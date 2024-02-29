@@ -222,12 +222,12 @@ class Logs extends React.Component {
                 labelPlacement="top"
               />
             </h1>
-            <ListItemText secondary="30s auto refresh" />
+            <ListItemText secondary="10s auto refresh" />
             <AutoRefreshLine
               className={classes.marginTop}
               intervalFunction={this.loadLogs}
-              execEveryMs={30000}
-              statusRefreshIntervalMs={500}
+              execEveryMs={10000}
+              statusRefreshIntervalMs={250}
               classes={classes}
             />
           </Grid>
@@ -321,13 +321,67 @@ class Logs extends React.Component {
             <Paper className={classes.paperLogs}>
               {logs.map((l) => (
                 <pre key={l.raw} className={formatClass(l.action, classes, highlightLogs)}>
-                  {moment(new Date(l.timestamp_ms)).format(
-                    "HH:mm:ss - ddd, MMM D"
-                  ) +
-                    "\t" +
-                    l.action.padEnd(20) +
-                    l.message}
-                </pre>
+                {moment(new Date(l.timestamp_ms)).format("HH:mm:ss") +
+                  " " +
+                  l.action.replace(
+                    /(ADMIN ANTI-CHEAT)/, '🚷CHEAT').replace(
+                    /(ADMIN BANNED)/, '⌛TEMPBAN').replace(
+                    /(ADMIN IDLE)/, '💤IDLE').replace(
+                    /(ADMIN KICKED)/, '🚷KICK').replace(
+                    /(ADMIN MISC)/, '🚨MISC').replace(
+                    /(ADMIN PERMA BANNED)/, '⛔PERMBAN').replace(
+                    /(ADMIN)$/, '🚨ADMIN').replace(
+                    /(CAMERA)/, '👀CAM').replace(
+                    /(CHAT\[Allies\]\[Team\])/, '🟦CHAT').replace(
+                    /(CHAT\[Axis\]\[Team\])/, '🟥CHAT').replace(
+                    /(CHAT\[Allies\]\[Unit\])/, '🟦CHAT[u]').replace(
+                    /(CHAT\[Axis\]\[Unit\])/, '🟥CHAT[u]').replace(
+                    /^(CONNECTED)/, '🛬ARRIVAL').replace(
+                    /(DISCONNECTED)/, '🛫DEPART').replace(
+                    /^(KILL)/, '💀KILL').replace(
+                    /(MATCH ENDED)/, '🕜END').replace(
+                    /(MATCH START)/, '🕛START').replace(
+                    /(MESSAGE)/, '📩MESSAGE').replace(
+                    /(TEAM KILL)/, '⚠️TK').replace(
+                    /(TEAMSWITCH)/, '♻️SWITCH').replace(
+                    /(TK AUTO KICKED)/, '🚷KICK TK').replace(
+                    /(VOTE COMPLETED)/, '🙋END').replace(
+                    /(VOTE EXPIRED)/, '🙋EXPIRED').replace(
+                    /(VOTE PASSED)/, '🙋PASSED').replace(
+                    /(VOTE STARTED)/, '🙋START').replace(
+                    /(VOTE)$/, '🙋VOTE').padEnd(9) +
+                    " | " +
+                    l.message.replace(/^(.*?): (.*)\(([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}|\d{17})\)$/, '$1 💬$2').replace(
+                    /💬(!vm|!votemap)/i, '🙋‍♂️').replace(
+                    /\(None > Allies\)/, '->🟦').replace(
+                    /\(None > Axis\)/, '->🟥').replace(
+                    /\(Allies > Axis\)/, '🟦->🟥').replace(
+                    /\(Axis > Allies\)/, '🟥->🟦').replace(
+                    /^(BAN|KICK): \[/, '').replace(
+                    /\] has been (banned|kicked)./, '').replace(
+                    /\s?\((([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})|(\d{17}))\)/, '').replace(
+                    /^(.*)\(Allies\/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}|\d{17})\) -> /, '🟦$1 -> ').replace(
+                    /^(.*)\(Axis\/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}|\d{17})\) -> /, '🟥$1 -> ').replace(
+                    / -> (.*)\(Allies\/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}|\d{17})\)/, ' -> 🟦$1').replace(
+                    / -> (.*)\(Axis\/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}|\d{17})\)/, ' -> 🟥$1').replace(
+                    / with (M1918A2 BAR|STG44|FG42|Bren Gun)$/, ' / ⚠️$1⚠️').replace(
+                    / with (KARABINER 98K|MOSIN NAGANT 1891|MOSIN NAGANT 91\/30|MOSIN NAGANT M38|SMLE No.1 Mk III|Rifle No.4 Mk I|Rifle No.5 Mk I)$/, ' / ⚠️$1⚠️').replace(
+                    / with (M3 KNIFE|FELDSPATEN|MPL-50 SPADE|Fairbairn–Sykes)$/, ' / ⚠️⚠️$1⚠️⚠️').replace(
+                    / with (COLT M1911|WALTHER P38|LUGER P08|NAGANT M1895|TOKAREV TT33|Webley MK VI)$/, ' / ⚠️$1⚠️').replace(
+                    / with (M1 GARAND|M1 CARBINE|GEWEHR 43|SVT40)$/, ' / ⚠️$1⚠️').replace(
+                    / with (M97 TRENCH GUN)$/, ' / ⚠️$1⚠️').replace(
+                    / with (M1919 SPRINGFIELD|KARABINER 98K x8|FG42 x4|SCOPED MOSIN NAGANT 91\/30|SCOPED SVT40|Lee-Enfield Pattern 1914 Sniper)$/, ' / ⚠️$1⚠️').replace(
+                    / with (M1A1 THOMPSON|M3 GREASE GUN|MP40|PPSH 41|PPSH 41 W\/DRUM|Sten Gun|Lanchester|M1928A1 THOMPSON)$/, ' / ⚠️$1⚠️').replace(
+                    / with /, ' / ').replace(
+                    /^TEAMSWITCH /, '').replace(
+                    /\s{2,}/g, ' ').replace(
+                    /(.{70})(?=.)/g,'$1\n                      ').replace(
+                    /\s{23,}/g,'                      ').replace(
+                    /^MATCH START (.*)/, '$1\n                      ----------------------------------------------------------------------').replace(
+                    /^MATCH ENDED (.*)/, '----------------------------------------------------------------------\n                      $1').replace(
+                    /`/g, '').replace(
+                    /ALLIED \(([0-5]) - ([0-5])\) AXIS/, '🟦$1-$2🟥')}
+              </pre>
               ))}
             </Paper>
           </Grid>

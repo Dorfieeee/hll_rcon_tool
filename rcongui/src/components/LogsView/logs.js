@@ -376,7 +376,7 @@ class Logs extends React.Component {
                     /^TEAMSWITCH /, '').replace(
                     /\s{2,}/g, ' ').replace(
                     /(.{70})(?=.)/g,'$1\n                      ').replace(
-                    /\s{23,}/g,'                      ').replace(
+                    / {23,}/g,'                      ').replace(
                     /^MATCH START (.*)/, '$1\n                      ----------------------------------------------------------------------').replace(
                     /^MATCH ENDED (.*)/, '----------------------------------------------------------------------\n                      $1').replace(
                     /`/g, '').replace(

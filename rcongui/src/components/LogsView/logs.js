@@ -374,6 +374,7 @@ class Logs extends React.Component {
                     / with (M1A1 THOMPSON|M3 GREASE GUN|MP40|PPSH 41|PPSH 41 W\/DRUM|Sten Gun|Lanchester|M1928A1 THOMPSON)$/, ' / ⚠️$1⚠️').replace(
                     / with /, ' / ').replace(
                     /^TEAMSWITCH /, '').replace(
+                    /\n{1,}/g, ' ').replace(
                     /\s{2,}/g, ' ').replace(
                     /(.{70})(?=.)/g,'$1\n                      ').replace(
                     / {23,}/g,'                      ').replace(

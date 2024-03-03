@@ -339,9 +339,9 @@ class Logs extends React.Component {
                     /^(CONNECTED)/, '🛬ARRIVAL').replace(
                     /(DISCONNECTED)/, '🛫DEPART').replace(
                     /^(KILL)/, '💀KILL').replace(
-                    /(MATCH ENDED)/, '🕜END').replace(
-                    /(MATCH START)/, '🕛START').replace(
-                    /(MESSAGE)/, '📩MESSAGE').replace(
+                    /(MATCH ENDED)/, '🏁END').replace(
+                    /(MATCH START)/, '🏁START').replace(
+                    /(MESSAGE)/, '📢MESSAGE').replace(
                     /(TEAM KILL)/, '⚠️TK').replace(
                     /(TEAMSWITCH)/, '♻️SWITCH').replace(
                     /(TK AUTO KICKED)/, '🚷KICK TK').replace(
@@ -351,35 +351,61 @@ class Logs extends React.Component {
                     /(VOTE STARTED)/, '🙋START').replace(
                     /(VOTE)$/, '🙋VOTE').padEnd(9) +
                     " | " +
-                    l.message.replace(/^(.*?): (.*)\(([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}|\d{17})\)$/, '$1 💬$2').replace(
-                    /💬(!vm|!votemap)/i, '🙋‍♂️').replace(
-                    /\(None > Allies\)/, '->🟦').replace(
-                    /\(None > Axis\)/, '->🟥').replace(
-                    /\(Allies > Axis\)/, '🟦->🟥').replace(
-                    /\(Axis > Allies\)/, '🟥->🟦').replace(
-                    /^(BAN|KICK): \[/, '').replace(
-                    /\] has been (banned|kicked)./, '').replace(
-                    /\s?\((([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})|(\d{17}))\)/, '').replace(
+                  l.message.replace(
+                    // general space formatting
+                    /\n{1,}/g, ' ').replace(
+                    /\s{2,}/g, ' ').replace(
+                    // ADMIN ANTI-CHEAT
+                    /^KICK: \[(.*)\] has been kicked. \[Anti-Cheat (.*)\]/, '$1 ($2)').replace(
+                    // ADMIN BANNED
+                    /^KICK: \[(.*)\] has been kicked. \[BANNED FOR (.*) BY THE ADMINISTRATOR! /, '$1 ($2)').replace(
+                    // ADMIN IDLE
+                    /^KICK: \[(.*)\] has been kicked. \[YOU WERE KICKED FOR BEING IDLE\]$/, '$1 (idle)').replace(
+                    /^KICK: \[(.*)\] has been kicked. \[YOU WERE KICKED DUE TO HIGH PING\]$/, '$1 (high ping)').replace(
+                    // ADMIN KICKED
+                    /^KICK: \[(.*)\] has been kicked. \[KICKED BY THE ADMINISTRATOR! (.*)\]/, '$1 📢$2').replace(
+                    // ADMIN MISC
+                    /^KICK: \[(.*)\] has been kicked. \[Kicked for (.*)\]/, '$1 ($2)').replace(
+                    // ADMIN PERMA BANNED
+                    /^KICK: \[(.*)\] has been kicked. \[PERMANENTLY BANNED BY THE ADMINISTRATOR! (.*)\]/, '$1 📢$2').replace(
+                    // CAMERA
+                    /^\[(.*) \(([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}|\d{17})\)\] (Entered|Left) Admin Camera$/, '$1 ($3)').replace(
+                    // CHAT
+                    /^(.*?): (.*) \(([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}|\d{17})\)$/, '$1 💬$2').replace(
+                    // CONNECTED / DISCONNECTED
+                    /^(.*?) \(([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}|\d{17})\)$/, '$1').replace(
+                    // KILL, TEAMKILL
                     /^(.*)\(Allies\/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}|\d{17})\) -> /, '🟦$1 -> ').replace(
                     /^(.*)\(Axis\/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}|\d{17})\) -> /, '🟥$1 -> ').replace(
                     / -> (.*)\(Allies\/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}|\d{17})\)/, ' -> 🟦$1').replace(
                     / -> (.*)\(Axis\/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}|\d{17})\)/, ' -> 🟥$1').replace(
+                    // KILL, TEAMKILL / highlight suspicious teamkills
                     / with (M1918A2 BAR|STG44|FG42|Bren Gun)$/, ' / ⚠️$1⚠️').replace(
                     / with (KARABINER 98K|MOSIN NAGANT 1891|MOSIN NAGANT 91\/30|MOSIN NAGANT M38|SMLE No.1 Mk III|Rifle No.4 Mk I|Rifle No.5 Mk I)$/, ' / ⚠️$1⚠️').replace(
                     / with (M3 KNIFE|FELDSPATEN|MPL-50 SPADE|Fairbairn–Sykes)$/, ' / ⚠️⚠️$1⚠️⚠️').replace(
                     / with (COLT M1911|WALTHER P38|LUGER P08|NAGANT M1895|TOKAREV TT33|Webley MK VI)$/, ' / ⚠️$1⚠️').replace(
                     / with (M1 GARAND|M1 CARBINE|GEWEHR 43|SVT40)$/, ' / ⚠️$1⚠️').replace(
                     / with (M97 TRENCH GUN)$/, ' / ⚠️$1⚠️').replace(
-                    / with (M1919 SPRINGFIELD|KARABINER 98K x8|FG42 x4|SCOPED MOSIN NAGANT 91\/30|SCOPED SVT40|Lee-Enfield Pattern 1914 Sniper)$/, ' / ⚠️$1⚠️').replace(
+                    / with (M1903 SPRINGFIELD|M1919 SPRINGFIELD|KARABINER 98K x8|FG42 x4|SCOPED MOSIN NAGANT 91\/30|SCOPED SVT40|Lee-Enfield Pattern 1914 Sniper)$/, ' / ⚠️$1⚠️').replace(
                     / with (M1A1 THOMPSON|M3 GREASE GUN|MP40|PPSH 41|PPSH 41 W\/DRUM|Sten Gun|Lanchester|M1928A1 THOMPSON)$/, ' / ⚠️$1⚠️').replace(
+                    // KILL, TEAMKILL / shorten line
                     / with /, ' / ').replace(
+                    // MESSAGE
+                    /^(.*)\((([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})|(\d{17}))\): (.*)$/, '$1 📢$5').replace(
+                    // TEAMSWITCH
                     /^TEAMSWITCH /, '').replace(
-                    /\n{1,}/g, ' ').replace(
-                    /\s{2,}/g, ' ').replace(
+                    /\(None > Allies\)/, '->🟦').replace(
+                    /\(None > Axis\)/, '->🟥').replace(
+                    /\(Allies > Axis\)/, '🟦->🟥').replace(
+                    /\(Axis > Allies\)/, '🟥->🟦').replace(
+                    // VOTEMAP
+                    /💬(!vm|!votemap)/i, '🙋‍♂️').replace(
+                    // general space formatting
                     /(.{70})(?=.)/g,'$1\n                      ').replace(
                     / {23,}/g,'                      ').replace(
-                    /^MATCH START (.*)/, '$1\n                      ----------------------------------------------------------------------').replace(
-                    /^MATCH ENDED (.*)/, '----------------------------------------------------------------------\n                      $1').replace(
+                    // MATCH (must come after general space formatting)
+                    /^MATCH START (.*)/, '🟢$1\n                     ----------------------------------------------------------------------').replace(
+                    /^MATCH ENDED (.*)/, '----------------------------------------------------------------------\n                     🔴$1').replace(
                     /`/g, '').replace(
                     /ALLIED \(([0-5]) - ([0-5])\) AXIS/, '🟦$1-$2🟥')}
               </pre>

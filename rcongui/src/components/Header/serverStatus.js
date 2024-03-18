@@ -2,17 +2,29 @@ import React from "react";
 import "react-toastify/dist/ReactToastify.css";
 import Grid from "@material-ui/core/Grid";
 import { get, handle_http_errors, showResponse } from "../../utils/fetchUtils";
-
 import debounce from "lodash/debounce";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { makeStyles } from "@material-ui/core/styles";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Link from "@material-ui/core/Link";
 import { fromJS, List } from "immutable";
+import { Button } from "@material-ui/core";
+
+const useStyles = makeStyles({
+  truncatedBtn: {
+    textAlign: "left",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    "&:hover": {
+      whiteSpace: "break-spaces",
+      overflowWrap: "anywhere",
+      overflow: "visible",
+    },
+  }
+})
 
 const Status = ({
-  classes,
   name,
   nbPlayers,
   map,
@@ -21,8 +33,7 @@ const Status = ({
   balance,
   score,
 }) => {
-  const theme = useTheme();
-  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -34,48 +45,41 @@ const Status = ({
   };
 
   return (
-    <React.Fragment>
-      <Grid container className={classes.alignLeft} spacing={1}>
-        <Grid item>
-          <Link variant="button" color="inherit" onClick={handleClick}>
-            <strong
-              style={{ display: "block" }}
-              className={`${classes.ellipsis}`}
-            >
-              {isSmall ? `${name.substring(0, 40)}...` : name}
-            </strong>
-          </Link>
-          <Menu
-            id="simple-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            {serverList.map((s) => {
-              let link = ""
-              if (s.get("link")) {
-                link = new URL(`${s.get('link')}${window.location.hash}`)
-              } else {
-                // Everyone should be setting their server URL, but for locally hosted instances just swap out the port
-                const regex = /:(\d+)/gm;
-                link = new URL(window.location.href.replace(regex, `:${s.get('port')}`))
-              }
-              return (
-                <MenuItem onClick={handleClose}>
-                  <Link color="inherit" href={link}>
-                    {s.get("name")}
-                  </Link>
-                </MenuItem>
-              );
-            })}
-          </Menu>
-          <small style={{ display: "block" }}>
-            {nbPlayers} ({balance}) - {map} - {timeRemaining} - {score}
-          </small>
-        </Grid>
+    <Grid>
+      <Grid item>
+        <Button className={classes.truncatedBtn} variant="button" color="inherit" onClick={handleClick}>
+          {name}
+        </Button>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          {serverList.map((s) => {
+            let link = ""
+            if (s.get("link")) {
+              link = new URL(`${s.get('link')}${window.location.hash}`)
+            } else {
+              // Everyone should be setting their server URL, but for locally hosted instances just swap out the port
+              const regex = /:(\d+)/gm;
+              link = new URL(window.location.href.replace(regex, `:${s.get('port')}`))
+            }
+            return (
+              <MenuItem onClick={handleClose}>
+                <Link color="inherit" href={link}>
+                  {s.get("name")}
+                </Link>
+              </MenuItem>
+            );
+          })}
+        </Menu>
+        <small style={{ display: "block" }}>
+          {nbPlayers} ({balance}) - {map} - {timeRemaining} - {score}
+        </small>
       </Grid>
-    </React.Fragment>
+    </Grid>
   );
 };
 
@@ -194,11 +198,9 @@ class ServerStatus extends React.Component {
       numAxisPlayers,
       numAlliedPlayers,
     } = this.state;
-    const { classes } = this.props;
 
     return (
       <Status
-        classes={classes}
         name={name}
         nbPlayers={nbPlayers}
         map={map}

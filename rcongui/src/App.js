@@ -55,6 +55,7 @@ import {
   GTXNameChange,
   ChatCommands,
 } from "./components/UserSettings/miscellaneous";
+import themes from "./themes";
 
 const Live = ({ classes }) => {
   const [mdSize, setMdSize] = React.useState(6);
@@ -90,270 +91,6 @@ const Live = ({ classes }) => {
   );
 };
 
-// Easy way to make ugly ass themes: https://material.io/resources/color/#!/?view.left=0&view.right=0&primary.color=33691E&secondary.color=3E2723
-const darkTheme = createMuiTheme({
-  editor: "vs-dark",
-  palette: {
-    type: "dark",
-  },
-});
-
-const lightTheme = createMuiTheme({
-  palette: {
-    type: "light",
-  },
-});
-
-const GreenYellowDarkTheme = createMuiTheme({
-  editor: "vs-dark",
-  palette: {
-    primary: {
-      light: "#5edfca",
-      main: "#17ad99",
-      dark: "#007d6b",
-      contrastText: "#fff",
-    },
-    secondary: {
-      light: "#ffe54c",
-      main: "#ffb300",
-      dark: "#c68400",
-      contrastText: "#000",
-    },
-    background: {
-      default: "#303030",
-      paper: "#424242",
-    },
-    text: {
-      primary: "#fff",
-      secondary: " rgba(255, 255, 255, 0.7)",
-      disabled: "rgba(255, 255, 255, 0.5)",
-    },
-  },
-});
-
-const GreenYellowLightTheme = createMuiTheme({
-  palette: {
-    primary: {
-      light: "#5edfca",
-      main: "#17ad99",
-      dark: "#007d6b",
-      contrastText: "#fff",
-    },
-    secondary: {
-      light: "#ffe54c",
-      main: "#ffb300",
-      dark: "#c68400",
-      contrastText: "#000",
-    },
-  },
-});
-
-const YellowGreenTheme = createMuiTheme({
-  palette: {
-    secondary: {
-      light: "#5edfca",
-      main: "#17ad99",
-      dark: "#007d6b",
-      contrastText: "#fff",
-    },
-    primary: {
-      light: "#ffe54c",
-      main: "#ffb300",
-      dark: "#c68400",
-      contrastText: "#000",
-    },
-  },
-});
-
-const RedTheme = createMuiTheme({
-  palette: {
-    primary: {
-      light: "#ff7961",
-      main: "#f44336",
-      dark: "#ba000d",
-      contrastText: "#fff",
-    },
-    secondary: {
-      light: "#708690",
-      main: "#445963",
-      dark: "#1b3039",
-      contrastText: "#000",
-    },
-  },
-});
-
-const GreyBlueDarkTheme = createMuiTheme({
-  editor: "vs-dark",
-  palette: {
-    primary: {
-      light: "#8eacbb",
-      main: "#607d8b",
-      dark: "#34515e",
-      contrastText: "#fff",
-    },
-    secondary: {
-      light: "#c3fdff",
-      main: "#90caf9",
-      dark: "#5d99c6",
-      contrastText: "#fff",
-    },
-    background: {
-      default: "#303030",
-      paper: "#424242",
-    },
-    text: {
-      primary: "#fff",
-      secondary: " rgba(255, 255, 255, 0.7)",
-      disabled: "rgba(255, 255, 255, 0.5)",
-    },
-  },
-});
-
-const PurplePinkTheme = createMuiTheme({
-  palette: {
-    primary: {
-      light: "#d05ce3",
-      main: "#9c27b0",
-      dark: "#6a0080",
-      contrastText: "#000",
-    },
-    secondary: {
-      light: "#ffeeff",
-      main: "#f8bbd0",
-      dark: "#c48b9f",
-      contrastText: "#fff",
-    },
-  },
-});
-
-const CamoDarkTheme = createMuiTheme({
-  editor: "vs-dark",
-  palette: {
-    primary: {
-      light: "#629749",
-      main: "#33691e",
-      dark: "#003d00",
-      contrastText: "#000",
-    },
-    secondary: {
-      light: "#ffffb3",
-      main: "#ffe082",
-      dark: "#caae53",
-      contrastText: "#000",
-    },
-    background: {
-      default: "#343434",
-      paper: "#424242",
-    },
-    text: {
-      primary: "#fff",
-      secondary: " rgba(255, 255, 255, 0.7)",
-      disabled: "rgba(255, 255, 255, 0.5)",
-    },
-  },
-});
-
-const CamoLight = createMuiTheme({
-  palette: {
-    primary: {
-      light: "#629749",
-      main: "#33691e",
-      dark: "#003d00",
-      contrastText: "#000",
-    },
-    secondary: {
-      light: "#6a4f4b",
-      main: "#3e2723",
-      dark: "#1b0000",
-      contrastText: "#000",
-    },
-    background: {
-      default: "#ffffe5",
-      paper: "#fff8e1",
-    },
-    text: {
-      primary: "#000",
-      secondary: " rgba(0, 0, 0, 0.7)",
-      disabled: "rgba(0, 0, 0, 0.5)",
-    },
-  },
-});
-
-const hll = createMuiTheme({
-  palette: {
-    primary: {
-      light: "#484848",
-      main: "#212121",
-      dark: "#000000",
-      contrastText: "#fff",
-    },
-    secondary: {
-      light: "#ffac42",
-      main: "#f47b00",
-      dark: "#ba4c00",
-      contrastText: "#fff",
-    },
-    background: {
-      default: "#343434",
-      paper: "#5b5b5b",
-    },
-    text: {
-      primary: "#ffffff",
-      secondary: " rgba(0, 0, 0, 0.7)",
-      disabled: "rgba(0, 0, 0, 0.5)",
-    },
-  },
-  overrides: {
-    MuiChip: {
-      deleteIcon: {
-        color: "#212121",
-      },
-    },
-    MuiCssBaseline: {
-      "@global": {
-        body: {
-          backgroundRepeat: "no-repeat",
-          backgroundAttachment: "fixed",
-          backgroundSize: "cover",
-          backgroundImage: 'url("hll.jpg")',
-        },
-      },
-    },
-  },
-});
-
-const hllNoBg = createMuiTheme({
-  palette: {
-    primary: {
-      light: "#484848",
-      main: "#212121",
-      dark: "#000000",
-      contrastText: "#fff",
-    },
-    secondary: {
-      light: "#ffac42",
-      main: "#f47b00",
-      dark: "#ba4c00",
-      contrastText: "#fff",
-    },
-    background: {
-      default: "#343434",
-      paper: "#5b5b5b",
-    },
-    text: {
-      primary: "#ffffff",
-      secondary: " rgba(0, 0, 0, 0.7)",
-      disabled: "rgba(0, 0, 0, 0.5)",
-    },
-  },
-  overrides: {
-    MuiChip: {
-      deleteIcon: {
-        color: "#212121",
-      },
-    },
-  },
-});
 
 function App() {
   const [isEmbed, setIsEmbed] = React.useState(false);
@@ -371,41 +108,27 @@ function App() {
     setIsEmbed(serarchParams.has("embed"));
   }, [window.location.search]);
 
-  const themes = {
-    Dark: darkTheme,
-    Light: lightTheme,
-    GreenYellowDark: GreenYellowDarkTheme,
-    GreenYellowLight: GreenYellowLightTheme,
-    YellowGreen: YellowGreenTheme,
-    Red: RedTheme,
-    GreyBlueDark: GreyBlueDarkTheme,
-    CamoDark: CamoDarkTheme,
-    PurplePink: PurplePinkTheme,
-    CamoLight: CamoLight,
-    hll: hll,
-  };
-
   const theme = process.env.REACT_APP_PUBLIC_BUILD
     ? isEmbed
-      ? hllNoBg
-      : hll
+      ? themes.HLL_No_Background
+      : themes.HLL
     : themes[userTheme]
     ? themes[userTheme]
-    : lightTheme;
+    : themes.Light;
   const classes = useStyles();
 
   const Router = isEmbed ? BrowserRouter : HashRouter;
 
   return (
-    <div className={"App " + classes.root}>
+    <div className={classes.root}>
       <ThemeProvider theme={theme}>
-        {isEmbed ? "" : <CssBaseline />}
+        {isEmbed ? null : <CssBaseline />}
         <ToastContainer />
         <Router>
           {isEmbed ? (
-            ""
+            null
           ) : !process.env.REACT_APP_PUBLIC_BUILD ? (
-            <Header classes={classes} />
+            <Header />
           ) : (
             <ScoreMenu classes={classes} />
           )}

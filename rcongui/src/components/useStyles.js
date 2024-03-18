@@ -4,6 +4,7 @@ const useStyles = makeStyles((theme) => {
   return {
     root: {
       flexGrow: 1,
+      textAlign: "center",
     },
     high: {
       color: theme.palette.secondary.main,
@@ -270,6 +271,6 @@ const useStyles = makeStyles((theme) => {
       textAlign: "right",
     },
   };
-});
+}, { name: "global" });
 
 export default useStyles;

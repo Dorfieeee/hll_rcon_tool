@@ -1,0 +1,46 @@
+import { createMuiTheme } from "@material-ui/core";
+
+const hll = createMuiTheme({
+    palette: {
+        primary: {
+            light: "#484848",
+            main: "#212121",
+            dark: "#000000",
+            contrastText: "#fff",
+        },
+        secondary: {
+            light: "#ffac42",
+            main: "#f47b00",
+            dark: "#ba4c00",
+            contrastText: "#fff",
+        },
+        background: {
+            default: "#343434",
+            paper: "#5b5b5b",
+        },
+        text: {
+            primary: "#ffffff",
+            secondary: " rgba(0, 0, 0, 0.7)",
+            disabled: "rgba(0, 0, 0, 0.5)",
+        },
+    },
+    overrides: {
+        MuiChip: {
+            deleteIcon: {
+                color: "#212121",
+            },
+        },
+        MuiCssBaseline: {
+            "@global": {
+                body: {
+                    backgroundRepeat: "no-repeat",
+                    backgroundAttachment: "fixed",
+                    backgroundSize: "cover",
+                    backgroundImage: 'url("hll.jpg")',
+                },
+            },
+        },
+    },
+});
+
+export default hll;

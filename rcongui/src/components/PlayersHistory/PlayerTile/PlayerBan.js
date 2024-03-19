@@ -21,7 +21,7 @@ export function banListFromServer(data) {
 }
 
 
-export const PlayerBan = ({ classes, bans, player }) => {
+export const PlayerBan = ({ bans, player }) => {
     const playerBans = bans.get(player.get('steam_id_64'))
     const formattedBans = {}
 
@@ -31,7 +31,6 @@ export const PlayerBan = ({ classes, bans, player }) => {
             container
             justify="space-between"
             spacing={0}
-            className={classes.noPaddingMargin}
         >
             <Grid item xs={6}>
                 {formattedBans.temp ?

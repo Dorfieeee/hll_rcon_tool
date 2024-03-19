@@ -61,7 +61,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Squad = ({
-  classes: globalClasses,
   squadName,
   squadData,
   doOpen,
@@ -156,7 +155,7 @@ const Squad = ({
                 backgroundClass={classes.primaryBackground}
                 player={squadData}
               />
-              <KDChips classes={classes} player={squadData} />
+              <KDChips player={squadData} />
             </Grid>
           }
         />
@@ -190,7 +189,7 @@ const Squad = ({
             return (
               <PlayerItem
                 key={player.get("name")}
-                classes={globalClasses}
+                
                 player={player}
                 playerHasExtraInfo={true}
                 onDeleteFlag={(flagId) => deleteFlag(flagId)}
@@ -208,7 +207,6 @@ const Squad = ({
 };
 
 const Team = ({
-  classes: globalClasses,
   teamName,
   teamData,
   selectedPlayers,
@@ -262,7 +260,7 @@ const Team = ({
         (showOnlySelected &&
           selectedPlayers.contains(teamData.get("commander")?.get("name")))) ? (
         <PlayerItem
-          classes={globalClasses}
+          
           player={teamData.get("commander")}
           playerHasExtraInfo={true}
           onDeleteFlag={() => null}
@@ -285,7 +283,7 @@ const Team = ({
             key={key}
             squadName={key}
             squadData={value}
-            classes={globalClasses}
+            
             doOpen={openAll}
             onSelectSquad={() => true}
             onSelectPlayer={selectPlayer}
@@ -306,7 +304,7 @@ const SimplePlayerRenderer = ({ player, flag }) => (
   </Typography>
 );
 
-const GameView = ({ classes: globalClasses }) => {
+const GameView = () => {
   const classes = useStyles();
   const [isLoading, setIsLoading] = React.useState(false);
   const [teamView, setTeamView] = React.useState(null);
@@ -572,10 +570,10 @@ const GameView = ({ classes: globalClasses }) => {
   };
 
   return (
-    <Grid container spacing={2} className={globalClasses.padding}>
+    <Grid container spacing={2}>
       {teamView ? (
         <Fragment>
-          <Grid item xs={12} className={globalClasses.doublePadding}>
+          <Grid item xs={12}>
             <LinearProgress
               style={{ visibility: isLoading ? "visible" : "hidden" }}
             />
@@ -704,7 +702,7 @@ const GameView = ({ classes: globalClasses }) => {
           </Grid>
           <Grid item xs={12} md={12} lg={6}>
             <Team
-              classes={globalClasses}
+              
               teamName="Allies"
               teamData={teamView.get("allies")}
               selectedPlayers={selectedPlayers}
@@ -718,7 +716,7 @@ const GameView = ({ classes: globalClasses }) => {
           </Grid>
           <Grid item xs={12} md={12} lg={6}>
             <Team
-              classes={globalClasses}
+              
               teamName="Axis"
               teamData={teamView.get("axis")}
               selectedPlayers={selectedPlayers}
@@ -732,7 +730,7 @@ const GameView = ({ classes: globalClasses }) => {
           </Grid>
           <Grid item xs={12} md={12}>
             <Team
-              classes={globalClasses}
+              
               teamName="Unassigned"
               teamData={teamView.get("none")}
               selectedPlayers={selectedPlayers}
@@ -746,7 +744,7 @@ const GameView = ({ classes: globalClasses }) => {
           </Grid>
         </Fragment>
       ) : (
-        <Grid item xs={12} className={globalClasses.doublePadding}>
+        <Grid item xs={12}>
           <LinearProgress />
         </Grid>
       )}

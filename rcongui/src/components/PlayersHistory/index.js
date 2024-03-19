@@ -125,13 +125,13 @@ class FlagDialog extends React.Component {
   }
 }
 
-const FlagButton = ({ classes, onflag }) => (
+const FlagButton = ({ onflag }) => (
   <Button variant="outlined" onClick={onflag}>
     <FlagIcon />
   </Button>
 );
 
-const MyPagination = ({ classes, pageSize, total, page, setPage }) => (
+const MyPagination = ({ pageSize, total, page, setPage }) => (
   <Pagination
     count={Math.ceil(total / pageSize)}
     page={page}
@@ -140,7 +140,6 @@ const MyPagination = ({ classes, pageSize, total, page, setPage }) => (
     color="default"
     showFirstButton
     showLastButton
-    className={classes.pagination}
   />
 );
 
@@ -526,7 +525,6 @@ class PlayersHistory extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
     const {
       playersHistory,
       pageSize,
@@ -556,7 +554,6 @@ class PlayersHistory extends React.Component {
       <Grid container spacing={1}>
         <Grid item xs={12}>
           <SearchBar
-            classes={classes}
             pageSize={pageSize}
             setPageSize={(v) => this.setState({ pageSize: v })}
             lastSeenFrom={lastSeenFrom}
@@ -584,7 +581,6 @@ class PlayersHistory extends React.Component {
         </Grid>
         <Grid item xs={12}>
           <MyPagination
-            classes={classes}
             pageSize={pageSize}
             page={page}
             setPage={(page) =>
@@ -596,7 +592,6 @@ class PlayersHistory extends React.Component {
         <Grid item xs={12}>
           {isLoading ? <LinearProgress color="secondary" /> : ""}
           <PlayerGrid
-            classes={classes}
             players={playersHistory}
             onBlacklist={this.onBlacklist}
             onUnBlacklist={this.onUnBlacklist}
@@ -612,9 +607,8 @@ class PlayersHistory extends React.Component {
             onAddToWatchList={this.onAddToWatchList}
           />
         </Grid>
-        <Grid item xs={12} className={classes.padding}>
+        <Grid item xs={12}>
           <MyPagination
-            classes={classes}
             pageSize={pageSize}
             page={page}
             setPage={(page) =>

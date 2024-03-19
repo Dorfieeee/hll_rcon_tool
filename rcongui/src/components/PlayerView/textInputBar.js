@@ -78,7 +78,6 @@ const Reason = ({
 };
 
 const TextInputBar = ({
-  classes,
   handleChange,
   total,
   showCount,
@@ -88,10 +87,10 @@ const TextInputBar = ({
 }) => {
   /* todo refactor */
   return (
-    <Grid item xs={12} spacing={2}>
+    <Grid item xs={12}>
       <Grid container justify="flex-start" direction="row" alignItems="center">
         <Grid item xs={12} lg={3}>
-          <FormControl className={classes.formControl}>
+          <FormControl>
             <InputLabel>Sort</InputLabel>
             <Select
               value={sortType}
@@ -116,7 +115,7 @@ const TextInputBar = ({
             <FormHelperText>Sort the player list</FormHelperText>
           </FormControl>
         </Grid>
-        <Grid item xs={12} md={3} className={classes.textLeft}>
+        <Grid item xs={12} md={3}>
           <TextField
             label="Filter"
             helperText={`Showing: ${showCount} / ${total}`}
@@ -126,7 +125,7 @@ const TextInputBar = ({
             }}
           />
         </Grid>
-        <Grid item xs={12} lg={6} className={classes.textLeft}>
+        <Grid item xs={12} lg={6}>
           <Reason handleMessageChange={handleMessageChange} />
         </Grid>
       </Grid>

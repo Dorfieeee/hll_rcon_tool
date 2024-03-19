@@ -242,7 +242,7 @@ class PlayerView extends Component {
     this.loadPlayers();
   }
   render() {
-    const { classes, isFullScreen, onFullScreen } = this.props;
+    const { isFullScreen, onFullScreen } = this.props;
     const {
       openGroupAction,
       openUnban,
@@ -270,7 +270,6 @@ class PlayerView extends Component {
           onFullScreenClick={onFullScreen}
         />
         <TextInputBar
-          classes={classes}
           handleChange={this.filterChange}
           total={players.size}
           showCount={filteredPlayers.size}
@@ -281,7 +280,6 @@ class PlayerView extends Component {
         />
 
         <CompactList
-          classes={classes}
           sortType={sortType}
           players={filteredPlayers}
           handleAction={(
@@ -309,7 +307,6 @@ class PlayerView extends Component {
         <GroupActions
           onClose={() => this.setState({ openGroupAction: false })}
           open={openGroupAction}
-          classes={classes}
           players={players} /* Todo handle immuatable */
           handleAction={this.handleAction}
         />
@@ -318,7 +315,6 @@ class PlayerView extends Component {
           onReload={this.loadBans}
           handleUnban={this.unBan}
           bannedPlayers={bannedPlayers}
-          classes={classes}
           onClose={() => this.setState({ openUnban: false })}
         />
         <ReasonDialog

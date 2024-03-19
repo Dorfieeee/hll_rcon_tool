@@ -66,8 +66,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ServerInfo = ({ classes }) => {
-  const styles = useStyles();
+const ServerInfo = () => {
+  const classes = useStyles();
   const theme = useTheme();
   const [serverState, setServerState] = React.useState(new Map());
   const [isLoading, setIsLoading] = React.useState(true);
@@ -119,14 +119,14 @@ const ServerInfo = ({ classes }) => {
   }, [serverState]);
 
   return (
-    <GridList cols={1} className={styles.gridList}>
+    <GridList cols={1} className={classes.gridList}>
       <GridListTile>
         <img
           alt="Map"
           src={getMapImageUrl(mapName)}
         />
         <GridListTileBar
-          className={styles.titleBarTop}
+          className={classes.titleBarTop}
           title={serverState.get("name")}
           subtitle={serverState
             .get("current_map", new Map())
@@ -134,7 +134,7 @@ const ServerInfo = ({ classes }) => {
           titlePosition="top"
         />
         <GridListTileBar
-          className={styles.titleBarBottom}
+          className={classes.titleBarBottom}
           title={`Time: ${started} - Players: ${serverState.get(
             "player_count"
           )}/${serverState.get("max_player_count")}`}

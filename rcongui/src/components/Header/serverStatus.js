@@ -47,7 +47,7 @@ const Status = ({
   return (
     <Grid>
       <Grid item>
-        <Button className={classes.truncatedBtn} variant="button" color="inherit" onClick={handleClick}>
+        <Button className={classes.truncatedBtn} color="inherit" onClick={handleClick}>
           {name}
         </Button>
         <Menu

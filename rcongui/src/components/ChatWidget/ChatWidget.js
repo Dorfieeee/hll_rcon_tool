@@ -156,7 +156,7 @@ const ChatWidget = ({ data, handleMessageSend }) => {
         <ChatContent
           data={data}
           handleMessageSend={handleMessageSend}
-          classes={classes}
+          
         />
       </Drawer>
     </div>

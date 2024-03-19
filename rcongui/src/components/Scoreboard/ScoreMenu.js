@@ -1,41 +1,52 @@
 import React from "react";
-import { AppBar, Link, Toolbar } from "@material-ui/core";
+import { AppBar, Link, Toolbar, makeStyles } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
 
-const ScoreMenu = ({ classes }) => (
-  <AppBar position="static">
-    <Toolbar>
-      <nav className={classes.title}>
+const useStyles = makeStyles((theme) => ({
+  nav: {
+      flexGrow: 1,
+      display: "block",
+      textAlign: "left",
+    },
+  link: {
+    margin: theme.spacing(1, 1.5),
+    marginLeft: 0,
+  }
+}))
+
+const ScoreMenu = () => {
+  const classes = useStyles();
+
+  return (
+    <AppBar position="static">
+      <Toolbar component={"nav"}>
         <Link
-          variant="button"
           color="inherit"
-          className={classes.firstLink}
+          className={classes.link}
           component={RouterLink}
           to="/"
         >
           Live game
         </Link>
         <Link
-          variant="button"
           color="inherit"
-          className={classes.firstLink}
+          className={classes.link}
           component={RouterLink}
           to="/livescore"
         >
           Live sessions
         </Link>
         <Link
-          variant="button"
           color="inherit"
-          className={classes.firstLink}
+          className={classes.link}
           component={RouterLink}
           to="/gamescoreboard"
         >
           Last games
         </Link>
-      </nav>
     </Toolbar>
-  </AppBar>
-);
+    </AppBar>
+  )
+};
 
 export default ScoreMenu;

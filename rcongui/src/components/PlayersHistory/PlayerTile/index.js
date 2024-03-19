@@ -20,25 +20,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default ({ classes, onDeleteFlag, player }) => {
-  const myClasses = useStyles();
+export default ({ onDeleteFlag, player }) => {
+  const classes = useStyles();
 
   return (
     <GridListTile style={{ minHeight: "100%" }}>
       <Grid
         container
-        className={myClasses.paperTile}
+        className={classes.paperTile}
         direction="column"
         justify="space-between"
       >
-        <PlayerHeader classes={classes} player={player} />
+        <PlayerHeader  player={player} />
         <PlayerFlags
           player={player}
-          classes={classes}
+          
           onDeleteFlag={onDeleteFlag}
         />
-        <PlayerSighthings classes={classes} player={player} />
-        <PlayerPenalties classes={classes} player={player} />
+        <PlayerSighthings  player={player} />
+        <PlayerPenalties  player={player} />
         <Grid container justify="center">
           <Grid item>
             <ActionButton

@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const GamesScore = ({ classes }) => {
+const GamesScore = () => {
   let { slug } = useParams();
   slug = parseInt(slug);
   console.log("Slug ", slug);
@@ -196,7 +196,6 @@ const GamesScore = ({ classes }) => {
         container
         spacing={2}
         justify="center"
-        className={classes.gridContainer}
       >
         <Grid item xs={12} className={styles.transparentPaper}>
           <Typography color="secondary" variant="h4">
@@ -214,7 +213,7 @@ const GamesScore = ({ classes }) => {
             </Typography>
           </Grid>
         )}
-        <Grid item xs={12} className={`${classes.doublePadding}`}>
+        <Grid item xs={12}>
           <div className={styles.singleLine}>
             <GridList
               cols={
@@ -293,10 +292,8 @@ const GamesScore = ({ classes }) => {
         container
         spacing={2}
         justify="center"
-        className={classes.gridContainer}
       >
         <Scores
-          classes={classes}
           serverState={serverState}
           styles={styles}
           started={started}

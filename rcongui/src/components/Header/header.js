@@ -95,91 +95,91 @@ const menuConfigs = [
     routes: [
       {
         name: "Settings",
-        path: "/settings"
+        path: "/settings/settings"
       },
       {
         name: "Audit Webhooks",
-        path: "/audit-webhooks"
+        path: "/settings/audit-webhooks"
       },
       {
         name: "Admin Ping Webhooks",
-        path: "/admin-webhooks"
+        path: "/settings/admin-webhooks"
       },
       {
         name: "Watchlist Webhooks",
-        path: "/watchlist-webhooks"
+        path: "/settings/watchlist-webhooks"
       },
       {
         name: "Camera Webhooks",
-        path: "/camera-webhooks"
+        path: "/settings/camera-webhooks"
       },
       {
         name: "Chat Webhooks",
-        path: "/chat-webhooks"
+        path: "/settings/chat-webhooks"
       },
       {
         name: "Kill/Teamkills Webhooks",
-        path: "/kill-webhooks"
+        path: "/settings/kill-webhooks"
       },
       {
         name: "Level Auto Mod",
-        path: "/automod-level"
+        path: "/settings/automod-level"
       },
       {
         name: "No Leader Auto Mod",
-        path: "/automod-no-leader"
+        path: "/settings/automod-no-leader"
       },
       {
         name: "Seeding Auto Mod",
-        path: "/automod-seeding"
+        path: "/settings/automod-seeding"
       },
       {
         name: "No Solo Tank Auto Mod",
-        path: "/automod-solo-tank"
+        path: "/settings/automod-solo-tank"
       },
       {
         name: "RCON Game Server Connection",
-        path: "/rcon-gameserver"
+        path: "/settings/rcon-gameserver"
       },
       {
         name: "CRCON Settings",
-        path: "/rcon-server"
+        path: "/settings/rcon-server"
       },
       {
         name: "Chat Commands",
-        path: "/chatcommands"
+        path: "/settings/chatcommands"
       },
       {
         name: "Scorebot",
-        path: "/scorebot"
+        path: "/settings/scorebot"
       },
       {
         name: "Steam API",
-        path: "/steam"
+        path: "/settings/steam"
       },
       {
         name: "VAC/Game Bans",
-        path: "/vac-gamebans"
+        path: "/settings/vac-gamebans"
       },
       {
         name: "TK Ban On Connect",
-        path: "/tk-ban"
+        path: "/settings/tk-ban"
       },
       {
         name: "Name Kicks",
-        path: "/name-kicks"
+        path: "/settings/name-kicks"
       },
       {
         name: "Log Line Webhooks",
-        path: "/log-lines"
+        path: "/settings/log-lines"
       },
       {
         name: "Expired VIP",
-        path: "/expired-vip"
+        path: "/settings/expired-vip"
       },
       {
         name: "GTX Server Name Change",
-        path: "/gtx-server-name-change"
+        path: "/settings/gtx-server-name-change"
       },
     ]
   },
@@ -220,7 +220,7 @@ const Header = () => {
   };
 
   const createMenu = (menu) => {
-    return <MenuSelection name={menu.name} routes={menu.routes} anchorEl={anchorEl} open={menu.name === openedMenu} handleClose={handleClose} handleClick={(e) => handleClick(e, menu.name)} />
+    return <MenuSelection key={menu.name} name={menu.name} routes={menu.routes} anchorEl={anchorEl} open={menu.name === openedMenu} handleClose={handleClose} handleClick={(e) => handleClick(e, menu.name)} />
   }
 
   return (

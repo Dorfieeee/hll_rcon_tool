@@ -245,8 +245,7 @@ const ScoreChips = ({ player, backgroundClass }) => {
   );
 };
 
-const KDChips = ({ classes, player }) => {
-  const localClasses = useStyles();
+const KDChips = ({ player }) => {
 
   return (
     <Fragment>
@@ -284,23 +283,23 @@ const KDChips = ({ classes, player }) => {
   );
 };
 
-const ScoreListText = ({ classes, player }) => {
-  const localClasses = useStyles();
+const ScoreListText = ({ player }) => {
+  const classes = useStyles();
 
   return (
     <ListItemText
-      className={localClasses.alignRight}
+      className={classes.alignRight}
       primary={
         <Grid container spacing={1}>
           <ScoreChips
-            backgroundClass={localClasses.darkBackground}
+            backgroundClass={classes.darkBackground}
             player={player}
           />
         </Grid>
       }
       secondary={
         <Grid container spacing={1}>
-          <KDChips classes={classes} player={player} />
+          <KDChips player={player} />
         </Grid>
       }
     />
@@ -308,7 +307,6 @@ const ScoreListText = ({ classes, player }) => {
 };
 
 const PlayerItem = ({
-  classes,
   player,
   handleAction,
   nbButtons,
@@ -322,7 +320,7 @@ const PlayerItem = ({
   const profile = player.get("profile") ? player.get("profile") : new Map();
   const name = player.get("name");
   const steamID64 = player.get("steam_id_64");
-  const localClasses = useStyles();
+  const classes = useStyles();
 
   return (
     <ListItem key={name} dense selected={isSelected}>
@@ -331,7 +329,7 @@ const PlayerItem = ({
           <Badge
             badgeContent={player.get("level", 0)}
             max={999}
-            classes={{ badge: localClasses.customBadge }}
+            classes={{ badge: classes.customBadge }}
             anchorOrigin={{
               vertical: "bottom",
               horizontal: "right",
@@ -339,7 +337,7 @@ const PlayerItem = ({
           >
             <Avatar
               variant="square"
-              className={avatarBackround || localClasses.darkBackground}
+              className={avatarBackround || classes.darkBackground}
               src={`icons/roles/${player.get("role", "rifleman")}.png`}
             ></Avatar>
           </Badge>
@@ -396,7 +394,7 @@ const PlayerItem = ({
         }
       />
       {playerHasExtraInfo ? (
-        <ScoreListText classes={classes} player={player} />
+        <ScoreListText player={player} />
       ) : (
         ""
       )}
@@ -486,7 +484,6 @@ const getSortedPlayers = (players, sortType) => {
 
 const CompactList = ({
   players,
-  classes,
   handleAction,
   sortType,
   width,
@@ -512,10 +509,9 @@ const CompactList = ({
   };
 
   return (
-    <List className={classes.root}>
+    <List>
       {myPlayers.map((player) => (
         <PlayerItem
-          classes={classes}
           nbButtons={sizes[width]}
           player={player}
           key={player.get("steam_id_64")}

@@ -32,7 +32,6 @@ const compactProfile = (player) => {
 
 const GroupActions = ({
   players,
-  classes,
   width,
   handleAction,
   onClose,
@@ -59,7 +58,7 @@ const GroupActions = ({
       onClose={onClose}
       aria-labelledby="customized-dialog-title"
       open={open}
-      fullWidth={width}
+      fullWidth={!!width}     
       maxWidth={width}
     >
       <DialogTitle id="customized-dialog-title" onClose={onClose}>
@@ -68,7 +67,6 @@ const GroupActions = ({
       <DialogContent dividers>
         <Autocomplete
           autoFocus
-          className={classes.marginBottom}
           multiple
           clearOnEscape
           id="tags-outlined"
@@ -87,7 +85,7 @@ const GroupActions = ({
         />
 
         <Grid container>
-          <Grid item xs={12} xl={12} className={classes.marginBottom}>
+          <Grid item xs={12} xl={12}>
             <Reason
               message={message}
               handleMessageChange={setMessage}
@@ -97,7 +95,7 @@ const GroupActions = ({
               textHistory={textHistory}
             />
           </Grid>
-          <Grid item xs={12} xl={12} className={classes.marginBottom}>
+          <Grid item xs={12} xl={12}>
             <TextField
               multiline
               rows={1}
@@ -110,7 +108,7 @@ const GroupActions = ({
               helperText="A comment that will NOT be displayed to the player"
             />
           </Grid>
-          <Grid item xs={12} xl={12} className={classes.marginTop}>
+          <Grid item xs={12} xl={12}>
             <PlayerActions
               handleAction={(actionType) =>
                 selectedPlayers.forEach((p) => {
@@ -132,7 +130,7 @@ const GroupActions = ({
               displayCount={nbButton}
             />
           </Grid>
-          <Grid item xs={12} xl={12} className={classes.marginTop}>
+          <Grid item xs={12} xl={12}>
             <Duration
               durationNumber={durationNumber}
               onNumberChange={(number) => setDurationNumber(number)}

@@ -65,9 +65,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LiveSessionScore = ({ classes }) => (
+const LiveSessionScore = () => (
   <LiveScore
-    classes={classes}
     endpoint="live_scoreboard"
     title="LIVE SESSIONS"
     explainText={
@@ -75,7 +74,6 @@ const LiveSessionScore = ({ classes }) => (
         Only ingame players are shown. Stats are reset on disconnection, not per
         game, check the{" "}
         <Link
-          variant="button"
           color="inherit"
           component={RouterLink}
           to="/livegamescore"
@@ -84,7 +82,6 @@ const LiveSessionScore = ({ classes }) => (
         </Link>{" "}
         or{" "}
         <Link
-          variant="button"
           color="inherit"
           component={RouterLink}
           to="/gamescoreboard"
@@ -98,16 +95,14 @@ const LiveSessionScore = ({ classes }) => (
   />
 );
 
-const LiveGameScore = ({ classes }) => (
+const LiveGameScore = () => (
   <LiveScore
-    classes={classes}
     endpoint="get_live_game_stats"
     title="CURRENT GAME"
     explainText={
       <React.Fragment>
         All players that are or were in the game are shown, check the{" "}
         <Link
-          variant="button"
           color="inherit"
           component={RouterLink}
           to="/livescore"
@@ -116,7 +111,6 @@ const LiveGameScore = ({ classes }) => (
         </Link>{" "}
         for live stats accross several games or{" "}
         <Link
-          variant="button"
           color="inherit"
           component={RouterLink}
           to="/gamescoreboard"
@@ -130,7 +124,7 @@ const LiveGameScore = ({ classes }) => (
   />
 );
 
-const LiveScore = ({ classes, endpoint, explainText, title }) => {
+const LiveScore = ({ endpoint, explainText, title }) => {
   const styles = useStyles();
   const [stats, setStats] = React.useState(new iList());
   const [serverState, setServerState] = React.useState(new Map());
@@ -186,12 +180,10 @@ const LiveScore = ({ classes, endpoint, explainText, title }) => {
         container
         spacing={2}
         justify="center"
-        className={classes.gridContainer}
       >
         <Grid
           item
           xs={12}
-          className={`${classes.doublePadding} ${styles.transparentPaper}`}
         >
           {process.env.REACT_APP_PUBLIC_BUILD ? (
             <Typography color="secondary" variant="h4">
@@ -216,10 +208,8 @@ const LiveScore = ({ classes, endpoint, explainText, title }) => {
             md={10}
             lg={10}
             xl={8}
-            className={classes.doublePadding}
           >
             <LiveHeader
-              classes={classes}
               serverState={serverState}
               styles={styles}
               started={started}
@@ -240,10 +230,8 @@ const LiveScore = ({ classes, endpoint, explainText, title }) => {
         container
         spacing={2}
         justify="center"
-        className={classes.gridContainer}
       >
         <Scores
-          classes={classes}
           serverState={serverState}
           styles={styles}
           started={started}
@@ -262,7 +250,6 @@ const LiveScore = ({ classes, endpoint, explainText, title }) => {
 };
 
 const LiveHeader = ({
-  classes,
   serverState,
   styles,
   started,
@@ -292,10 +279,10 @@ const LiveHeader = ({
 
   return (
     <AppBar position="relative" style={{ minHeight: "144px" }}>
-      <Toolbar className={classes.doublePadding}>
+      <Toolbar>
         <GridList cols={isXs ? 1 : 2}>
           <GridListTile>
-            <Grid container spacing={1} className={styles.padRight}>
+            <Grid container spacing={1}>
               <Grid item xs={12}>
                 <Typography variant="h4" display="inline" color="inherit">
                   {title}
@@ -316,7 +303,6 @@ const LiveHeader = ({
               <Grid item xs={12}>
                 <LinearProgress
                   style={{ visibility: isLoading ? "visible" : "hidden" }}
-                  className={classes.grow}
                   color="secondary"
                 />
               </Grid>

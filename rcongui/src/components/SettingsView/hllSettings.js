@@ -329,10 +329,9 @@ class HLLSettings extends React.Component {
       votekickThreshold,
       autobalanceEnabled,
     } = this.state;
-    const { classes } = this.props;
 
     return (
-      <Grid container spacing={3} className={classes.paper}>
+      <Grid container spacing={3}>
         <Grid item xs={12}>
           <h2>HLL Game Server settings </h2>
           <small>(1min autorefresh)</small>
@@ -340,28 +339,27 @@ class HLLSettings extends React.Component {
             intervalFunction={() => this.loadAll()}
             execEveryMs={60000}
             statusRefreshIntervalMs={500}
-            classes={classes}
+            
           />
         </Grid>
         <Grid
           container
           xs={12}
-          className={classes.paddingBottom}
           justify="center"
         >
           <Grid item xs={12}>
             <ChangeMap
-              classes={classes}
+              
               availableMaps={availableMaps}
               changeMap={this.changeMap}
             />
           </Grid>
         </Grid>
-        <Grid item className={classes.paper} sm={6} xs={12}>
+        <Grid item sm={6} xs={12}>
           <ServerMessage
             autocompleteKey="welcome"
             type="Welcome message"
-            classes={classes}
+            
             forward={forwardWelcome}
             onForwardChange={() => this.toggle("forwardWelcome")}
             value={welcomeMessage}
@@ -376,11 +374,11 @@ class HLLSettings extends React.Component {
             }
           />
         </Grid>
-        <Grid item className={classes.paper} sm={6} xs={12}>
+        <Grid item sm={6} xs={12}>
           <ServerMessage
             autocompleteKey="broadcast"
             type="Broadcast message"
-            classes={classes}
+            
             value={broadcastMessage}
             forward={forwardBroadcast}
             onForwardChange={() => this.toggle("forwardBroadcast")}
@@ -400,17 +398,17 @@ class HLLSettings extends React.Component {
             }
           />
         </Grid>
-        <Grid item className={classes.paper} xs={12} md={6}>
+        <Grid item xs={12} md={6}>
           <CollapseCard
             title="Manage VIPs"
-            classes={classes}
+            
             onExpand={this.loadVips}
           >
-            <VipUpload classes={classes} />
+            <VipUpload  />
             <p>Changes are applied immediately</p>
             <VipEditableList
               peopleList={vips}
-              classes={classes}
+              
               forward={forwardVIP}
               onFowardChange={() => this.toggle("forwardVIP")}
               onAdd={(name, steamID64, expirationTimestamp) =>
@@ -430,17 +428,17 @@ class HLLSettings extends React.Component {
             />
           </CollapseCard>
         </Grid>
-        <Grid item className={classes.paper} xs={12} md={6}>
+        <Grid item xs={12} md={6}>
           <CollapseCard
             title="Manage Console admins"
-            classes={classes}
+            
             onExpand={this.loadAdmins}
           >
             <p>Changes are applied immediately</p>
             <AdminsEditableList
               peopleList={admins}
               roles={adminRoles}
-              classes={classes}
+              
               onAdd={(name, steamID64, role) =>
                 sendAction("do_add_admin", {
                   steam_id_64: steamID64,
@@ -458,7 +456,6 @@ class HLLSettings extends React.Component {
         </Grid>
         <Grid
           container
-          className={classes.paper}
           xs={12}
           alignContent="center"
           justify="center"
@@ -467,7 +464,7 @@ class HLLSettings extends React.Component {
             <Padlock
               checked={lockedSliders}
               handleChange={() => this.toggle("lockedSliders")}
-              classes={classes}
+              
               label="Locked sliders"
             />
           </Grid>
@@ -475,7 +472,7 @@ class HLLSettings extends React.Component {
             <Padlock
               checked={sildersShowValues}
               handleChange={() => this.toggle("sildersShowValues")}
-              classes={classes}
+              
               label="Show all values"
             />
           </Grid>
@@ -483,14 +480,14 @@ class HLLSettings extends React.Component {
             <Padlock
               checked={forwardSettings}
               handleChange={() => this.toggle("forwardSettings")}
-              classes={classes}
+              
               label="Forward settings changes to all servers"
             />
           </Grid>
         </Grid>
-        <Grid item className={classes.paper} xs={12} md={6}>
+        <Grid item xs={12} md={6}>
           <NumSlider
-            classes={classes}
+            
             disabled={lockedSliders}
             showValue={sildersShowValues}
             text="Teamswitch cooldown (minutes)"
@@ -510,9 +507,9 @@ class HLLSettings extends React.Component {
             }
           />
         </Grid>
-        <Grid item className={classes.paper} xs={12} md={6}>
+        <Grid item xs={12} md={6}>
           <NumSlider
-            classes={classes}
+            
             disabled={lockedSliders}
             showValue={sildersShowValues}
             text="Autobalance threshold"
@@ -531,9 +528,9 @@ class HLLSettings extends React.Component {
             }
           />
         </Grid>
-        <Grid item className={classes.paper} xs={12} md={6}>
+        <Grid item xs={12} md={6}>
           <NumSlider
-            classes={classes}
+            
             disabled={lockedSliders}
             showValue={sildersShowValues}
             text="Idle autokick (minutes)"
@@ -556,9 +553,9 @@ class HLLSettings extends React.Component {
             }
           />
         </Grid>
-        <Grid item className={classes.paper} xs={12} md={6}>
+        <Grid item xs={12} md={6}>
           <NumSlider
-            classes={classes}
+            
             disabled={lockedSliders}
             showValue={sildersShowValues}
             text="Maximum ping (ms)"
@@ -579,9 +576,9 @@ class HLLSettings extends React.Component {
             }
           />
         </Grid>
-        <Grid item className={classes.paper} xs={12} md={6}>
+        <Grid item xs={12} md={6}>
           <NumSlider
-            classes={classes}
+            
             disabled={lockedSliders}
             showValue={sildersShowValues}
             text="Max queue length"
@@ -601,9 +598,9 @@ class HLLSettings extends React.Component {
             }
           />
         </Grid>
-        <Grid item className={classes.paper} xs={12} md={6}>
+        <Grid item xs={12} md={6}>
           <NumSlider
-            classes={classes}
+            
             disabled={lockedSliders}
             showValue={sildersShowValues}
             text="Vip slots"
@@ -623,7 +620,7 @@ class HLLSettings extends React.Component {
           />
         </Grid>
 
-        <Grid item className={classes.paper} xs={12} md={6}>
+        <Grid item xs={12} md={6}>
           <Padlock
             label="Auto balance enabled"
             checked={autobalanceEnabled}
@@ -635,7 +632,7 @@ class HLLSettings extends React.Component {
             }
           />
         </Grid>
-        <Grid item className={classes.paper} xs={12} md={6}>
+        <Grid item xs={12} md={6}>
           <Padlock
             label="Vote kicks allowed"
             checked={votekickEnabled}
@@ -685,7 +682,7 @@ class HLLSettings extends React.Component {
           </Grid>
         </Grid>
 
-        <Grid container className={classes.paddingTop} justify="center" xs={12}>
+        <Grid container justify="center" xs={12}>
           <Grid item>
             <Typography variant="h5" gutterBottom>
               Vote Map config{" "}
@@ -695,17 +692,17 @@ class HLLSettings extends React.Component {
             </Typography>
           </Grid>
         </Grid>
-        <Grid container className={classes.paper} xs={12}>
+        <Grid container xs={12}>
           <VoteMapConfig />
         </Grid>
-        <Grid container className={classes.paddingTop} justify="center">
+        <Grid container justify="center">
           <Grid item xs={12}>
             <Typography variant="h5">Map rotation</Typography>
 
-            <MapRotation classes={classes} />
+            <MapRotation  />
             <Typography variant="h5">Map rotation settings</Typography>
 
-            <MapRotationSettings classes={classes} />
+            <MapRotationSettings  />
           </Grid>
         </Grid>
         <Grid item xs={12}>

@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
 
 const PlayerGrid = withWidth()(
   ({
-    classes,
     players,
     onBlacklist,
     onUnBlacklist,
@@ -42,7 +41,7 @@ const PlayerGrid = withWidth()(
     vips,
     bans
   }) => {
-    const myClasses = useStyles();
+    const classes = useStyles();
 
     const size = {
       xs: 1,
@@ -64,20 +63,20 @@ const PlayerGrid = withWidth()(
                 >
                   <Grid
                     container
-                    className={myClasses.paperTile}
+                    className={classes.paperTile}
                     direction="column"
                     justify="space-between"
                   >
-                    <PlayerHeader classes={classes} player={player} />
+                    <PlayerHeader  player={player} />
                     <React.Fragment>
                       <PlayerFlags
                         player={player}
-                        classes={classes}
+                        
                         onDeleteFlag={onDeleteFlag}
                       />
-                      <PlayerBan classes={classes} bans={bans} player={player} />
-                      <PlayerSighthings classes={classes} player={player} />
-                      <PlayerPenalties classes={classes} player={player} />
+                      <PlayerBan  bans={bans} player={player} />
+                      <PlayerSighthings  player={player} />
+                      <PlayerPenalties  player={player} />
                       <Grid container justify="center">
                         <Grid item>
                           <ActionButton

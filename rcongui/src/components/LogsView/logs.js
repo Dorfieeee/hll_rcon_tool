@@ -64,7 +64,6 @@ const formatClass = (action, classes, highlightLogs) => {
 };
 
 const Selector = ({
-  classes,
   defaultValue,
   defaultText,
   values,
@@ -73,7 +72,7 @@ const Selector = ({
   kind,
   multiple,
 }) => (
-  <FormControl className={classes.logsControl}>
+  <FormControl>
     <InputLabel shrink>{kind}</InputLabel>
     <Select
       value={currentValue}
@@ -184,7 +183,7 @@ class Logs extends React.Component {
   }
 
   render() {
-    const { classes, isFullScreen, onFullScreen } = this.props;
+    const { isFullScreen, onFullScreen } = this.props;
     const {
       logs,
       players,
@@ -203,9 +202,8 @@ class Logs extends React.Component {
           <Grid
             item
             xs={12}
-            className={`${classes.textLeft} ${classes.paddingLeft}`}
           >
-            <h1 className={classes.marginBottom}>
+            <h1>
               Logs view{" "}
               <IconButton onClick={onFullScreen}>
                 {isFullScreen ? <FullscreenExitIcon /> : <FullscreenIcon />}
@@ -224,25 +222,22 @@ class Logs extends React.Component {
             </h1>
             <ListItemText secondary="30s auto refresh" />
             <AutoRefreshLine
-              className={classes.marginTop}
               intervalFunction={this.loadLogs}
               execEveryMs={30000}
               statusRefreshIntervalMs={500}
-              classes={classes}
             />
           </Grid>
         </Grid>
-        <Grid container justify="space-around" className={classes.marginBottom}>
-          <Grid className={classes.padding} item xs={12} sm={12} md={12} lg={2}>
+        <Grid container justify="space-around">
+          <Grid item xs={12} sm={12} md={12} lg={2}>
             <Selector
-              classes={classes}
               values={limitOptions}
               onChange={this.setLimit}
               currentValue={limit}
               kind="Show last N lines"
             />
           </Grid>
-          <Grid className={classes.padding} item xs={12} sm={12} md={12} lg={2}>
+          <Grid item xs={12} sm={12} md={12} lg={2}>
             <FormControl fullWidth>
               <InputLabel shrink>Inclusive/Exclusive</InputLabel>
               <Select
@@ -255,9 +250,9 @@ class Logs extends React.Component {
               </Select>
             </FormControl>
           </Grid>
-          <Grid className={classes.padding} item xs={12} sm={12} md={12} lg={3}>
+          <Grid item xs={12} sm={12} md={12} lg={3}>
             <Autocomplete
-              id="tags-outlined"
+              id="filter-by-type"
               multiple
               options={actions}
               value={actionsFilter}
@@ -266,7 +261,6 @@ class Logs extends React.Component {
               onChange={(e, value) => this.setActionFilter(value)}
               renderInput={(params) => (
                 <TextField
-                  className={classes.logsControl}
                   {...params}
                   variant="outlined"
                   label="Filter by type"
@@ -274,9 +268,9 @@ class Logs extends React.Component {
               )}
             />
           </Grid>
-          <Grid className={classes.padding} item xs={12} sm={12} md={12} lg={4}>
+          <Grid item xs={12} sm={12} md={12} lg={4}>
             <Autocomplete
-              id="tags-outlined"
+              id="filter-by-player"
               multiple
               options={players.sort()}
               value={playersFilter}
@@ -296,7 +290,6 @@ class Logs extends React.Component {
               }}
               renderInput={(params) => (
                 <TextField
-                  className={classes.logsControl}
                   {...params}
                   variant="outlined"
                   label="Filter by player"
@@ -304,9 +297,8 @@ class Logs extends React.Component {
               )}
             />
           </Grid>
-          <Grid className={classes.padding} item xs={12} sm={12} md={12} lg={1}>
+          <Grid item xs={12} sm={12} md={12} lg={1}>
             <Button
-              className={classes.logsControl}
               disableElevation
               size="large"
               variant="outlined"
@@ -317,10 +309,10 @@ class Logs extends React.Component {
           </Grid>
         </Grid>
         <Grid container justify="center" alignItems="center">
-          <Grid item className={classes.padding} xs={12}>
-            <Paper className={classes.paperLogs}>
+          <Grid item xs={12}>
+            <Paper>
               {logs.map((l) => (
-                <pre key={l.raw} className={formatClass(l.action, classes, highlightLogs)}>
+                <pre key={l.raw}>
                   {moment(new Date(l.timestamp_ms)).format(
                     "HH:mm:ss - ddd, MMM D"
                   ) +

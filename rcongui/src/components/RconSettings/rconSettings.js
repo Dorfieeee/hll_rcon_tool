@@ -37,7 +37,7 @@ import HelpIcon from "@material-ui/icons/Help";
 import ServerName from "./serverName";
 import AutoSettings from "./autoSettings";
 
-const ManualWatchList = ({ classes }) => {
+const ManualWatchList = () => {
   const [name, setName] = React.useState("");
   const [steamId64, setSteamId64] = React.useState("");
   const [reason, setReason] = React.useState("");
@@ -58,7 +58,7 @@ const ManualWatchList = ({ classes }) => {
       setReason={setReason}
       textHistory={textHistory}
       sharedMessages={sharedMessages}
-      classes={classes}
+      
       actionName="Watch"
       tooltipText="You will get a notification on you watchlist discord hook when this player enters your server"
       onSubmit={() => addPlayerToWatchList(steamId64, reason, null, name)}
@@ -461,32 +461,14 @@ class RconSettings extends React.Component {
       autosettings,
       forwardAutoSettings,
     } = this.state;
-    const { classes, theme, themeName, themeNames, setTheme } = this.props;
+    const { theme } = this.props;
 
     return (
-      <Grid container className={classes.paper} spacing={3}>
+      <Grid container  spacing={3}>
         <Grid item xs={12}>
           <h2>Advanced RCON settings</h2>
         </Grid>
-        <Grid item xs={12} className={classes.padding}>
-          <Typography variant="h6">Your RCON color theme</Typography>
-        </Grid>
-        <Grid item xs={12} className={classes.padding}>
-          <FormControl style={{ minWidth: "200px" }}>
-            <InputLabel>Pick your theme</InputLabel>
-            <Select
-              value={themeName}
-              onChange={(event) => setTheme(event.target.value)}
-            >
-              {themeNames.map((t) => (
-                <MenuItem key={t} value={t}>
-                  {t}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} className={classes.padding}>
+        <Grid item xs={12} >
           <Typography variant="h6">Automated broadcast cycle</Typography>
         </Grid>
         <Grid item xs={12}>
@@ -552,7 +534,7 @@ class RconSettings extends React.Component {
             Save auto broadcast messages
           </Button>
         </Grid>
-        <Grid item xs={12} className={classes.padding}>
+        <Grid item xs={12} >
           <Typography variant="h6">
             Manage your personal text history
           </Typography>
@@ -563,16 +545,16 @@ class RconSettings extends React.Component {
           alignContent="center"
           justify="center"
           alignItems="center"
-          className={classes.root}
+          
         >
-          <Grid item xs={12} className={`${classes.padding} ${classes.margin}`}>
-            <TextHistoryManager classes={classes} />
+          <Grid item xs={12} >
+            <TextHistoryManager  />
           </Grid>
         </Grid>
-        <Grid item xs={12} className={classes.padding}>
+        <Grid item xs={12} >
           <Typography variant="h6">Manage shared standard messages</Typography>
         </Grid>
-        <Grid item xs={12} className={classes.padding}>
+        <Grid item xs={12} >
           <SelectNameSpace
             value={standardMessagesType}
             handleChange={(v) =>
@@ -612,52 +594,52 @@ class RconSettings extends React.Component {
             Save shared messages
           </Button>
         </Grid>
-        <Grid item className={classes.paddingTop} justify="center" xs={12}>
+        <Grid item  justify="center" xs={12}>
           <Typography variant="h5">Blacklist player by Steam ID</Typography>
         </Grid>
-        <Grid item className={classes.paddingTop} justify="center" xs={12}>
-          <Blacklist classes={classes} />
+        <Grid item  justify="center" xs={12}>
+          <Blacklist  />
         </Grid>
-        <Grid item className={classes.paddingTop} justify="center" xs={12}>
+        <Grid item  justify="center" xs={12}>
           <Typography variant="h5">Add player to watchlist</Typography>
         </Grid>
         <Grid item xs={12}>
-          <ManualWatchList classes={classes} />
+          <ManualWatchList  />
         </Grid>
-        <Grid item className={classes.paddingTop} justify="center" xs={12}>
+        <Grid item  justify="center" xs={12}>
           <Typography variant="h5">Manage services</Typography>
         </Grid>
-        <Grid item className={classes.paddingTop} justify="center" xs={12}>
+        <Grid item  justify="center" xs={12}>
           <Grid container justify="center">
             <Grid item md={8} xs={12}>
-              <ServicesList classes={classes} />
+              <ServicesList  />
             </Grid>
           </Grid>
         </Grid>
-        {/* <Grid item className={classes.paddingTop} justify="center" xs={12}>
+        {/* <Grid item  justify="center" xs={12}>
           <Typography variant="h5">Discord Webhooks configuration</Typography>
         </Grid>
         <Grid
           item
           xs={12}
-          className={`${classes.padding} ${classes.margin} ${classes.root}`}
+          
           alignContent="center"
           justify="center"
           alignItems="center"
         >
-          <WebhooksConfig classes={classes} type="watchlist" />
+          <WebhooksConfig  type="watchlist" />
         </Grid>
         <Grid
           item
           xs={12}
-          className={`${classes.padding} ${classes.margin} ${classes.root}`}
+          
           alignContent="center"
           justify="center"
           alignItems="center"
         >
-          <WebhooksConfig classes={classes} type="camera" />
+          <WebhooksConfig  type="camera" />
         </Grid> */}
-        <Grid item className={classes.paddingTop} justify="center" xs={12}>
+        <Grid item  justify="center" xs={12}>
           <Typography variant="h5">
             Auto votekick toggle{" "}
             <Tooltip title="When enabled this feature manages the votekicks ingame by turning it off if the conditions you set below are met, and turning it back on if they are NOT met">
@@ -668,7 +650,7 @@ class RconSettings extends React.Component {
         </Grid>
         <Grid
           container
-          className={`${classes.padding} ${classes.margin}`}
+          
           alignContent="center"
           justify="center"
           alignItems="center"
@@ -738,12 +720,12 @@ class RconSettings extends React.Component {
             />
           </Grid>
         </Grid>
-        <Grid item className={classes.paddingTop} justify="center" xs={12}>
+        <Grid item  justify="center" xs={12}>
           <Typography variant="h5">Camera notification config</Typography>
         </Grid>
         <Grid
           container
-          className={`${classes.padding} ${classes.margin} ${classes.root}`}
+          
           alignContent="center"
           justify="center"
           alignItems="center"
@@ -765,7 +747,7 @@ class RconSettings extends React.Component {
         </Grid>
         <Grid
           container
-          className={`${classes.padding} ${classes.margin} ${classes.root}`}
+          
           alignContent="center"
           justify="center"
           alignItems="center"
@@ -786,12 +768,12 @@ class RconSettings extends React.Component {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <RealVip classes={classes} />
+            <RealVip  />
           </Grid>
         </Grid>
         <Grid
           container
-          className={`${classes.padding} ${classes.margin} ${classes.root}`}
+          
           alignContent="center"
           justify="center"
           alignItems="center"
@@ -805,13 +787,13 @@ class RconSettings extends React.Component {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <ServerName classes={classes} />
+            <ServerName  />
           </Grid>
         </Grid>
 
         <Grid
           container
-          className={`${classes.padding} ${classes.margin} ${classes.root}`}
+          
           alignContent="center"
           justify="center"
           alignItems="center"
@@ -842,7 +824,7 @@ class RconSettings extends React.Component {
         <Grid
           item
           xs={12}
-          className={`${classes.padding} ${classes.margin} ${classes.root}`}
+          
           alignContent="center"
           justify="center"
           alignItems="center"
@@ -858,7 +840,7 @@ class RconSettings extends React.Component {
         <Grid
           item
           xs={12}
-          className={`${classes.padding} ${classes.margin} ${classes.root}`}
+          
           alignContent="center"
           justify="center"
           alignItems="center"

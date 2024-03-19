@@ -5,4 +5,5 @@ export default createMuiTheme({
     palette: {
         type: "dark",
     },
+    spacing: 1,
 });

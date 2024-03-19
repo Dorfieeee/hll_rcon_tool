@@ -133,7 +133,7 @@ const LogsFilter = ({ onSubmit, onChange }) => {
               </MuiPickersUtilsProvider>
             </Grid>
             <Grid item>
-              <FormControl className={classes.formControl}>
+              <FormControl>
                 <InputLabel id="time_sort_label">Time sort</InputLabel>
                 <Select
                   labelId="time_sort_label"
@@ -360,7 +360,6 @@ class LogsHistory extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
     const { isLoading } = this.state;
 
     return (
@@ -369,7 +368,7 @@ class LogsHistory extends React.Component {
           <LogsFilter onSubmit={this.getHistoricalLogs} />
         </Grid>
         {isLoading ? (
-          <Grid itemx xs={12} className={classes.doublePadding}>
+          <Grid itemx xs={12}>
             <LinearProgress color="secondary" />
           </Grid>
         ) : (

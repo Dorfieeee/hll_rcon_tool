@@ -240,7 +240,7 @@ function MetricsParams({
   );
 }
 
-const ServerStatsPage = ({ classes }) => {
+const ServerStatsPage = () => {
   const [stats, setStats] = React.useState({});
   const [dataPoint, setDatapoint] = React.useState({});
   const [datasetsIndex, setDatasetsIndex] = React.useState(null);
@@ -411,7 +411,6 @@ const ServerStatsPage = ({ classes }) => {
       <Grid
         container
         spacing={2}
-        className={classes.doublePadding}
         alignContent="center"
         alignItems="center"
         style={{ paddingTop: 0 }}

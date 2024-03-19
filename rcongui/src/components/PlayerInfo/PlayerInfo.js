@@ -149,7 +149,7 @@ const Is = ({ bool, text }) =>
     ""
   );
 
-const PlayerInfoFunc = ({ classes }) => {
+const PlayerInfoFunc = () => {
   const { steamId64 } = useParams();
   const [created, setCreated] = React.useState("0");
   const [names, setNames] = React.useState([]);
@@ -288,9 +288,9 @@ const PlayerInfoFunc = ({ classes }) => {
   }, [steamId64]);
 
   return (
-    <Grid container className={classes.root}>
+    <Grid container>
       {loaded ? (
-        <Grid item sm={12} className={classes.marginTop}>
+        <Grid item sm={12}>
           <Grid container spacing={2}>
             <Grid item xl={2} lg={2} md={2} sm={3} xs={12}>
               <Grid
@@ -309,7 +309,6 @@ const PlayerInfoFunc = ({ classes }) => {
                       fontSize: "5rem",
                     }}
                     variant="square"
-                    className={classes.square}
                     src={steaminfo?.profile?.avatarfull}
                   >
                     {names[0]?.name[0].toUpperCase()}
@@ -394,7 +393,7 @@ const PlayerInfoFunc = ({ classes }) => {
             <Grid item xl={3} xs={12}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
-                  <CollapseCard title="Comments" classes={classes} startOpen>
+                  <CollapseCard title="Comments"  startOpen>
                     <ChatContent
                       data={comments}
                       handleMessageSend={handleNewComment}
@@ -404,7 +403,7 @@ const PlayerInfoFunc = ({ classes }) => {
                 <Grid item xs={12}>
                   <CollapseCard
                     title="Message History"
-                    classes={classes}
+                    
                     startOpen
                   >
                     <MessageHistory data={messages} />
@@ -564,13 +563,12 @@ class PlayerInfo extends React.Component {
 
   render() {
     // TODO Fix mobile responsiveness
-    const { classes } = this.props;
     const { steamId64 } = this.props.match.params;
 
     return (
-      <Grid container className={classes.root}>
+      <Grid container>
         {this.state.loaded ? (
-          <Grid item sm={12} className={classes.marginTop}>
+          <Grid item sm={12}>
             <Grid container>
               <Grid item xl={2} lg={2} md={2} sm={3} xs={12}>
                 <Grid
@@ -589,7 +587,6 @@ class PlayerInfo extends React.Component {
                         fontSize: "5rem",
                       }}
                       variant="square"
-                      className={classes.square}
                       src={this.state.steaminfo?.profile?.avatarfull}
                     >
                       {this.state.names[0]?.name[0].toUpperCase()}

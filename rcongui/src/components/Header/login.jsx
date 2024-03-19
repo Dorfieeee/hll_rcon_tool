@@ -129,9 +129,7 @@ class LoginBox extends React.Component {
         return (
             <React.Fragment>
                 <Button
-                    variant="button"
                     color="inherit"
-                    component={RouterLink}
                     onClick={() =>
                         isLoggedIn === true ? this.logout() : this.setState({ open: true })
                     }

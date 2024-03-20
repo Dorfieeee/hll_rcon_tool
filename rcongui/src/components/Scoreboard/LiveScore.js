@@ -4,21 +4,20 @@ import {
   Grid,
   Toolbar,
   Typography,
-  makeStyles,
   LinearProgress,
-  GridList,
-  GridListTile,
-  GridListTileBar,
-} from "@material-ui/core";
+  ImageList,
+  ImageListItem,
+  ImageListItemBar,
+} from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
 import React from "react";
 import { get, handle_http_errors, showResponse } from "../../utils/fetchUtils";
 import { List as iList, Map, fromJS } from "immutable";
 import moment from "moment";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme, alpha } from "@mui/material/styles";
 import Scores from "./Scores";
 import { getMapImageUrl } from "./utils";
-import { fade } from "@material-ui/core/styles/colorManipulator";
 import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -29,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   transparentPaper: {
-    backgroundColor: fade(theme.palette.background.paper, 0.6),
+    backgroundColor: alpha(theme.palette.background.paper, 0.6),
     borderRadius: "0px",
   },
   root: {
@@ -174,79 +173,77 @@ const LiveScore = ({ endpoint, explainText, title }) => {
       .substr(11, 8)
     : "N/A";
 
-  return (
-    <>
+  return <>
+    <Grid
+      container
+      spacing={2}
+      justifyContent="center"
+    >
       <Grid
-        container
-        spacing={2}
-        justify="center"
+        item
+        xs={12}
       >
-        <Grid
-          item
-          xs={12}
-        >
-          {process.env.REACT_APP_PUBLIC_BUILD ? (
-            <Typography color="secondary" variant="h4">
-              {serverState.get("name")}
-            </Typography>
-          ) : (
-            <Link
-              href={`http://${window.location.hostname}:${serverState.get(
-                "public_stats_port"
-              )}`}
-              target="_blank"
-            >
-              Public version on port {serverState.get("public_stats_port")} -
-              https: {serverState.get("public_stats_port_https")}
-            </Link>
-          )}
-        </Grid>
-
         {process.env.REACT_APP_PUBLIC_BUILD ? (
-          <Grid
-            xs={12}
-            md={10}
-            lg={10}
-            xl={8}
-          >
-            <LiveHeader
-              serverState={serverState}
-              styles={styles}
-              started={started}
-              lastRefresh={lastRefresh}
-              refreshIntervalSec={refreshIntervalSec}
-              setPaused={setPaused}
-              isPaused={isPaused}
-              isLoading={isLoading}
-              explainText={explainText}
-              title={title}
-            />
-          </Grid>
+          <Typography color="secondary" variant="h4">
+            {serverState.get("name")}
+          </Typography>
         ) : (
-          ""
+          <Link
+            href={`http://${window.location.hostname}:${serverState.get(
+              "public_stats_port"
+            )}`}
+            target="_blank"
+          >
+            Public version on port {serverState.get("public_stats_port")} -
+            https: {serverState.get("public_stats_port_https")}
+          </Link>
         )}
       </Grid>
-      <Grid
-        container
-        spacing={2}
-        justify="center"
-      >
-        <Scores
-          serverState={serverState}
-          styles={styles}
-          started={started}
-          lastRefresh={lastRefresh}
-          refreshIntervalSec={refreshIntervalSec}
-          setPaused={setPaused}
-          isPaused={isPaused}
-          isLoading={isLoading}
-          scores={scores}
-          durationToHour={durationToHour}
-          type="live"
-        />
-      </Grid>
-    </>
-  );
+
+      {process.env.REACT_APP_PUBLIC_BUILD ? (
+        <Grid
+          xs={12}
+          md={10}
+          lg={10}
+          xl={8}
+        >
+          <LiveHeader
+            serverState={serverState}
+            styles={styles}
+            started={started}
+            lastRefresh={lastRefresh}
+            refreshIntervalSec={refreshIntervalSec}
+            setPaused={setPaused}
+            isPaused={isPaused}
+            isLoading={isLoading}
+            explainText={explainText}
+            title={title}
+          />
+        </Grid>
+      ) : (
+        ""
+      )}
+    </Grid>
+    <Grid
+      container
+      spacing={2}
+      justifyContent="center"
+    >
+      <Scores
+        serverState={serverState}
+        styles={styles}
+        started={started}
+        lastRefresh={lastRefresh}
+        refreshIntervalSec={refreshIntervalSec}
+        setPaused={setPaused}
+        isPaused={isPaused}
+        isLoading={isLoading}
+        scores={scores}
+        durationToHour={durationToHour}
+        type="live"
+      />
+    </Grid>
+  </>;
 };
 
 const LiveHeader = ({
@@ -262,7 +259,7 @@ const LiveHeader = ({
   title,
 }) => {
   const theme = useTheme();
-  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+  const isXs = useMediaQuery(theme.breakpoints.down('xl'));
   const nextMapString = React.useMemo(() => {
     const [map, nbVotes] = serverState
       .get("vote_status")
@@ -280,8 +277,8 @@ const LiveHeader = ({
   return (
     <AppBar position="relative" style={{ minHeight: "144px" }}>
       <Toolbar>
-        <GridList cols={isXs ? 1 : 2}>
-          <GridListTile>
+        <ImageList cols={isXs ? 1 : 2}>
+          <ImageListItem>
             <Grid container spacing={1}>
               <Grid item xs={12}>
                 <Typography variant="h4" display="inline" color="inherit">
@@ -307,13 +304,13 @@ const LiveHeader = ({
                 />
               </Grid>
             </Grid>
-          </GridListTile>
-          <GridListTile>
+          </ImageListItem>
+          <ImageListItem>
             <img
               alt="Map"
               src={getMapImageUrl(serverState.get('name'))}
             />
-            <GridListTileBar
+            <ImageListItemBar
               className={styles.titleBarTop}
               title={serverState
                 .get("current_map", new Map())
@@ -321,7 +318,7 @@ const LiveHeader = ({
               subtitle=""
               titlePosition="top"
             />
-            <GridListTileBar
+            <ImageListItemBar
               className={styles.titleBarBottom}
               title={`Elapsed: ${started} - Players: ${serverState.get(
                 "player_count"
@@ -329,8 +326,8 @@ const LiveHeader = ({
               subtitle={nextMapString}
               titlePosition="bottom"
             />
-          </GridListTile>
-        </GridList>
+          </ImageListItem>
+        </ImageList>
       </Toolbar>
     </AppBar>
   );

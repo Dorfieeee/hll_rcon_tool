@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import ListItemText from "@material-ui/core/ListItemText";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
+import ListItemText from "@mui/material/ListItemText";
 import "react-toastify/dist/ReactToastify.css";
 import { PlayerActions } from "./playerActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,18 +13,16 @@ import {
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import { faSteam, faXbox, faWindows } from "@fortawesome/free-brands-svg-icons";
-import Link from "@material-ui/core/Link";
-import withWidth from "@material-ui/core/withWidth";
-import Icon from "@material-ui/core/Icon";
-import OpenInNewIcon from "@material-ui/icons/OpenInNew";
+import Link from "@mui/material/Link";
+import Icon from "@mui/material/Icon";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { getEmojiFlag } from "../../utils/emoji";
 import { List as IList, Map } from "immutable";
 import { getName } from "country-list";
-import Popover from "@material-ui/core/Popover";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import Popover from "@mui/material/Popover";
+import Typography from "@mui/material/Typography";
+import makeStyles from '@mui/styles/makeStyles';
 import { Link as RouterLink } from "react-router-dom";
-import { pure } from "recompose";
 import {
   Avatar,
   Badge,
@@ -32,9 +30,12 @@ import {
   Chip,
   Grid,
   ListItemAvatar,
-} from "@material-ui/core";
+} from "@mui/material";
 import makePlayerProfileUrl from "../../utils/makePlayerProfileUrl";
 import moment from "moment";
+
+// FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
+const withWidth = () => (WrappedComponent) => (props) => <WrappedComponent {...props} width="xs" />;
 
 const zeroPad = (num, places) => String(num).padStart(places, "0");
 
@@ -46,10 +47,10 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
   },
   paperBackground: {
-    backgroundColor: theme.palette.type == "dark" ? "" : "grey",
+    backgroundColor: theme.palette.mode == "dark" ? "" : "grey",
   },
   darkBackground: {
-    backgroundColor: theme.palette.type == "dark" ? "" : "grey",
+    backgroundColor: theme.palette.mode == "dark" ? "" : "grey",
   },
   primaryBackground: {
     backgroundColor: theme.palette.primary.dark,
@@ -365,7 +366,7 @@ const PlayerItem = ({
             <Link
               className={classes.marginRight}
               target="_blank"
-              color="inherit"
+              color={"inherit"}
               href={makePlayerProfileUrl(steamID64, name)}
             >
               <FontAwesomeIcon icon={(steamID64.length === 17) ? faSteam : faWindows} />
@@ -543,5 +544,5 @@ const CompactList = ({
   );
 };
 
-export default withWidth()(pure(CompactList));
+export default withWidth()(CompactList);
 export { PlayerItem, CompactList, ScoreListText, ScoreChips, KDChips };

@@ -12,14 +12,13 @@ import {
   Typography,
   Paper,
   IconButton,
-} from "@material-ui/core";
-import CancelIcon from "@material-ui/icons/Cancel";
-import { pure } from "recompose";
+} from "@mui/material";
+import CancelIcon from "@mui/icons-material/Cancel";
 import { safeGetSteamProfile } from "./Scores";
 import { SubList } from "./SubList";
 import makePlayerProfileUrl from "../../utils/makePlayerProfileUrl";
 
-export const PlayerStatProfile = pure(({ playerScore, onClose }) => {
+export const PlayerStatProfile = ({ playerScore, onClose }) => {
   const steamProfile = safeGetSteamProfile(playerScore);
   const excludedKeys = new Set([
     "player_id",
@@ -34,7 +33,7 @@ export const PlayerStatProfile = pure(({ playerScore, onClose }) => {
 
   return (
     <Grid item xs={12}>
-      <Grid container justify="center">
+      <Grid container justifyContent="center">
         <Grid item xs={12} md={6} lg={4} xl={2}>
           <Paper>
             <List>
@@ -64,7 +63,7 @@ export const PlayerStatProfile = pure(({ playerScore, onClose }) => {
                   }
                 />
                 <ListItemSecondaryAction>
-                  <IconButton onClick={onClose}>
+                  <IconButton onClick={onClose} size="large">
                     <CancelIcon />
                   </IconButton>
                 </ListItemSecondaryAction>
@@ -105,4 +104,4 @@ export const PlayerStatProfile = pure(({ playerScore, onClose }) => {
       </Grid>
     </Grid>
   );
-});
+};

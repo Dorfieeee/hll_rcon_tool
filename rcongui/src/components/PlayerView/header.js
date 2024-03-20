@@ -1,16 +1,16 @@
 import React from "react";
-import Grid from "@material-ui/core/Grid";
-import ListItemText from "@material-ui/core/ListItemText";
-import LinearProgress from "@material-ui/core/LinearProgress";
+import Grid from "@mui/material/Grid";
+import ListItemText from "@mui/material/ListItemText";
+import LinearProgress from "@mui/material/LinearProgress";
 import "react-toastify/dist/ReactToastify.css";
 import useStyles from "../useStyles";
-import Button from "@material-ui/core/Button";
-import Link from "@material-ui/core/Link";
+import Button from "@mui/material/Button";
+import Link from "@mui/material/Link";
 import { toast } from "react-toastify";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import FullscreenIcon from "@material-ui/icons/Fullscreen";
-import FullscreenExitIcon from "@material-ui/icons/FullscreenExit";
-import { IconButton } from "@material-ui/core";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import FullscreenIcon from "@mui/icons-material/Fullscreen";
+import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
+import { IconButton } from "@mui/material";
 
 const AutoRefreshBar = ({
   intervalFunction,
@@ -44,13 +44,13 @@ const AutoRefreshBar = ({
 
   return (
     <React.Fragment>
-      <Grid className={classes.textLeft} container justify="flex-start">
+      <Grid className={classes.textLeft} container justifyContent="flex-start">
         <Grid item xs={12}>
-          <Grid container justify="space-between">
+          <Grid container justifyContent="space-between">
             <Grid style={{ textAlign: "left" }} item xs={6}>
               <h1>
                 Players view{" "}
-                <IconButton onClick={onFullScreenClick}>
+                <IconButton onClick={onFullScreenClick} size="large">
                   {isFullScreen ? <FullscreenExitIcon /> : <FullscreenIcon />}
                 </IconButton>
               </h1>

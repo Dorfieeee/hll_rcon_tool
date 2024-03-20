@@ -1,29 +1,29 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
-import Chip from "@material-ui/core/Chip";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import TextField from "@material-ui/core/TextField";
+import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import TextField from "@mui/material/TextField";
 import _ from "lodash";
-import Badge from "@material-ui/core/Badge";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import Badge from "@mui/material/Badge";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import "react-toastify/dist/ReactToastify.css";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 import { Map } from "immutable";
-import FlagOutlinedIcon from "@material-ui/icons/FlagOutlined";
+import FlagOutlinedIcon from "@mui/icons-material/FlagOutlined";
 import TextHistory from "../textHistory";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import Autocomplete from '@mui/material/Autocomplete';
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 import { getSharedMessages } from "../../utils/fetchUtils";
-import { Grid } from "@material-ui/core";
-import Tooltip from "@material-ui/core/Tooltip";
-import MessageIcon from "@material-ui/icons/Message";
-import VisibilityIcon from "@material-ui/icons/Visibility";
+import { Grid } from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
+import MessageIcon from "@mui/icons-material/Message";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 const Duration = ({
   durationNumber,
@@ -146,8 +146,8 @@ class ReasonDialog extends React.Component {
               <TextField
                 {...params}
                 multiline
-                rows={4}
-                rowsMax={10}
+                minRows={4}
+                maxRows={10}
                 label={actionType === "message_player" ? "Message" : "Reason"}
                 variant="outlined"
                 margin="dense"
@@ -159,8 +159,8 @@ class ReasonDialog extends React.Component {
           {open.actionType !== "message_player" ? (
             <TextField
               multiline
-              rows={4}
-              rowsMax={10}
+              minRows={4}
+              maxRows={10}
               fullWidth
               value={comment}
               onChange={(e) => this.setState({ comment: e.target.value })}
@@ -283,7 +283,7 @@ const PlayerActions = ({
         {show > 1 ? (
           <Tooltip title="Watch Player">
             <Button
-              color={isWatched ? "primary" : "default"}
+              color={isWatched ? "primary" : "inherit"}
               variant={isWatched ? "contained" : "outlined"}
               size="small"
               onClick={() =>
@@ -303,7 +303,6 @@ const PlayerActions = ({
             onClick={() => handleAction(actions[idx][0])}
           >
             <Badge
-              size="small"
               color="primary"
               max={9}
               badgeContent={penaltyCount.get(
@@ -348,13 +347,12 @@ const PlayerActions = ({
         >
           {show <= 1 ? (
             <MenuItem
-              size="small"
               onClick={() =>
                 handleAction(isWatched ? "unwatch_player" : "watch_player")
               }
             >
               <VisibilityIcon
-                color={isWatched ? "primary" : "default"}
+                color={isWatched ? "primary" : "inherit"}
                 fontSize="small"
               />
             </MenuItem>

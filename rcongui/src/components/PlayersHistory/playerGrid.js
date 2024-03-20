@@ -1,4 +1,5 @@
-import { Grid, GridList, GridListTile, makeStyles } from "@material-ui/core";
+import { Grid, ImageList, ImageListItem } from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
 import React from "react";
 import "emoji-mart/css/emoji-mart.css";
 import { ActionButton } from "./PlayerTile/ActionButton";
@@ -7,22 +8,9 @@ import { PlayerFlags } from "./PlayerTile/PlayerFlags";
 import { PlayerSighthings } from "./PlayerTile/PlayerSighthings";
 import { PlayerPenalties } from "./PlayerTile/PlayerPenalties";
 import { PlayerBan } from "./PlayerTile/PlayerBan";
-import withWidth from "@material-ui/core/withWidth";
-import { pure } from "recompose";
 
-const useStyles = makeStyles((theme) => ({
-  paperTile: {
-    backgroundColor: theme.palette.background.paper,
-    minHeight: "100%",
-    padding: theme.spacing(2),
-  },
-  root: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
-    overflow: "hidden",
-  },
-}));
+// FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
+const withWidth = () => (WrappedComponent) => (props) => <WrappedComponent {...props} width="xs" />;
 
 const PlayerGrid = withWidth()(
   ({
@@ -41,7 +29,6 @@ const PlayerGrid = withWidth()(
     vips,
     bans
   }) => {
-    const classes = useStyles();
 
     const size = {
       xs: 1,
@@ -54,18 +41,17 @@ const PlayerGrid = withWidth()(
     return (
       <Grid container>
         <Grid item xs={12}>
-          <GridList cols={size} cellHeight={240} spacing={12}>
+          <ImageList cols={size} rowHeight={240} spacing={12}>
             {players.map((player) => {
               return (
-                <GridListTile
+                <ImageListItem
                   key={player.get("steam_id_64")}
                   style={{ minHeight: "100%" }}
                 >
                   <Grid
                     container
-                    className={classes.paperTile}
                     direction="column"
-                    justify="space-between"
+                    justifyContent="space-between"
                   >
                     <PlayerHeader  player={player} />
                     <React.Fragment>
@@ -77,7 +63,7 @@ const PlayerGrid = withWidth()(
                       <PlayerBan  bans={bans} player={player} />
                       <PlayerSighthings  player={player} />
                       <PlayerPenalties  player={player} />
-                      <Grid container justify="center">
+                      <Grid container justifyContent="center">
                         <Grid item>
                           <ActionButton
                             blacklisted={
@@ -105,14 +91,14 @@ const PlayerGrid = withWidth()(
                       </Grid>
                     </React.Fragment>
                   </Grid>
-                </GridListTile>
+                </ImageListItem>
               );
             })}
-          </GridList>
+          </ImageList>
         </Grid>
       </Grid>
     );
   }
 );
 
-export default pure(PlayerGrid);
+export default PlayerGrid;

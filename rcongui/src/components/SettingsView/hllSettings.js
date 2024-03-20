@@ -6,7 +6,7 @@ import {
   TextField,
   Typography,
   Tooltip,
-} from "@material-ui/core";
+} from "@mui/material";
 import { range } from "lodash/util";
 import {
   get,
@@ -25,7 +25,7 @@ import Padlock from "./padlock";
 import AutoRefreshLine from "../autoRefreshLine";
 import { ForwardCheckBox, WordList } from "../commonComponent";
 import VoteMapConfig from "./voteMapConfig";
-import HelpIcon from "@material-ui/icons/Help";
+import HelpIcon from "@mui/icons-material/Help";
 import MapRotation from "../MapManager";
 import MapRotationSettings from "../MapManager/settings";
 
@@ -345,7 +345,7 @@ class HLLSettings extends React.Component {
         <Grid
           container
           xs={12}
-          justify="center"
+          justifyContent="center"
         >
           <Grid item xs={12}>
             <ChangeMap
@@ -458,7 +458,7 @@ class HLLSettings extends React.Component {
           container
           xs={12}
           alignContent="center"
-          justify="center"
+          justifyContent="center"
         >
           <Grid item>
             <Padlock
@@ -682,7 +682,7 @@ class HLLSettings extends React.Component {
           </Grid>
         </Grid>
 
-        <Grid container justify="center" xs={12}>
+        <Grid container justifyContent="center" xs={12}>
           <Grid item>
             <Typography variant="h5" gutterBottom>
               Vote Map config{" "}
@@ -695,7 +695,7 @@ class HLLSettings extends React.Component {
         <Grid container xs={12}>
           <VoteMapConfig />
         </Grid>
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           <Grid item xs={12}>
             <Typography variant="h5">Map rotation</Typography>
 

@@ -16,15 +16,14 @@ import {
   Divider,
   IconButton,
   TextField,
-} from "@material-ui/core";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import { makeStyles } from "@material-ui/core/styles";
-import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
-import { pure } from "recompose";
+} from "@mui/material";
+import Autocomplete from '@mui/material/Autocomplete';
+import makeStyles from '@mui/styles/makeStyles';
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import { PlayerStatProfile } from "./PlayerStatProfile";
 import MUIDataTable from "mui-datatables";
-import { Button } from "@material-ui/core";
+import { Button } from "@mui/material";
 import { fromJS } from "immutable";
 import { toPairs, sortBy } from "lodash";
 
@@ -35,7 +34,7 @@ export const safeGetSteamProfile = (scoreObj) =>
       : new Map()
     : new Map();
 
-const PlayerItem = pure(({ score, rank, postProcess, statKey, onClick }) => {
+const PlayerItem = ({ score, rank, postProcess, statKey, onClick }) => {
   const steamProfile = safeGetSteamProfile(score);
   const avatarUrl = steamProfile ? steamProfile.get("avatar", null) : null;
 
@@ -64,9 +63,9 @@ const PlayerItem = pure(({ score, rank, postProcess, statKey, onClick }) => {
       </ListItem>
     </React.Fragment>
   );
-});
+};
 
-const TopList = pure(
+const TopList = 
   ({
     iconUrl,
     scores,
@@ -133,7 +132,7 @@ const TopList = pure(
           </ListItemAvatar>
           <ListItemText primary={<Link onClick={toggle}>{show}</Link>} />
           <ListItemSecondaryAction>
-            <IconButton onClick={toggle} color="secondary">
+            <IconButton onClick={toggle} color="secondary" size="large">
               {showButton}
             </IconButton>
           </ListItemSecondaryAction>
@@ -141,9 +140,8 @@ const TopList = pure(
       </List>
     );
   }
-);
 
-const RankBoard = pure(
+const RankBoard = 
   ({
     iconUrl,
     scores,
@@ -181,7 +179,6 @@ const RankBoard = pure(
       </Paper>
     </React.Fragment>
   )
-);
 
 const useStyles = makeStyles((theme) => ({
   black: {
@@ -189,7 +186,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RawScores = pure(({ scores }) => {
+const RawScores = ({ scores }) => {
   const lastState = window.localStorage.getItem("rawStats");
   const [show, setShow] = React.useState(
     lastState !== null
@@ -335,7 +332,7 @@ const RawScores = pure(({ scores }) => {
       )}
     </Grid>
   );
-});
+}
 
 function commaSeperatedListRenderer(value) {
   const pairs = toPairs(value);
@@ -344,7 +341,7 @@ function commaSeperatedListRenderer(value) {
     .join(", ");
 }
 
-const Scores = pure(({ scores, durationToHour, type }) => {
+const Scores = ({ scores, durationToHour, type }) => {
   const [highlight, setHighlight] = React.useState(null);
   const doHighlight = (playerScore) => {
     setHighlight(playerScore);
@@ -660,6 +657,6 @@ const Scores = pure(({ scores, durationToHour, type }) => {
       )}
     </React.Fragment>
   );
-});
+};
 
 export default Scores;

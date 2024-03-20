@@ -1,5 +1,6 @@
 import React from "react";
-import { AppBar, Link, Toolbar, makeStyles } from "@material-ui/core";
+import { AppBar, Link, Toolbar } from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
 import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({

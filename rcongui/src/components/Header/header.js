@@ -1,36 +1,24 @@
 import React from "react";
 import "react-toastify/dist/ReactToastify.css";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
 import { Link as RouterLink } from "react-router-dom";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 import ServerStatus from "./serverStatus";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import { Box, makeStyles } from "@material-ui/core";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import makeStyles from '@mui/styles/makeStyles';
 import LoginBox from "./login";
-
-const useStyles = makeStyles((theme) => ({
-  appbar: {
-    borderBottom: `1px solid ${theme.palette.divider}`
-  },
-  toolbar: {
-    flexDirection: "row",
-    gap: "0.25rem"
-  },
-  navigation: {
-    display: "flex",
-    flexGrow: 1,
-  }
-}))
+import { Stack } from "@mui/material";
 
 const MenuSelection = (props) => {
   return (
-    <Box>
+    <Stack>
       <Button
         style={{ textTransform: "capitalize" }}
         id={`${props.name}-button`}
         onClick={props.handleClick}
+        color="inherit"
       >
         {props.name}
       </Button>
@@ -51,7 +39,7 @@ const MenuSelection = (props) => {
           )
         })}
       </Menu>
-    </Box>
+    </Stack>
   )
 }
 
@@ -204,7 +192,19 @@ const menuConfigs = [
 
 // TODO: Make this reactive, it's causing the view on mobile to be bigger then it should
 const Header = () => {
-  const classes = useStyles();
+  const classes = makeStyles((theme) => ({
+    appbar: {
+      borderBottom: `1px solid ${theme.palette.divider}`
+    },
+    toolbar: {
+      flexDirection: "row",
+      gap: "0.25rem"
+    },
+    navigation: {
+      display: "flex",
+      flexGrow: 1,
+    }
+  }))()
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openedMenu, setOpenedMenu] = React.useState("");
@@ -224,12 +224,12 @@ const Header = () => {
   }
 
   return (
-    <AppBar position="static" elevation={0} className={classes.appbar}>
-      <Toolbar className={classes.toolbar}>
+    <AppBar position="static" elevation={0}>
+      <Toolbar>
         <ServerStatus />
-        <Box className={classes.navigation}>
+        <Stack direction={"row"} sx={{flexGrow: 1}}>
           {menuConfigs.map(createMenu)}
-        </Box>
+        </Stack>
         <LoginBox />
       </Toolbar>
     </AppBar>

@@ -1,6 +1,6 @@
-import { createMuiTheme } from "@material-ui/core";
+import { createTheme } from "@mui/material";
 
-const RedTheme = createMuiTheme({
+const RedTheme = createTheme({
     palette: {
         primary: {
             light: "#ff7961",

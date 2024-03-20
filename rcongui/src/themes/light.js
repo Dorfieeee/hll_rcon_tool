@@ -1,7 +1,7 @@
-import { createMuiTheme } from "@material-ui/core";
+import { createTheme } from "@mui/material";
 
-export default createMuiTheme({
+export default createTheme({
     palette: {
-        type: "light",
+        mode: "light",
     },
 });

@@ -1,6 +1,6 @@
-import { createMuiTheme } from "@material-ui/core";
+import { createTheme } from "@mui/material";
 
-const hllNoBg = createMuiTheme({
+const hllNoBg = createTheme({
     palette: {
         primary: {
             light: "#484848",
@@ -24,11 +24,13 @@ const hllNoBg = createMuiTheme({
             disabled: "rgba(0, 0, 0, 0.5)",
         },
     },
-    overrides: {
+    components: {
         MuiChip: {
-            deleteIcon: {
-                color: "#212121",
-            },
+            styleOverrides: {
+                deleteIcon: {
+                    color: "#212121",
+                },
+            }
         },
     },
 });

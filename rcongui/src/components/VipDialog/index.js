@@ -7,10 +7,10 @@ import {
   DialogContent,
   DialogTitle,
   Grid,
-} from "@material-ui/core";
+} from "@mui/material";
 
-import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import MomentUtils from "@date-io/moment";
+import { LocalizationProvider, DateTimePicker } from "@mui/x-date-pickers/";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3"
 import moment from "moment";
 import { PlayerVipSummary } from "./PlayerVipSummary";
 import { ForwardCheckBox } from "../commonComponent";
@@ -95,7 +95,7 @@ export function VipExpirationDialog(props) {
             ))}
           </Grid>
           <Grid item>
-            <MuiPickersUtilsProvider utils={MomentUtils}>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DateTimePicker
                 label="New VIP Expiration"
                 value={expirationTimestamp}
@@ -105,7 +105,7 @@ export function VipExpirationDialog(props) {
                 format="YYYY/MM/DD HH:mm"
                 maxDate={moment("3000-01-01T00:00:00+00:00")}
               />
-            </MuiPickersUtilsProvider>
+            </LocalizationProvider>
           </Grid>
         </Grid>
       </DialogContent>

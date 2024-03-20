@@ -13,17 +13,17 @@ import {
   InputLabel,
   Select,
   MenuItem,
-} from "@material-ui/core";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import WarningIcon from "@material-ui/icons/Warning";
+} from "@mui/material";
+import Autocomplete from '@mui/material/Autocomplete';
+import WarningIcon from "@mui/icons-material/Warning";
 import { fromJS, Map, List as IList, OrderedSet } from "immutable";
-import { makeStyles } from "@material-ui/core/styles";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Collapse from "@material-ui/core/Collapse";
+import makeStyles from '@mui/styles/makeStyles';
+import ListSubheader from "@mui/material/ListSubheader";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Collapse from "@mui/material/Collapse";
 import { PlayerItem, KDChips, ScoreChips } from "../PlayerView/playerList";
 import {
   get,
@@ -232,7 +232,7 @@ const Team = ({
             container
             alignContent="space-between"
             alignItems="flex-end"
-            justify="space-between"
+            justifyContent="space-between"
             spacing={2}
           >
             <Grid item xs={9}>
@@ -609,7 +609,7 @@ const GameView = () => {
             <Grid
               container
               alignItems="center"
-              justify="space-between"
+              justifyContent="space-between"
               spacing={2}
             >
               <Grid item xs={12}>

@@ -6,21 +6,21 @@ import {
   get,
   handle_http_errors,
 } from "../../utils/fetchUtils";
-import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@mui/material/Grid";
+import makeStyles from '@mui/styles/makeStyles';
 import LogsTable from "./logTable";
-import MomentUtils from "@date-io/moment";
-import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import { Button, LinearProgress, TextField } from "@material-ui/core";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
+import { LocalizationProvider, DateTimePicker } from "@mui/x-date-pickers/";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3"
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 import MUIDataTable from "mui-datatables";
 import moment from "moment";
-import Link from "@material-ui/core/Link";
+import Link from "@mui/material/Link";
+import { TextField, Button, LinearProgress } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   flexContainer: {
@@ -49,7 +49,7 @@ const LogsFilter = ({ onSubmit, onChange }) => {
     <Grid container spacing={1}>
       <Grid item xs={12} className={classes.margin}>
         <form className={classes.flexContainer}>
-          <Grid container spacing={1} justify="space-evenly">
+          <Grid container spacing={1} justifyContent="space-evenly">
             <Grid item>
               <TextField
                 label="Steam id"
@@ -113,24 +113,24 @@ const LogsFilter = ({ onSubmit, onChange }) => {
               />
             </Grid>
             <Grid item>
-              <MuiPickersUtilsProvider utils={MomentUtils}>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DateTimePicker
                   label="From time"
                   format="YYYY/MM/DD HH:mm"
                   value={from}
                   onChange={setFrom}
                 />
-              </MuiPickersUtilsProvider>
+              </LocalizationProvider>
             </Grid>
             <Grid item>
-              <MuiPickersUtilsProvider utils={MomentUtils}>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DateTimePicker
                   label="Till time"
                   format="YYYY/MM/DD HH:mm"
                   value={till}
                   onChange={setTill}
                 />
-              </MuiPickersUtilsProvider>
+              </LocalizationProvider>
             </Grid>
             <Grid item>
               <FormControl>
@@ -368,16 +368,16 @@ class LogsHistory extends React.Component {
           <LogsFilter onSubmit={this.getHistoricalLogs} />
         </Grid>
         {isLoading ? (
-          <Grid itemx xs={12}>
+          <Grid item xs={12}>
             <LinearProgress color="secondary" />
           </Grid>
         ) : (
           ""
         )}
         <Grid item xs={12}>
-          <Grid container justify="center">
+          <Grid container justifyContent="center">
             <Grid item>
-              <Grid container justify="center">
+              <Grid container justifyContent="center">
                 <Grid item>
                   <MUIDataTable
                     title={"Game logs"}

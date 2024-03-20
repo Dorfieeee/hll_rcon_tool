@@ -1,17 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import Badge from "@material-ui/core/Badge";
-import { Comment, Send } from "@material-ui/icons";
-import {
-  Box,
-  Button,
-  Chip,
-  Drawer,
-  Grid,
-  makeStyles,
-  TextField,
-} from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
+import Badge from "@mui/material/Badge";
+import { Comment, Send } from "@mui/icons-material";
+import { Box, Button, Chip, Drawer, Grid, TextField } from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
 import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
@@ -45,7 +38,7 @@ const ChatContent = ({ data, handleMessageSend }) => {
       <Box paddingLeft={2}>
         <Grid
           container
-          justify="flex-start"
+          justifyContent="flex-start"
           alignContent="flex-start"
           alignItems="flex-end"
           direction="column"
@@ -57,7 +50,7 @@ const ChatContent = ({ data, handleMessageSend }) => {
               <Grid item key={index}>
                 <Grid
                   container
-                  justify="flex-start"
+                  justifyContent="flex-start"
                   alignContent="flex-start"
                   alignItems="flex-end"
                   direction="column"
@@ -66,13 +59,11 @@ const ChatContent = ({ data, handleMessageSend }) => {
                     <Chip
                       style={{ height: "auto", paddingTop: "-10px" }}
                       color="primary"
-                      variant="default"
                       label={
                         <Typography align="left" className={classes.message}>
                           {message.content}
                         </Typography>
-                      }
-                    />
+                      } />
                   </Grid>
                   <Grid item>
                     <Typography
@@ -95,7 +86,7 @@ const ChatContent = ({ data, handleMessageSend }) => {
         </Grid>
         <Grid
           container
-          justify="flex-start"
+          justifyContent="flex-start"
           alignContent="flex-start"
           alignItems="center"
           className={classes.padding}
@@ -145,9 +136,9 @@ const ChatWidget = ({ data, handleMessageSend }) => {
   // TODO replace with builtin speeddial from MUI
   return (
     <div className={classes.chatPosition}>
-      <Badge color="secondary" overlap="circle" badgeContent={data?.length}>
+      <Badge color="secondary" overlap="circular" badgeContent={data?.length}>
         <Grid container className={classes.shape}>
-          <IconButton onClick={handleChange}>
+          <IconButton onClick={handleChange} size="large">
             <Comment style={{ color: "white" }} />
           </IconButton>
         </Grid>

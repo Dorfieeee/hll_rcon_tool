@@ -1,6 +1,6 @@
-import { createMuiTheme } from "@material-ui/core";
+import { createTheme } from "@mui/material";
 
-const hll = createMuiTheme({
+const hll = createTheme({
     palette: {
         primary: {
             light: "#484848",
@@ -24,21 +24,25 @@ const hll = createMuiTheme({
             disabled: "rgba(0, 0, 0, 0.5)",
         },
     },
-    overrides: {
+    components: {
         MuiChip: {
-            deleteIcon: {
-                color: "#212121",
-            },
+            styleOverrides: {
+                deleteIcon: {
+                    color: "#212121",
+                },    
+            }
         },
         MuiCssBaseline: {
-            "@global": {
-                body: {
-                    backgroundRepeat: "no-repeat",
-                    backgroundAttachment: "fixed",
-                    backgroundSize: "cover",
-                    backgroundImage: 'url("hll.jpg")',
+            styleOverrides: {
+                "@global": {
+                    body: {
+                        backgroundRepeat: "no-repeat",
+                        backgroundAttachment: "fixed",
+                        backgroundSize: "cover",
+                        backgroundImage: 'url("hll.jpg")',
+                    },
                 },
-            },
+            }
         },
     },
 });

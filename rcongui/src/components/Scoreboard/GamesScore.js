@@ -1,24 +1,16 @@
-import {
-  Grid,
-  Typography,
-  makeStyles,
-  GridList,
-  GridListTile,
-  GridListTileBar,
-  IconButton,
-} from "@material-ui/core";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import VisibilityIcon from "@material-ui/icons/Visibility";
-import LinkIcon from "@material-ui/icons/Link";
-import CheckIcon from "@material-ui/icons/Check";
+import { Grid, Typography, ImageList, ImageListItem, ImageListItemBar, IconButton } from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
+import useMediaQuery from "@mui/material/useMediaQuery";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import LinkIcon from "@mui/icons-material/Link";
+import CheckIcon from "@mui/icons-material/Check";
 import React from "react";
 import { get, handle_http_errors, showResponse } from "../../utils/fetchUtils";
 import { List as iList, Map, fromJS, List } from "immutable";
 import moment from "moment";
-import { useTheme } from "@material-ui/core/styles";
+import { useTheme, alpha } from "@mui/material/styles";
 import Scores from "./Scores";
 import { getMapImageUrl } from "./utils";
-import { fade } from "@material-ui/core/styles/colorManipulator";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -31,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
   },
   transparentPaper: {
-    backgroundColor: fade(theme.palette.background.paper, 0.6),
+    backgroundColor: alpha(theme.palette.background.paper, 0.6),
     borderRadius: "0px",
   },
   clickable: {
@@ -190,124 +182,119 @@ const GamesScore = () => {
       .substr(11, 8)
     : "N/A";
 
-  return (
-    <>
-      <Grid
-        container
-        spacing={2}
-        justify="center"
-      >
-        <Grid item xs={12} className={styles.transparentPaper}>
-          <Typography color="secondary" variant="h4">
-            {serverState.get("name")}
+  return <>
+    <Grid
+      container
+      spacing={2}
+      justifyContent="center"
+    >
+      <Grid item xs={12} className={styles.transparentPaper}>
+        <Typography color="secondary" variant="h4">
+          {serverState.get("name")}
+        </Typography>
+      </Grid>
+      {!maps.size ? (
+        <Grid item className={styles.paper}>
+          <Typography variant="h2">No games recorded yet</Typography>
+        </Grid>
+      ) : (
+        <Grid item>
+          <Typography variant="caption">
+            Select a game below to see its stats
           </Typography>
         </Grid>
-        {!maps.size ? (
-          <Grid item className={styles.paper}>
-            <Typography variant="h2">No games recorded yet</Typography>
-          </Grid>
-        ) : (
-          <Grid item>
-            <Typography variant="caption">
-              Select a game below to see its stats
-            </Typography>
-          </Grid>
-        )}
-        <Grid item xs={12}>
-          <div className={styles.singleLine}>
-            <GridList
-              cols={
-                xl
-                  ? Math.min(maps.size, 8.5)
-                  : lg
-                    ? Math.min(maps.size, 5.5)
-                    : md
-                      ? Math.min(maps.size, 3.5)
-                      : sm
-                        ? Math.min(maps.size, 2.5)
-                        : Math.min(maps.size, 1.5)
-              }
-              className={styles.gridList}
-            >
-              {maps.map((m) => {
-                const start = moment(m.get("start") + "Z");
-                const end = moment(m.get("end") + "Z");
-                const duration = moment.duration(end - start);
-                const isSelected = (isReturn, isNotReturn) =>
-                  m.get("id") === slug ? isReturn : isNotReturn;
+      )}
+      <Grid item xs={12}>
+        <div className={styles.singleLine}>
+          <ImageList
+            cols={
+              xl
+                ? Math.min(maps.size, 8.5)
+                : lg
+                  ? Math.min(maps.size, 5.5)
+                  : md
+                    ? Math.min(maps.size, 3.5)
+                    : sm
+                      ? Math.min(maps.size, 2.5)
+                      : Math.min(maps.size, 1.5)
+            }
+            className={styles.gridList}
+          >
+            {maps.map((m) => {
+              const start = moment(m.get("start") + "Z");
+              const end = moment(m.get("end") + "Z");
+              const duration = moment.duration(end - start);
+              const isSelected = (isReturn, isNotReturn) =>
+                m.get("id") === slug ? isReturn : isNotReturn;
 
-                return (
-                  <GridListTile
-                    className={styles.clickable}
-                    onClick={() => doSelectMap(m.get("id"))}
-                    key={`${m.get("name")}${m.get("start")}${m.get("end")}`}
-                  >
-                    <img alt="Map" src={getMapImageUrl(m.get('map_name'))} />
+              return (
+                <ImageListItem
+                  className={styles.clickable}
+                  onClick={() => doSelectMap(m.get("id"))}
+                  key={`${m.get("name")}${m.get("start")}${m.get("end")}`}
+                >
+                  <img alt="Map" src={getMapImageUrl(m.get('map_name'))} />
 
-                    <GridListTileBar
-                      className={isSelected(
-                        styles.selectedTitleBarTop,
-                        styles.titleBarTop
-                      )}
-                      title={m.get("long_name")}
-                      subtitle={`${duration.humanize()}`}
-                      titlePosition="top"
-                    />
-                    <GridListTileBar
-                      className={isSelected(
-                        styles.selectedTitleBar,
-                        styles.titleBar
-                      )}
-                      title={`${start.format("dddd, MMM Do ")}`}
-                      subtitle={`Started at: ${start.format("HH:mm")}`}
-                      actionIcon={isSelected(
-                        <IconButton color="inherit">
-                          <CopyToClipboard
-                            text={getShareableLink()}
-                            onCopy={onCopyLink}
-                          >
-                            {hasCopiedLink ? (
-                              <CheckIcon color="inherit" />
-                            ) : (
-                              <LinkIcon color="inherit" />
-                            )}
-                          </CopyToClipboard>
-                        </IconButton>,
-                        <IconButton
-                          color="inherit"
-                          onClick={() => doSelectMap(m.get("id"))}
+                  <ImageListItemBar
+                    className={isSelected(
+                      styles.selectedTitleBarTop,
+                      styles.titleBarTop
+                    )}
+                    title={m.get("long_name")}
+                    subtitle={`${duration.humanize()}`}
+                    titlePosition="top"
+                  />
+                  <ImageListItemBar
+                    className={isSelected(
+                      styles.selectedTitleBar,
+                      styles.titleBar
+                    )}
+                    title={`${start.format("dddd, MMM Do ")}`}
+                    subtitle={`Started at: ${start.format("HH:mm")}`}
+                    actionIcon={isSelected(
+                      <IconButton color="inherit" size="large">
+                        <CopyToClipboard
+                          text={getShareableLink()}
+                          onCopy={onCopyLink}
                         >
-                          <VisibilityIcon color="inherit" />
-                        </IconButton>
-                      )}
-                    />
-                  </GridListTile>
-                );
-              })}
-            </GridList>
-          </div>
-        </Grid>
+                          {hasCopiedLink ? (
+                            <CheckIcon color="inherit" />
+                          ) : (
+                            <LinkIcon color="inherit" />
+                          )}
+                        </CopyToClipboard>
+                      </IconButton>,
+                      <IconButton color="inherit" onClick={() => doSelectMap(m.get("id"))} size="large">
+                        <VisibilityIcon color="inherit" />
+                      </IconButton>
+                    )}
+                  />
+                </ImageListItem>
+              );
+            })}
+          </ImageList>
+        </div>
       </Grid>
-      <Grid
-        container
-        spacing={2}
-        justify="center"
-      >
-        <Scores
-          serverState={serverState}
-          styles={styles}
-          started={started}
-          lastRefresh={lastRefresh}
-          refreshIntervalSec={refreshIntervalSec}
-          setPaused={setPaused}
-          isPaused={isPaused}
-          isLoading={isLoading}
-          scores={scores}
-          durationToHour={durationToHour}
-        />
-      </Grid>
-    </>
-  );
+    </Grid>
+    <Grid
+      container
+      spacing={2}
+      justifyContent="center"
+    >
+      <Scores
+        serverState={serverState}
+        styles={styles}
+        started={started}
+        lastRefresh={lastRefresh}
+        refreshIntervalSec={refreshIntervalSec}
+        setPaused={setPaused}
+        isPaused={isPaused}
+        isLoading={isLoading}
+        scores={scores}
+        durationToHour={durationToHour}
+      />
+    </Grid>
+  </>;
 };
 
 export default GamesScore;

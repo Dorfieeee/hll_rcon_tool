@@ -1,6 +1,6 @@
 import React from "react";
-import { Grid, TextField } from "@material-ui/core";
-import Autocomplete from "@material-ui/lab/Autocomplete";
+import { Grid, TextField } from "@mui/material";
+import Autocomplete from '@mui/material/Autocomplete';
 import SplitButton from "../splitButton";
 import TextHistory from "../textHistory";
 import { getSharedMessages } from "../../utils/fetchUtils";
@@ -27,7 +27,7 @@ const ServerMessage = ({
       xs={12}
       alignItems="center"
       alignContent="center"
-      justify="center"
+      justifyContent="center"
     >
       <Grid item xs={12}>
         <Autocomplete
@@ -38,8 +38,8 @@ const ServerMessage = ({
           renderInput={(params) => (
             <TextField
               multiline
-              rows={4}
-              rowsMax={40}
+              minRows={4}
+              maxRows={40}
               {...params}
               label={type}
               margin="normal"

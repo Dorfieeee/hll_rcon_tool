@@ -5,14 +5,13 @@ import {
   ListItem,
   ListItemSecondaryAction,
   ListItemText,
-  makeStyles,
   Typography,
   IconButton,
   Collapse,
-} from "@material-ui/core";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import { pure } from "recompose";
+} from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 
 const useStyles = makeStyles((theme) => ({
   nested: {
@@ -20,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const SubList = pure(
+export const SubList =
   ({ playerScore, dataMapKey, title, subtitle, openDefault, sortByKey }) => {
     let data = dataMapKey
       ? playerScore.get(dataMapKey) || new Map()
@@ -41,7 +40,7 @@ export const SubList = pure(
             secondary={subtitle}
           />
           <ListItemSecondaryAction>
-            <IconButton onClick={() => setOpen(!open)}>
+            <IconButton onClick={() => setOpen(!open)} size="large">
               {open ? <ExpandLess /> : <ExpandMore />}
             </IconButton>
           </ListItemSecondaryAction>
@@ -65,4 +64,4 @@ export const SubList = pure(
       </React.Fragment>
     );
   }
-);
+

@@ -1,7 +1,6 @@
-import { createMuiTheme } from "@material-ui/core";
+import { createTheme } from "@mui/material";
 
-const CamoDarkTheme = createMuiTheme({
-    editor: "vs-dark",
+const CamoDarkTheme = createTheme({
     palette: {
         primary: {
             light: "#629749",

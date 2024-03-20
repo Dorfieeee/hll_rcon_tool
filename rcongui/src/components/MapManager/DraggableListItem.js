@@ -1,18 +1,18 @@
 import * as React from "react";
 import { Draggable } from "react-beautiful-dnd";
 
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ListItemText from "@material-ui/core/ListItemText";
+import makeStyles from '@mui/styles/makeStyles';
+import ListItem from "@mui/material/ListItem";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemText from "@mui/material/ListItemText";
 import {
   ListItemSecondaryAction,
   IconButton,
   Chip,
   Typography,
-} from "@material-ui/core";
-import Avatar from "@material-ui/core/Avatar";
-import DeleteIcon from "@material-ui/icons/Delete";
+} from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { getMapName, getMapImageUrl } from "../Scoreboard/utils";
 
 const useStyles = makeStyles({
@@ -110,7 +110,7 @@ const DraggableListItem = ({ item, index, onRemove }) => {
               edge="end"
               aria-label="delete"
               onClick={() => onRemove(index)}
-            >
+              size="large">
               <DeleteIcon />
             </IconButton>
           </ListItemSecondaryAction>

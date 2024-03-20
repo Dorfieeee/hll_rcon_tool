@@ -11,18 +11,18 @@ import {
   Legend,
   registerables,
 } from "chart.js";
-import StarIcon from "@material-ui/icons/Star";
-import LinearProgress from "@material-ui/core/LinearProgress";
-import Switch from "@material-ui/core/Switch";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import MomentUtils from "@date-io/moment";
-import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import StarIcon from "@mui/icons-material/Star";
+import LinearProgress from "@mui/material/LinearProgress";
+import Switch from "@mui/material/Switch";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import { LocalizationProvider, DateTimePicker } from "@mui/x-date-pickers/";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3"
 import palette from "google-palette";
 import "chartjs-adapter-moment";
 import { Bar } from "react-chartjs-2";
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from '@mui/styles/makeStyles';
 import { get, handle_http_errors, showResponse } from "../../utils/fetchUtils";
 import { fromJS } from "immutable";
 import {
@@ -37,7 +37,7 @@ import {
   DialogContentText,
   Button,
   TextareaAutosize,
-} from "@material-ui/core";
+} from "@mui/material";
 
 ChartJS.register(
   CategoryScale,
@@ -54,12 +54,12 @@ function hexToRgb(hex) {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
     ? "rgb(" +
-        parseInt(result[1], 16) +
-        "," +
-        parseInt(result[2], 16) +
-        "," +
-        parseInt(result[3], 16) +
-        ")"
+    parseInt(result[1], 16) +
+    "," +
+    parseInt(result[2], 16) +
+    "," +
+    parseInt(result[3], 16) +
+    ")"
     : null;
 }
 
@@ -99,8 +99,8 @@ function DetailsDialog({
       <DialogTitle>{dataPoint.map}</DialogTitle>
 
       {datasetElementIndex !== null &&
-      datasetsIndex !== null &&
-      Object.keys(dataPoint).length > 0 ? (
+        datasetsIndex !== null &&
+        Object.keys(dataPoint).length > 0 ? (
         <React.Fragment>
           <DialogContent>
             <DialogContentText>
@@ -160,28 +160,28 @@ function MetricsParams({
       container
       alignContent="center"
       alignItems="center"
-      justify="center"
+      justifyContent="center"
       spacing={2}
     >
       <Grid item>
-        <MuiPickersUtilsProvider utils={MomentUtils}>
+        <LocalizationProvider dateAdapter={AdapterDateFns} >
           <DateTimePicker
             label="From time"
             format="YYYY/MM/DD HH:mm"
             value={from}
             onChange={setFrom}
           />
-        </MuiPickersUtilsProvider>
+        </LocalizationProvider>
       </Grid>
       <Grid item>
-        <MuiPickersUtilsProvider utils={MomentUtils}>
+        <LocalizationProvider dateAdapter={AdapterDateFns} >
           <DateTimePicker
             label="Till time"
             format="YYYY/MM/DD HH:mm"
             value={till}
             onChange={setTill}
           />
-        </MuiPickersUtilsProvider>
+        </LocalizationProvider>
       </Grid>
       <Grid item>
         <Grid container direction="column">

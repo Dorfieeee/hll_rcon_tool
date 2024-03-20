@@ -11,9 +11,9 @@ import {
   InputLabel,
   Select,
   MenuItem,
-} from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import AddIcon from "@material-ui/icons/Add";
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
 
 const AdminRole = ({ role, setRole, roles }) => (
   <FormControl>
@@ -78,7 +78,7 @@ const AddAdminItem = ({
             setRole("");
           })
         }
-      >
+        size="large">
         <AddIcon />
       </IconButton>
     </ListItemSecondaryAction>
@@ -120,7 +120,7 @@ const AdminsEditableList = ({
                 edge="end"
                 aria-label="delete"
                 onClick={() => onDelete(obj.name, obj.steam_id_64, obj.role)}
-              >
+                size="large">
                 <DeleteIcon />
               </IconButton>
             </ListItemSecondaryAction>

@@ -1,4 +1,4 @@
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 import { Route, Switch } from "react-router-dom/cjs/react-router-dom.min";
 import HLLSettings from "../SettingsView/hllSettings";
 import RconSettings from "../RconSettings/rconSettings";

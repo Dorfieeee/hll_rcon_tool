@@ -6,7 +6,7 @@ import {
   NativeSelect,
   TextField,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import React from "react";
 import { fromJS, List, Map } from "immutable";
 import {
@@ -67,7 +67,7 @@ const VoteMapConfig = () => {
     <Grid
       container
       spacing={2}
-      justify="flex-start"
+      justifyContent="flex-start"
       alignContent="center"
       alignItems="center"
     >
@@ -83,8 +83,8 @@ const VoteMapConfig = () => {
           <TextField
             fullWidth
             multiline
-            rows={2}
-            rowsMax={4}
+            minRows={2}
+            maxRows={4}
             label="Reminder text sent to player to vote:"
             helperText="Make sure you add {map_selection} in your text"
             value={config.get("instruction_text", "")}
@@ -97,8 +97,8 @@ const VoteMapConfig = () => {
           <TextField
             fullWidth
             multiline
-            rows={2}
-            rowsMax={4}
+            minRows={2}
+            maxRows={4}
             label="Thank you for voting message:"
             helperText="The reply to player after they voted. You can use {player_name} and {map_name} in the text. Leave blank if you don't want the confirmation message"
             value={config.get("thank_you_text", "")}
@@ -111,8 +111,8 @@ const VoteMapConfig = () => {
           <TextField
             fullWidth
             multiline
-            rows={2}
-            rowsMax={4}
+            minRows={2}
+            maxRows={4}
             label="Help text:"
             helperText="This text will show to the player in case of a bad !votemap command, or if the user types !votemap help"
             value={config.get("help_text", "")}
@@ -242,7 +242,7 @@ const VoteMapConfig = () => {
       <Grid item xs={12}>
         <Grid
           container
-          justify="flex-start"
+          justifyContent="flex-start"
           alignContent="stretch"
           alignItems="stretch"
           orientation="column"

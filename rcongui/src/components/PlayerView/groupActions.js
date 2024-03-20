@@ -1,18 +1,20 @@
 import React from "react";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
 import { Duration, PlayerActions } from "./playerActions";
-import withWidth from "@material-ui/core/withWidth";
 import { Reason } from "./textInputBar";
-import Grid from "@material-ui/core/Grid";
+import Grid from "@mui/material/Grid";
 import { DialogActions, DialogContent, DialogTitle } from "../dialog";
 import { join } from "lodash/array";
 import TextHistory from "../textHistory";
 import { List } from "immutable";
 import { sortBy } from "lodash/collection";
 import { getSharedMessages } from "../../utils/fetchUtils";
+
+// FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
+const withWidth = () => (WrappedComponent) => (props) => <WrappedComponent {...props} width="xs" />;
 
 const compactProfile = (player) => {
   let s = "";
@@ -77,7 +79,6 @@ const GroupActions = ({
           renderInput={(params) => (
             <TextField
               {...params}
-              variant="outlined"
               label="Select players"
               fullWidth
             />
@@ -98,8 +99,8 @@ const GroupActions = ({
           <Grid item xs={12} xl={12}>
             <TextField
               multiline
-              rows={1}
-              rowsMax={10}
+              minRows={1}
+              maxRows={10}
               fullWidth
               value={comment}
               onChange={(e) => setComment(e.target.value)}

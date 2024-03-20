@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core/styles";
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -26,12 +26,12 @@ const useStyles = makeStyles((theme) => {
         marginLeft: theme.spacing(1),
         width: "auto",
       },
-      [theme.breakpoints.down("xs")]: {
+      [theme.breakpoints.down('md')]: {
         display: "none",
       },
     },
     paddingXs: {
-      [theme.breakpoints.down("xs")]: {
+      [theme.breakpoints.down('md')]: {
         paddingTop: theme.spacing(2),
       },
     },

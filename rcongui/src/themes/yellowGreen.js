@@ -1,6 +1,6 @@
-import { createMuiTheme } from "@material-ui/core";
+import { createTheme } from "@mui/material";
 
-const YellowGreenTheme = createMuiTheme({
+const YellowGreenTheme = createTheme({
     palette: {
         secondary: {
             light: "#5edfca",

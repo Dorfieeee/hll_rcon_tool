@@ -1,6 +1,6 @@
 import * as React from "react";
 import {get, handle_http_errors, postData, showResponse,} from "../../utils/fetchUtils";
-import {Grid, Typography} from "@material-ui/core";
+import {Grid, Typography} from "@mui/material";
 import Padlock from "../SettingsView/padlock";
 
 const MapRotationSettings = () => {
@@ -37,7 +37,7 @@ const MapRotationSettings = () => {
     <Grid
       container
       spacing={2}
-      justify="flex-start"
+      justifyContent="flex-start"
       alignContent="center"
       alignItems="center"
     >

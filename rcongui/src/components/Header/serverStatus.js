@@ -1,14 +1,14 @@
 import React from "react";
 import "react-toastify/dist/ReactToastify.css";
-import Grid from "@material-ui/core/Grid";
+import Grid from "@mui/material/Grid";
 import { get, handle_http_errors, showResponse } from "../../utils/fetchUtils";
 import debounce from "lodash/debounce";
-import { makeStyles } from "@material-ui/core/styles";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Link from "@material-ui/core/Link";
+import makeStyles from '@mui/styles/makeStyles';
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Link from "@mui/material/Link";
 import { fromJS, List } from "immutable";
-import { Button } from "@material-ui/core";
+import { Button } from "@mui/material";
 
 const useStyles = makeStyles({
   truncatedBtn: {

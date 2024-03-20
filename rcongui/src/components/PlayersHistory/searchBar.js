@@ -1,5 +1,4 @@
 import React from "react";
-import MomentUtils from "@date-io/moment";
 import {
   Button,
   Card,
@@ -14,9 +13,11 @@ import {
   Select,
   Switch,
   TextField,
-} from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
-import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3"
 import { Picker } from "emoji-mart";
 
 const SearchBar = ({
@@ -54,7 +55,7 @@ const SearchBar = ({
         spacing={1}
         alignContent="center"
         alignItems="center"
-        justify="space-evenly"
+        justifyContent="space-evenly"
       >
         <Grid item>
           <TextField
@@ -108,7 +109,7 @@ const SearchBar = ({
               <CardHeader
                 title="Pick emojis"
                 action={
-                  <IconButton onClick={() => setShowEmojiPicker(false)}>
+                  <IconButton onClick={() => setShowEmojiPicker(false)} size="large">
                     <CloseIcon />
                   </IconButton>
                 }
@@ -132,24 +133,24 @@ const SearchBar = ({
           />
         </Grid>
         <Grid item>
-          <MuiPickersUtilsProvider utils={MomentUtils}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DateTimePicker
               label="Last seen from"
               value={lastSeenFrom}
               onChange={setLastSeenFrom}
               format="YYYY/MM/DD HH:mm"
             />
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </Grid>
         <Grid item>
-          <MuiPickersUtilsProvider utils={MomentUtils}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DateTimePicker
               label="Last seen until"
               value={lastSeenUntil}
               onChange={setLastSeenUntil}
               format="YYYY/MM/DD HH:mm"
             />
-          </MuiPickersUtilsProvider>
+          </LocalizationProvider>
         </Grid>
         <Grid item>
           <FormControlLabel

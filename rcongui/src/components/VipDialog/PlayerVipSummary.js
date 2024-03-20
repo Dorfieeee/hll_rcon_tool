@@ -1,5 +1,5 @@
 import React from "react";
-import { Chip, Grid, Typography } from "@material-ui/core";
+import { Chip, Grid, Typography } from "@mui/material";
 
 export function PlayerVipSummary({ player, isVip }) {
   const playerNames =

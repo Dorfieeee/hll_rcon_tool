@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@mui/material";
 import { fromJS } from "immutable";
 import { reduce } from "lodash";
 
@@ -29,7 +29,7 @@ export const PlayerBan = ({ bans, player }) => {
     return (
         <Grid
             container
-            justify="space-between"
+            justifyContent="space-between"
             spacing={0}
         >
             <Grid item xs={6}>
@@ -45,6 +45,5 @@ export const PlayerBan = ({ bans, player }) => {
                 }
             </Grid>
         </Grid>
-
-    )
+    );
 }

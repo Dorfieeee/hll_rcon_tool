@@ -5,14 +5,14 @@ import {
   AppBar,
   Toolbar,
   LinearProgress,
-  GridList,
-  GridListTile,
+  ImageList,
+  ImageListItem,
   useTheme,
   useMediaQuery,
-  makeStyles,
-  GridListTileBar,
-} from "@material-ui/core";
-import { fade } from "@material-ui/core/styles/colorManipulator";
+  ImageListItemBar,
+} from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
+import { alpha } from '@mui/material/styles';
 import { get, handle_http_errors, showResponse } from "../../utils/fetchUtils";
 import { List as iList, Map, fromJS } from "immutable";
 import { getMapImageUrl } from "../Scoreboard/utils";
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   transparentPaper: {
-    backgroundColor: fade(theme.palette.background.paper, 0.6),
+    backgroundColor: alpha(theme.palette.background.paper, 0.6),
     borderRadius: "0px",
   },
   root: {
@@ -71,7 +71,7 @@ const ServerInfo = () => {
   const theme = useTheme();
   const [serverState, setServerState] = React.useState(new Map());
   const [isLoading, setIsLoading] = React.useState(true);
-  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+  const isXs = useMediaQuery(theme.breakpoints.down('xl'));
   const [mapName, setMapName] = React.useState("")
 
   const getData = () => {
@@ -119,13 +119,13 @@ const ServerInfo = () => {
   }, [serverState]);
 
   return (
-    <GridList cols={1} className={classes.gridList}>
-      <GridListTile>
+    <ImageList cols={1} className={classes.gridList}>
+      <ImageListItem>
         <img
           alt="Map"
           src={getMapImageUrl(mapName)}
         />
-        <GridListTileBar
+        <ImageListItemBar
           className={classes.titleBarTop}
           title={serverState.get("name")}
           subtitle={serverState
@@ -133,7 +133,7 @@ const ServerInfo = () => {
             .get("human_name", "N/A")}
           titlePosition="top"
         />
-        <GridListTileBar
+        <ImageListItemBar
           className={classes.titleBarBottom}
           title={`Time: ${started} - Players: ${serverState.get(
             "player_count"
@@ -141,8 +141,8 @@ const ServerInfo = () => {
           subtitle={nextMapString}
           titlePosition="bottom"
         />
-      </GridListTile>
-    </GridList>
+      </ImageListItem>
+    </ImageList>
   );
 };
 

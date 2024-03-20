@@ -2,8 +2,7 @@ import React from "react";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { ThemeProvider } from "@material-ui/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 import { HashRouter, Route, Switch, BrowserRouter } from "react-router-dom";
 import Footer from "./components/Footer/footer";
 import Header from "./components/Header";
@@ -11,6 +10,7 @@ import ScoreMenu from "./components/Scoreboard/ScoreMenu";
 import themes from "./themes";
 import publicRoutes from "./routes/public";
 import adminRoutes from "./routes/admin";
+import { Container, ThemeProvider } from "@mui/material";
 
 const generateRoutes = (routes) => {
   return routes.map(route => {
@@ -34,7 +34,7 @@ const EmbedApp = () => {
         </Switch>
       </BrowserRouter>
     </ThemeProvider>
-  )
+  );
 }
 
 const PublicBuildApp = () => (
@@ -60,14 +60,16 @@ const DefaultApp = () => {
       <ToastContainer />
       <HashRouter>
         <Header />
-        <Switch>
-          {generateRoutes(publicRoutes)}
-          {!process.env.REACT_APP_PUBLIC_BUILD ? generateRoutes(adminRoutes) : null}
-        </Switch>
+        <Container >
+          <Switch>
+            {generateRoutes(publicRoutes)}
+            {!process.env.REACT_APP_PUBLIC_BUILD ? generateRoutes(adminRoutes) : null}
+          </Switch>
+        </Container>
         <Footer />
       </HashRouter>
     </ThemeProvider>
-  )
+  );
 }
 
 function App() {

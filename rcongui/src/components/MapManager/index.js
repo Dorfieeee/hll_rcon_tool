@@ -1,6 +1,6 @@
 import * as React from "react";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import Paper from "@material-ui/core/Paper";
+import makeStyles from '@mui/styles/makeStyles';
+import Paper from "@mui/material/Paper";
 import DraggableList from "./DraggableList";
 import { getItems, reorder } from "./helpers";
 import {
@@ -10,10 +10,10 @@ import {
   sendAction,
   showResponse,
 } from "../../utils/fetchUtils";
-import { Button, CircularProgress, Grid, Typography } from "@material-ui/core";
-import Chip from "@material-ui/core/Chip";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import TextField from "@material-ui/core/TextField";
+import { Button, CircularProgress, Grid, Typography } from "@mui/material";
+import Chip from "@mui/material/Chip";
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from "@mui/material/TextField";
 
 const MapRotation = () => {
   const [maps, setMaps] = React.useState([]);

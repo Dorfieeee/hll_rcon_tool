@@ -1,6 +1,6 @@
-import { createMuiTheme } from "@material-ui/core";
+import { createTheme } from "@mui/material";
 
-const GreyBlueDarkTheme = createMuiTheme({
+const GreyBlueDarkTheme = createTheme({
     editor: "vs-dark",
     palette: {
         primary: {

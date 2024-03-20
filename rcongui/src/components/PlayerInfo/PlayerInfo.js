@@ -5,16 +5,10 @@ import {
   showResponse,
 } from "../../utils/fetchUtils";
 import React from "react";
-import {
-  Avatar,
-  Button,
-  Grid,
-  Link,
-  makeStyles,
-  Popover,
-} from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
-import { ExpandMore } from "@material-ui/icons";
+import { Avatar, Button, Grid, Link, Popover } from "@mui/material";
+import makeStyles from '@mui/styles/makeStyles';
+import Typography from "@mui/material/Typography";
+import { ExpandMore } from "@mui/icons-material";
 import moment from "moment";
 import MUIDataTable from "mui-datatables";
 import { withRouter } from "react-router";
@@ -295,7 +289,7 @@ const PlayerInfoFunc = () => {
             <Grid item xl={2} lg={2} md={2} sm={3} xs={12}>
               <Grid
                 container
-                justify="center"
+                justifyContent="center"
                 alignContent="center"
                 wrap="wrap"
                 direction="column"
@@ -359,14 +353,14 @@ const PlayerInfoFunc = () => {
               <Grid
                 container
                 spacing={3}
-                justify="flex-start"
+                justifyContent="flex-start"
                 alignItems="flex-start"
                 alignContent="flex-start"
               >
                 <Grid item sm={12}>
                   <Grid
                     container
-                    justify="flex-start"
+                    justifyContent="flex-start"
                     alignItems="flex-start"
                     alignContent="flex-start"
                   >
@@ -573,7 +567,7 @@ class PlayerInfo extends React.Component {
               <Grid item xl={2} lg={2} md={2} sm={3} xs={12}>
                 <Grid
                   container
-                  justify="center"
+                  justifyContent="center"
                   alignContent="center"
                   wrap="wrap"
                   direction="column"
@@ -640,14 +634,14 @@ class PlayerInfo extends React.Component {
                 <Grid
                   container
                   spacing={3}
-                  justify="flex-start"
+                  justifyContent="flex-start"
                   alignItems="flex-start"
                   alignContent="flex-start"
                 >
                   <Grid item sm={12}>
                     <Grid
                       container
-                      justify="flex-start"
+                      justifyContent="flex-start"
                       alignItems="flex-start"
                       alignContent="flex-start"
                     >

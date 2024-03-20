@@ -1,9 +1,7 @@
-import { createMuiTheme } from "@material-ui/core";
+import { createTheme } from "@mui/material";
 
-export default createMuiTheme({
-    editor: "vs-dark",
+export default createTheme({
     palette: {
-        type: "dark",
+        mode: "dark",
     },
-    spacing: 1,
 });

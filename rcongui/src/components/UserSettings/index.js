@@ -106,7 +106,7 @@ const UserSetting = ({
               <div>
                 {Object.keys(ele).map((k) => {
                   return (
-                    <div>
+                    <div key={ele[k]}>
                       <b>{k}</b>: {JSON.stringify(ele[k])}
                     </div>
                   );

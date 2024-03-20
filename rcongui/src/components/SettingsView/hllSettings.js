@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Button,
-  Grid,
-  Link,
-  TextField,
-  Typography,
-  Tooltip,
-} from '@mui/material';
+import { Button, Grid, TextField, Typography, Tooltip } from '@mui/material';
 import { range } from 'lodash/util';
 import {
   get,
@@ -313,7 +306,6 @@ class HLLSettings extends React.Component {
       vips,
       admins,
       adminRoles,
-      mapRotation,
       availableMaps,
       welcomeMessage,
       broadcastMessage,
@@ -431,7 +423,7 @@ class HLLSettings extends React.Component {
                   role: role,
                 }).then(this.loadAdmins)
               }
-              onDelete={(name, steamID64, role) =>
+              onDelete={(name, steamID64) =>
                 sendAction('do_remove_admin', { steam_id_64: steamID64 }).then(
                   this.loadAdmins
                 )
@@ -632,7 +624,7 @@ class HLLSettings extends React.Component {
               <Button
                 fullWidth
                 variant="outlined"
-                onClick={(e) =>
+                onClick={() =>
                   this.saveVotekickThreshold().then(this.loadVotekickThreshold)
                 }
               >
@@ -643,7 +635,7 @@ class HLLSettings extends React.Component {
               <Button
                 fullWidth
                 variant="outlined"
-                onClick={(e) =>
+                onClick={() =>
                   this.resetVotekickThreshold().then(this.loadVotekickThreshold)
                 }
               >

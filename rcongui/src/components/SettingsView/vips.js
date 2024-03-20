@@ -143,8 +143,8 @@ const VipUpload = () => {
       {result ? (
         <Grid item xs={12}>
           <Typography variant="body2" color="secondary">
-            The job may take a while, here's the current status, do not resubmit
-            unless you see a "finished" or "failed" status:{' '}
+            {`The job may take a while, here's the current status, do not resubmit`}
+            {`unless you see a "finished" or "failed" status: `}
           </Typography>
           <pre>{result}</pre>
         </Grid>

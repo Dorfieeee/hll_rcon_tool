@@ -24,7 +24,6 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import { PlayerStatProfile } from './PlayerStatProfile';
 import MUIDataTable from 'mui-datatables';
 import { Button } from '@mui/material';
-import { fromJS } from 'immutable';
 import { toPairs, sortBy } from 'lodash';
 
 export const safeGetSteamProfile = (scoreObj) =>
@@ -208,7 +207,7 @@ const RawScores = ({ scores }) => {
       name: 'longest_life_secs',
       label: '(aprox.) Longest life min.',
       options: {
-        customBodyRender: (value, tableMeta, updateValue) =>
+        customBodyRender: (value) =>
           Math.round(parseInt(value) / 60).toFixed(2),
       },
     },
@@ -216,7 +215,7 @@ const RawScores = ({ scores }) => {
       name: 'shortest_life_secs',
       label: '(aprox.) Shortest life secs.',
       options: {
-        customBodyRender: (value, tableMeta, updateValue) =>
+        customBodyRender: (value) =>
           Math.round(parseInt(value) / 60).toFixed(2),
       },
     },
@@ -224,7 +223,7 @@ const RawScores = ({ scores }) => {
       name: 'death_by',
       label: 'Nemesis',
       options: {
-        customBodyRender: (value, tableMeta, updateValue) => {
+        customBodyRender: (value) => {
           const pairs = toPairs(value);
           return sortBy(pairs, (v) => -v[1]).map((v) => `${v[0]}: ${v[1]}`)[0];
         },
@@ -234,7 +233,7 @@ const RawScores = ({ scores }) => {
       name: 'most_killed',
       label: 'Victim',
       options: {
-        customBodyRender: (value, tableMeta, updateValue) => {
+        customBodyRender: (value) => {
           const pairs = toPairs(value);
           return sortBy(pairs, (v) => -v[1]).map((v) => `${v[0]}: ${v[1]}`)[0];
         },
@@ -333,7 +332,7 @@ function commaSeperatedListRenderer(value) {
     .join(', ');
 }
 
-const Scores = ({ scores, durationToHour, type }) => {
+const Scores = ({ scores, durationToHour }) => {
   const [highlight, setHighlight] = React.useState(null);
   const doHighlight = (playerScore) => {
     setHighlight(playerScore);

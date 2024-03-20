@@ -22,46 +22,10 @@ import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 
 // FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
-const withWidth = () => (WrappedComponent) => (props) => (
-  <WrappedComponent {...props} width="xs" />
-);
-
-const formatClass = (action, classes, highlightLogs) => {
-  // if the message is a chat message
-  if (highlightLogs) {
-    if (action.toLowerCase().includes('chat')) {
-      if (action.toLowerCase().includes('allies')) {
-        return classes.logsChatAllies;
-      }
-      if (action.toLowerCase().includes('axis')) {
-        return classes.logsChatAxis;
-      }
-    } else if (action.toLowerCase().includes('admin')) {
-      return classes.logsAdmin;
-    } else if (action.toLowerCase().includes('tk')) {
-      return classes.logsTK;
-    } else if (action.toLowerCase().includes('match')) {
-      return classes.logsMatch;
-    } else if (action.toLowerCase().includes('vote')) {
-      return classes.logsVote;
-    } else
-      switch (action.toLowerCase()) {
-        case 'message':
-          return classes.logsMessage;
-        case 'team kill':
-          return classes.logsTeamKill;
-        case 'kill':
-          return classes.logsKill;
-        case 'teamswitch':
-          return classes.logsTeamSwitch;
-        case 'disconnected':
-          return classes.logsDisconnected;
-        case 'connected':
-          return classes.logsConnected;
-      }
-  }
-  return classes.logs;
-};
+const withWidth = () => (WrappedComponent) =>
+  function Logs(props) {
+    return <WrappedComponent {...props} width="xs" />;
+  };
 
 const Selector = ({
   defaultValue,

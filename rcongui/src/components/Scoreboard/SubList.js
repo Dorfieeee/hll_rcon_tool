@@ -52,7 +52,7 @@ export const SubList = ({
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding dense>
           {data.entrySeq().map(([key, value]) => (
-            <ListItem className={styles.nested}>
+            <ListItem key={key} className={styles.nested}>
               <ListItemText primary={key} />
               <ListItemSecondaryAction>
                 <Typography variant="h6" color="secondary">

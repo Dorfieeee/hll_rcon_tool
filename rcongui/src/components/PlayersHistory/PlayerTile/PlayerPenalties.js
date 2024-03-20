@@ -18,7 +18,7 @@ export const Penalites = ({ player }) => (
   <div>
     {player.get('received_actions', new List()).size < 1 ? 'Clean record' : ''}
     {player.get('received_actions', new List()).map((action) => (
-      <p>{`${action.get('action_type')} ${moment
+      <p key={action.get('time')}>{`${action.get('action_type')} ${moment
         .utc(action.get('time'))
         .local()
         .format(

@@ -2,7 +2,11 @@ import * as React from 'react';
 import DraggableListItem from './DraggableListItem';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
-const DraggableList = React.memo(({ items, onDragEnd, onRemove }) => {
+export default React.memo(function DraggableList({
+  items,
+  onDragEnd,
+  onRemove,
+}) {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="droppable-list">
@@ -27,5 +31,3 @@ const DraggableList = React.memo(({ items, onDragEnd, onRemove }) => {
     </DragDropContext>
   );
 });
-
-export default DraggableList;

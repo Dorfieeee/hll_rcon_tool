@@ -8,7 +8,7 @@ export function banListFromServer(data) {
     reduce(
       data,
       (acc, val) => {
-        if (!acc.hasOwnProperty(val.steam_id_64)) {
+        if (!acc.hasOwn(val.steam_id_64)) {
           acc[val.steam_id_64] = new Array(val);
         } else {
           acc[val.steam_id_64].push(val);

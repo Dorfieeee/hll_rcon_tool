@@ -9,7 +9,6 @@ import {
 
 const ServerName = () => {
   const [name, setName] = React.useState('');
-  const isFirstRender = React.useRef(true);
 
   React.useEffect(() => {
     get('get_name')

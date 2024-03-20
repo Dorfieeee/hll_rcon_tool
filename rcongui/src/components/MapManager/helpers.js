@@ -11,7 +11,7 @@ export const reorder = (list, startIndex, endIndex) => {
 
 export const getItems = (count) =>
   Array.from({ length: count }, (v, k) => k).map(
-    (k) => faker.commerce.productName()
+    () => faker.commerce.productName()
     //{
     //id: `Item ${k + 1}`,
     // primary: faker.commerce.productName(),

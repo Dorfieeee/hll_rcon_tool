@@ -76,10 +76,8 @@ const NamePopOver = ({ names }) => {
         <Grid container className={styles.padding}>
           {names.map((name, index) => {
             return (
-              <Grid item xs={12}>
-                <Typography key={index} variant="body2">
-                  {name.name}
-                </Typography>
+              <Grid item xs={12} key={index}>
+                <Typography variant="body2">{name.name}</Typography>
               </Grid>
             );
           })}
@@ -183,10 +181,10 @@ const PlayerInfoFunc = () => {
     get(`get_ban?steam_id_64=${steamId64}`)
       .then((response) => showResponse(response, 'get_ban', false))
       .then((data) => {
-        const temp = data.result.find((ban, index) => {
+        const temp = data.result.find((ban) => {
           return ban.type === 'temp';
         });
-        const perma = data.result.find((ban, index) => {
+        const perma = data.result.find((ban) => {
           return ban.type === 'perma';
         });
         if (temp !== undefined) {
@@ -377,7 +375,7 @@ const PlayerInfoFunc = () => {
                       [temp, 'IS TEMPBANNED'],
                       [blacklist?.is_blacklisted, 'IS BLACKLISTED'],
                     ].map((e) => (
-                      <Is bool={e[0]} text={e[1]} />
+                      <Is key={e[1]} bool={e[0]} text={e[1]} />
                     ))}
                   </Grid>
                 </Grid>
@@ -457,10 +455,10 @@ class PlayerInfo extends React.Component {
     get(`get_ban?steam_id_64=${steamId64}`)
       .then((response) => showResponse(response, 'get_ban', false))
       .then((data) => {
-        const temp = data.result.find((ban, index) => {
+        const temp = data.result.find((ban) => {
           return ban.type === 'temp';
         });
-        const perma = data.result.find((ban, index) => {
+        const perma = data.result.find((ban) => {
           return ban.type === 'perma';
         });
         if (temp !== undefined && this._mounted) {
@@ -548,7 +546,7 @@ class PlayerInfo extends React.Component {
 
   componentWillUnmount() {
     this._mounted = false;
-    this.setState = (state, callback) => {
+    this.setState = () => {
       return;
     };
   }
@@ -657,7 +655,7 @@ class PlayerInfo extends React.Component {
                           'IS BLACKLISTED',
                         ],
                       ].map((e) => (
-                        <Is bool={e[0]} text={e[1]} />
+                        <Is key={e[1]} bool={e[0]} text={e[1]} />
                       ))}
                     </Grid>
                   </Grid>

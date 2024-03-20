@@ -1,5 +1,4 @@
 import { Grid, ImageList, ImageListItem } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import 'emoji-mart/css/emoji-mart.css';
 import { ActionButton } from './PlayerTile/ActionButton';
@@ -10,9 +9,10 @@ import { PlayerPenalties } from './PlayerTile/PlayerPenalties';
 import { PlayerBan } from './PlayerTile/PlayerBan';
 
 // FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
-const withWidth = () => (WrappedComponent) => (props) => (
-  <WrappedComponent {...props} width="xs" />
-);
+const withWidth = () => (WrappedComponent) =>
+  function PlayerGrid(props) {
+    return <WrappedComponent {...props} width="xs" />;
+  };
 
 const PlayerGrid = withWidth()(({
   players,

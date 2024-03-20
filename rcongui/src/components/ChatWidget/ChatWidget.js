@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import Badge from '@mui/material/Badge';
 import { Comment, Send } from '@mui/icons-material';
 import { Box, Button, Chip, Drawer, Grid, TextField } from '@mui/material';
@@ -22,12 +22,6 @@ const useStyles = makeStyles((theme) => ({
     maxHeight: '68vh',
   },
 }));
-
-const AlwaysScrollToBottom = () => {
-  const elementRef = useRef();
-  useEffect(() => elementRef.current.scrollIntoView());
-  return <div ref={elementRef} />;
-};
 
 const ChatContent = ({ data, handleMessageSend }) => {
   const classes = useStyles();
@@ -109,7 +103,7 @@ const ChatContent = ({ data, handleMessageSend }) => {
                 variant="contained"
                 fullWidth
                 color="secondary"
-                onClick={(e) => {
+                onClick={() => {
                   handleMessageSend(comment);
                   setComment('');
                 }}

@@ -152,6 +152,7 @@ export const WordList = ({
             size="small"
             variant="outlined"
             label={option}
+            key={option}
             {...getTagProps({ index })}
           />
         ))

@@ -24,7 +24,6 @@ import TextHistoryManager, { SelectNameSpace } from './textHistoryManager';
 import TextHistory from '../textHistory';
 import ServicesList from '../Services';
 import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
 import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -162,7 +161,7 @@ const WebhooksConfig = () => {
   return (
     <React.Fragment>
       {hooks.map((hookConfig) => (
-        <Grid container>
+        <Grid container key={hookConfig.name}>
           <Grid item xs={12}>
             <Typography variant="h6" style={{ 'text-transform': 'capitalize' }}>
               For: {hookConfig.name}
@@ -171,6 +170,7 @@ const WebhooksConfig = () => {
               {hookConfig.hooks.length ? (
                 hookConfig.hooks.map((o, idx) => (
                   <Hook
+                    key={o.hook}
                     hook={o.hook}
                     roles={o.roles}
                     actionType="delete"
@@ -429,7 +429,7 @@ class RconSettings extends React.Component {
     }
   }
 
-  handleEditorDidMount(editor, monaco) {
+  handleEditorDidMount(editor) {
     this.editorRef.current = editor;
   }
 
@@ -799,16 +799,14 @@ class RconSettings extends React.Component {
               Auto settings
             </Typography>
             <Typography variant="body1">
-              Can be turned On and Off under "Manage services"
+              {`Can be turned On and Off under "Manage services"`}
             </Typography>
           </Grid>
         </Grid>
         <Grid item xs={12}>
           <AutoSettings
             words={autosettings}
-            onWordsChange={(words, event) =>
-              this.setState({ autosettings: words })
-            }
+            onWordsChange={(words) => this.setState({ autosettings: words })}
             onSave={() => this.saveAutoSettings(autosettings)}
             forward={forwardAutoSettings}
             onFowardChange={() => this.toggle('forwardAutoSettings')}

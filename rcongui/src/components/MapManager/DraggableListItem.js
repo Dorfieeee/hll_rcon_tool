@@ -99,6 +99,7 @@ const DraggableListItem = ({ item, index, onRemove }) => {
                       variant={labelsVariant[e]}
                       color={labelsColors[e]}
                       label={e}
+                      key={e}
                     />
                   ))}
                 </Typography>

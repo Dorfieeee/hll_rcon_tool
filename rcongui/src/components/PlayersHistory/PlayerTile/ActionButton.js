@@ -18,7 +18,6 @@ export const ActionButton = ({
   onflag,
   isVip,
   onAddVip,
-  onDeleteVip,
   isWatched,
   onAddToWatchList,
   onRemoveFromWatchList,

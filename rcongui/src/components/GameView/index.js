@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import {
   Grid,
   Link,
-  Modal,
   Typography,
   TextField,
   Avatar,
@@ -31,11 +30,7 @@ import {
   postData,
   showResponse,
 } from '../../utils/fetchUtils';
-import {
-  Duration,
-  PlayerActions,
-  ReasonDialog,
-} from '../PlayerView/playerActions';
+import { PlayerActions, ReasonDialog } from '../PlayerView/playerActions';
 import { toast } from 'react-toastify';
 import { FlagDialog } from '../PlayersHistory';
 import Padlock from '../SettingsView/padlock';
@@ -64,7 +59,6 @@ const Squad = ({
   squadName,
   squadData,
   doOpen,
-  onSelectSquad,
   onSelectPlayer,
   selectedPlayers,
   selectMultiplePlayers,
@@ -295,7 +289,7 @@ const Team = ({
   );
 };
 
-const SimplePlayerRenderer = ({ player, flag }) => (
+const SimplePlayerRenderer = ({ flag }) => (
   <Typography variant="h4">
     Add {!flag ? '<select a flag>' : flag} to all selected players
   </Typography>
@@ -328,19 +322,19 @@ const GameView = () => {
 
   const sortTypeToFunc = React.useMemo(
     () => ({
-      combat_desc: (squadData, squadName) => -squadData.get('combat', 0),
-      offense_desc: (squadData, squadName) => -squadData.get('offense', 0),
-      defense_desc: (squadData, squadName) => -squadData.get('defense', 0),
-      support_desc: (squadData, squadName) => -squadData.get('support', 0),
-      kills_desc: (squadData, squadName) => -squadData.get('kills', 0),
-      deaths_desc: (squadData, squadName) => -squadData.get('kills', 0),
-      name_asc: (squadData, squadName) => squadName,
-      combat_asc: (squadData, squadName) => squadData.get('combat', 0),
-      offense_asc: (squadData, squadName) => squadData.get('offense', 0),
-      defense_asc: (squadData, squadName) => squadData.get('defense', 0),
-      support_asc: (squadData, squadName) => squadData.get('support', 0),
-      kills_asc: (squadData, squadName) => squadData.get('kills', 0),
-      deaths_asc: (squadData, squadName) => squadData.get('kills', 0),
+      combat_desc: (squadData) => -squadData.get('combat', 0),
+      offense_desc: (squadData) => -squadData.get('offense', 0),
+      defense_desc: (squadData) => -squadData.get('defense', 0),
+      support_desc: (squadData) => -squadData.get('support', 0),
+      kills_desc: (squadData) => -squadData.get('kills', 0),
+      deaths_desc: (squadData) => -squadData.get('kills', 0),
+      name_asc: (squadName) => squadName,
+      combat_asc: (squadData) => squadData.get('combat', 0),
+      offense_asc: (squadData) => squadData.get('offense', 0),
+      defense_asc: (squadData) => squadData.get('defense', 0),
+      support_asc: (squadData) => squadData.get('support', 0),
+      kills_asc: (squadData) => squadData.get('kills', 0),
+      deaths_asc: (squadData) => squadData.get('kills', 0),
     }),
     []
   );
@@ -356,7 +350,7 @@ const GameView = () => {
         .get(key, new Map())
         .get('squads', new Map())
         .entrySeq()
-        .forEach(([key, value]) =>
+        .forEach(([, value]) =>
           value.get('players', new IList()).forEach((player) => {
             namesToId[player.get('name')] = player.get('steam_id_64');
           })
@@ -382,7 +376,7 @@ const GameView = () => {
       .get(teamName, new Map())
       .get('squads', new Map())
       .entrySeq()
-      .map(([key, value]) =>
+      .map(([, value]) =>
         value.get('players', new IList()).map((player) => player.get('name'))
       )
       .flatten()
@@ -589,8 +583,7 @@ const GameView = () => {
               player,
               reason,
               comment,
-              duration_hours = 2,
-              steam_id_64 = null
+              duration_hours = 2
             ) => {
               handleAction(
                 action,

@@ -32,7 +32,9 @@ const PlayerSummary = ({ player, flag }) => {
       <p>
         To:{' '}
         {player.get('names')
-          ? player.get('names', []).map((n) => <Chip label={n.get('name')} />)
+          ? player
+              .get('names', [])
+              .map((n) => <Chip key={n.get('name')} label={n.get('name')} />)
           : 'No name recorded'}
       </p>
       <p>Steamd id: {player.get('steam_id_64', '')}</p>
@@ -43,7 +45,7 @@ const PlayerSummary = ({ player, flag }) => {
 };
 
 class PlayerView extends Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
       selectedPlayers: new List(),

@@ -12,7 +12,7 @@ import {
   faQuestionCircle,
   faStar,
 } from '@fortawesome/free-solid-svg-icons';
-import { faSteam, faXbox, faWindows } from '@fortawesome/free-brands-svg-icons';
+import { faSteam, faWindows } from '@fortawesome/free-brands-svg-icons';
 import Link from '@mui/material/Link';
 import Icon from '@mui/material/Icon';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
@@ -35,9 +35,10 @@ import makePlayerProfileUrl from '../../utils/makePlayerProfileUrl';
 import moment from 'moment';
 
 // FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
-const withWidth = () => (WrappedComponent) => (props) => (
-  <WrappedComponent {...props} width="xs" />
-);
+const withWidth = () => (WrappedComponent) => (props) =>
+  function CompactList() {
+    return <WrappedComponent {...props} width="xs" />;
+  };
 
 const zeroPad = (num, places) => String(num).padStart(places, '0');
 

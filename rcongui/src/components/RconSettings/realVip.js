@@ -1,15 +1,5 @@
 import React from 'react';
-import {
-  Button,
-  Grid,
-  IconButton,
-  Link,
-  TextField,
-  Typography,
-  Switch,
-  Tooltip,
-  FormControlLabel,
-} from '@mui/material';
+import { Grid, TextField, Switch, FormControlLabel } from '@mui/material';
 import {
   get,
   handle_http_errors,

@@ -161,8 +161,7 @@ export const PlayerHeader = ({ player }) => {
                   alert(`This feature only works if your rcon uses HTTPS.`);
                   return;
                 }
-                if (navigator.clipboard === undefined) {
-                } else {
+                if (navigator.clipboard !== undefined) {
                   navigator.clipboard.writeText(text).then(
                     function () {
                       console.log(

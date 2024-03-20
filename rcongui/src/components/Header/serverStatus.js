@@ -73,7 +73,7 @@ const Status = ({
               );
             }
             return (
-              <MenuItem onClick={handleClose}>
+              <MenuItem key={link} onClick={handleClose}>
                 <Link color="inherit" href={link}>
                   {s.get('name')}
                 </Link>

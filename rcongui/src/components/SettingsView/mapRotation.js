@@ -14,9 +14,10 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 // FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
-const withWidth = () => (WrappedComponent) => (props) => (
-  <WrappedComponent {...props} width="xs" />
-);
+const withWidth = () => (WrappedComponent) =>
+  function MapRotation(props) {
+    return <WrappedComponent {...props} width="xs" />;
+  };
 
 function not(a, b) {
   return a.filter((value) => b.indexOf(value) === -1);

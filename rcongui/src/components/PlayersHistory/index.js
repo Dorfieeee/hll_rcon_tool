@@ -8,7 +8,6 @@ import {
   showResponse,
 } from '../../utils/fetchUtils';
 import { toast } from 'react-toastify';
-import { reduce } from 'lodash';
 import Pagination from '@mui/material/Pagination';
 import {
   Button,
@@ -43,7 +42,9 @@ const PlayerSummary = ({ player, flag }) => (
     <Typography variant="body2">
       To:{' '}
       {player && player.get('names')
-        ? player.get('names').map((n) => <Chip label={n.get('name')} />)
+        ? player
+            .get('names')
+            .map((n) => <Chip key={n.get('name')} label={n.get('name')} />)
         : 'No name recorded'}
     </Typography>
     <Typography variant="body2">

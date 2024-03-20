@@ -4,7 +4,11 @@ import { Chip, Grid, Typography } from '@mui/material';
 export function PlayerVipSummary({ player, isVip }) {
   const playerNames =
     player && player.get('names')
-      ? player.get('names').map((name) => <Chip label={name.get('name')} />)
+      ? player
+          .get('names')
+          .map((name) => (
+            <Chip key={name.get('name')} label={name.get('name')} />
+          ))
       : 'No name recorded';
 
   let vipExpirationTimestamp = 'Not VIP';

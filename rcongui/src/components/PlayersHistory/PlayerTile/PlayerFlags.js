@@ -9,8 +9,8 @@ export const PlayerFlags = ({ player, onDeleteFlag }) => {
   return (
     <Grid container alignItems="center" justifyContent="center">
       <Grid item style={{ height: '22px' }}></Grid>
-      {player.get('flags', new List()).map((d) => (
-        <Grid item style={{ height: '22px' }}>
+      {player.get('flags', new List()).map((d, index) => (
+        <Grid item style={{ height: '22px' }} key={d.get('flag') + index}>
           <Tooltip
             title={d.get('comment') ? d.get('comment') : '<empty>'}
             arrow

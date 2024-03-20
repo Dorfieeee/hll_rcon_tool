@@ -1,10 +1,5 @@
 import React from 'react';
 import {
-  Grid,
-  Typography,
-  AppBar,
-  Toolbar,
-  LinearProgress,
   ImageList,
   ImageListItem,
   useTheme,
@@ -14,7 +9,7 @@ import {
 import makeStyles from '@mui/styles/makeStyles';
 import { alpha } from '@mui/material/styles';
 import { get, handle_http_errors, showResponse } from '../../utils/fetchUtils';
-import { List as iList, Map, fromJS } from 'immutable';
+import { Map, fromJS } from 'immutable';
 import { getMapImageUrl } from '../Scoreboard/utils';
 
 const useStyles = makeStyles((theme) => ({

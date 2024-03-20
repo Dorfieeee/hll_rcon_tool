@@ -6,7 +6,7 @@ import { PlayerFlags } from './PlayerFlags';
 import { PlayerSighthings } from './PlayerSighthings';
 import { PlayerPenalties } from './PlayerPenalties';
 
-export default ({ onDeleteFlag, player }) => {
+export default function playerView({ onDeleteFlag, player }) {
   return (
     <ImageListItem style={{ minHeight: '100%' }}>
       <Grid container direction="column" justifyContent="space-between">
@@ -35,4 +35,4 @@ export default ({ onDeleteFlag, player }) => {
       </Grid>
     </ImageListItem>
   );
-};
+}

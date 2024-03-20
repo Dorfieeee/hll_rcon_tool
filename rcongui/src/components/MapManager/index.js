@@ -1,17 +1,13 @@
 import * as React from 'react';
-import makeStyles from '@mui/styles/makeStyles';
-import Paper from '@mui/material/Paper';
 import DraggableList from './DraggableList';
-import { getItems, reorder } from './helpers';
+import { reorder } from './helpers';
 import {
   get,
   handle_http_errors,
   postData,
-  sendAction,
   showResponse,
 } from '../../utils/fetchUtils';
 import { Button, CircularProgress, Grid, Typography } from '@mui/material';
-import Chip from '@mui/material/Chip';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 

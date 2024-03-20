@@ -7,9 +7,10 @@ import { DialogActions, DialogContent, DialogTitle } from '../dialog';
 import FormHelperText from '@mui/material/FormHelperText';
 
 // FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
-const withWidth = () => (WrappedComponent) => (props) => (
-  <WrappedComponent {...props} width="xs" />
-);
+const withWidth = () => (WrappedComponent) => (props) =>
+  function Unban() {
+    return <WrappedComponent {...props} width="xs" />;
+  };
 
 const Unban = ({
   bannedPlayers,
@@ -56,7 +57,7 @@ const Unban = ({
           'Unable to show bans. Please retry'
         )}
         <FormHelperText>
-          Don't forget to remove the Blacklisting as well for permabans
+          {`Don't forget to remove the Blacklisting as well for permabans`}
         </FormHelperText>
         <Button autoFocus onClick={onReload} variant="outlined" color="primary">
           RELOAD LIST

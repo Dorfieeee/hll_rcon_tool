@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,7 +8,6 @@ import {
   Title,
   Tooltip,
   Legend,
-  registerables,
 } from 'chart.js';
 import StarIcon from '@mui/icons-material/Star';
 import LinearProgress from '@mui/material/LinearProgress';
@@ -24,19 +22,16 @@ import 'chartjs-adapter-moment';
 import { Bar } from 'react-chartjs-2';
 import makeStyles from '@mui/styles/makeStyles';
 import { get, handle_http_errors, showResponse } from '../../utils/fetchUtils';
-import { fromJS } from 'immutable';
 import {
   Dialog,
   DialogTitle,
   Grid,
   Link,
-  Modal,
   Typography,
   DialogContent,
   DialogActions,
   DialogContentText,
   Button,
-  TextareaAutosize,
 } from '@mui/material';
 
 ChartJS.register(
@@ -62,20 +57,6 @@ function hexToRgb(hex) {
         ')'
     : null;
 }
-
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
 
 function DetailsDialog({
   datasetElementIndex,
@@ -277,7 +258,6 @@ const ServerStatsPage = () => {
       ),
     [stats]
   );
-  const styles = useStyles();
   const datasets = React.useMemo(
     () =>
       Object.keys(stats)
@@ -294,7 +274,7 @@ const ServerStatsPage = () => {
           },
         }))
         .concat(
-          Object.keys(stats).map((mapName, i) => ({
+          Object.keys(stats).map((mapName) => ({
             grouped: false,
             label: 'vip',
             data: stats[mapName],
@@ -434,7 +414,7 @@ const ServerStatsPage = () => {
               plugins: {
                 legend: {
                   labels: {
-                    filter: function (item, chart) {
+                    filter: function (item) {
                       // Logic to remove a particular legend item goes here
                       return !item.text.includes('vip');
                     },

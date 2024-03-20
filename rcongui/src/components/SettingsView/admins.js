@@ -20,7 +20,9 @@ const AdminRole = ({ role, setRole, roles }) => (
     <InputLabel shrink>Role</InputLabel>
     <Select value={role} onChange={(e) => setRole(e.target.value)} displayEmpty>
       {roles.map((r) => (
-        <MenuItem value={r}>{r}</MenuItem>
+        <MenuItem key={r} value={r}>
+          {r}
+        </MenuItem>
       ))}
     </Select>
   </FormControl>

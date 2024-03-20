@@ -1,14 +1,7 @@
-import React, { useEffect } from 'react';
-import { toast } from 'react-toastify';
-import {
-  postData,
-  showResponse,
-  get,
-  handle_http_errors,
-} from '../../utils/fetchUtils';
+import React from 'react';
+import { postData, showResponse } from '../../utils/fetchUtils';
 import Grid from '@mui/material/Grid';
 import makeStyles from '@mui/styles/makeStyles';
-import LogsTable from './logTable';
 import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers/';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import InputLabel from '@mui/material/InputLabel';
@@ -32,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LogsFilter = ({ onSubmit, onChange }) => {
+const LogsFilter = ({ onSubmit }) => {
   const classes = useStyles();
   const [name, setName] = React.useState('');
   const [steamId64, setSteamId64] = React.useState('');

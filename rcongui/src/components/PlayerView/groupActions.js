@@ -14,9 +14,10 @@ import { sortBy } from 'lodash/collection';
 import { getSharedMessages } from '../../utils/fetchUtils';
 
 // FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
-const withWidth = () => (WrappedComponent) => (props) => (
-  <WrappedComponent {...props} width="xs" />
-);
+const withWidth = () => (WrappedComponent) =>
+  function GroupActions(props) {
+    return <WrappedComponent {...props} width="xs" />;
+  };
 
 const compactProfile = (player) => {
   let s = '';

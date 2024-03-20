@@ -1,11 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Badge from '@mui/material/Badge';
-import { Comment, Send } from '@mui/icons-material';
-import { Box, Button, Chip, Drawer, Grid, TextField } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
-import IconButton from '@mui/material/IconButton';
+import React from 'react';
 import Typography from '@mui/material/Typography';
 import moment from 'moment';
+import { makeStyles } from '@mui/styles';
+import { Box } from '@mui/system';
+import { Chip, Grid } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
   message: {
@@ -25,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
 
 const MessageHistory = ({ data }) => {
   const classes = useStyles();
-  const [comment, setComment] = React.useState('');
 
   return (
     <React.Fragment>

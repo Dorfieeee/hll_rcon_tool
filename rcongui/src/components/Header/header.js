@@ -7,7 +7,6 @@ import Button from '@mui/material/Button';
 import ServerStatus from './serverStatus';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import makeStyles from '@mui/styles/makeStyles';
 import LoginBox from './login';
 import { Stack } from '@mui/material';
 
@@ -190,20 +189,6 @@ const menuConfigs = [
 
 // TODO: Make this reactive, it's causing the view on mobile to be bigger then it should
 const Header = () => {
-  const classes = makeStyles((theme) => ({
-    appbar: {
-      borderBottom: `1px solid ${theme.palette.divider}`,
-    },
-    toolbar: {
-      flexDirection: 'row',
-      gap: '0.25rem',
-    },
-    navigation: {
-      display: 'flex',
-      flexGrow: 1,
-    },
-  }))();
-
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openedMenu, setOpenedMenu] = React.useState('');
 

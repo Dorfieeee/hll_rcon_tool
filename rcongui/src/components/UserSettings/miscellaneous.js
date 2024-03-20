@@ -265,7 +265,7 @@ export const Scorebot = ({
             A list of which stats to display, \`type\` must be one of:
                 'TOP_KILLERS','TOP_RATIO','TOP_PERFORMANCE','TRY_HARDERS','TOP_STAMINA','TOP_KILL_STREAK','MOST_PATIENT',
                 'I_NEVER_GIVE_UP','IM_CLUMSY','I_NEED_GLASSES','I_LOVE_VOTING','WHAT_IS_A_BREAK','SURVIVORS' or 'U_R_STILL_A_MAN'
-            Discord markup is supported in \`display_format\`, you can add emoji too, do \<the emoji> on your discord to get that id
+            Discord markup is supported in \`display_format\`, you can add emoji too, do <the emoji> on your discord to get that id
         */
         "stats_to_display": [
             {
@@ -514,6 +514,7 @@ export const NameKicks = ({
   validateEndpoint,
   describeEndpoint,
 }) => {
+  /* eslint-disable no-useless-escape */
   const notes = `
     {
         /*
@@ -545,6 +546,7 @@ export const NameKicks = ({
         "whitelist_flags": []
     }
     `;
+  /* eslint-enable no-useless-escape */
 
   return (
     <UserSetting

@@ -1,35 +1,37 @@
-import React from "react";
-import { Grid, Link, Typography } from "@mui/material";
+import React from 'react';
+import { Grid, Link, Typography } from '@mui/material';
 import {
   get as apiGet,
   handle_http_errors,
   showResponse,
-} from "../../utils/fetchUtils";
+} from '../../utils/fetchUtils';
 
 const Footer = () => {
   const [repoData, setRepoData] = React.useState([]);
-  const [apiVersion, setApiVersion] = React.useState("N/A");
+  const [apiVersion, setApiVersion] = React.useState('N/A');
 
   React.useEffect(() => {
     async function onLoad() {
       try {
-        const gitResponse = await fetch("https://api.github.com/repos/MarechJ/hll_rcon_tool/contributors")
-  
+        const gitResponse = await fetch(
+          'https://api.github.com/repos/MarechJ/hll_rcon_tool/contributors'
+        );
+
         if (gitResponse.status !== 200) {
-          throw new Error("Rate limited");
+          throw new Error('Rate limited');
         }
-  
-        setRepoData(await gitResponse.json())
+
+        setRepoData(await gitResponse.json());
       } catch (error) {
-        console.error("Something went wrong parsing github data.")        
+        console.error('Something went wrong parsing github data.');
       }
 
       try {
-        const apiResponse = await apiGet("get_version");
-        const apiData = await showResponse(apiResponse, "get_version", false);
-        setApiVersion(apiData.result)
+        const apiResponse = await apiGet('get_version');
+        const apiData = await showResponse(apiResponse, 'get_version', false);
+        setApiVersion(apiData.result);
       } catch (error) {
-        handle_http_errors(error)
+        handle_http_errors(error);
       }
     }
 
@@ -46,7 +48,7 @@ const Footer = () => {
       ));
   };
 
-  const appInfo = `UI Version: ${process.env.REACT_APP_VERSION} API Version: ${apiVersion} - Brought to you by Dr.WeeD, `
+  const appInfo = `UI Version: ${process.env.REACT_APP_VERSION} API Version: ${apiVersion} - Brought to you by Dr.WeeD, `;
 
   return (
     <Grid container>
@@ -57,7 +59,8 @@ const Footer = () => {
           display="block"
           gutterBottom
         >
-          {appInfo}{renderContributors()}
+          {appInfo}
+          {renderContributors()}
         </Typography>
       </Grid>
       {!process.env.REACT_APP_PUBLIC_BUILD ? (
@@ -68,17 +71,15 @@ const Footer = () => {
             display="block"
             gutterBottom
           >
-            Join{" "}
+            Join{' '}
             <Link target="_blank" href="https://discord.gg/zpSQQef">
               the discord
-            </Link>{" "}
+            </Link>{' '}
             for announcements, questions, feedback and support. Dev or docs
             contributions are most welcomed.
           </Typography>
         </Grid>
-      ) : (
-        null
-      )}
+      ) : null}
     </Grid>
   );
 };

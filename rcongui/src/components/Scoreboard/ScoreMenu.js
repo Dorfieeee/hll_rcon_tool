@@ -1,26 +1,26 @@
-import React from "react";
-import { AppBar, Link, Toolbar } from "@mui/material";
+import React from 'react';
+import { AppBar, Link, Toolbar } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   nav: {
-      flexGrow: 1,
-      display: "block",
-      textAlign: "left",
-    },
+    flexGrow: 1,
+    display: 'block',
+    textAlign: 'left',
+  },
   link: {
     margin: theme.spacing(1, 1.5),
     marginLeft: 0,
-  }
-}))
+  },
+}));
 
 const ScoreMenu = () => {
   const classes = useStyles();
 
   return (
     <AppBar position="static">
-      <Toolbar component={"nav"}>
+      <Toolbar component={'nav'}>
         <Link
           color="inherit"
           className={classes.link}
@@ -45,9 +45,9 @@ const ScoreMenu = () => {
         >
           Last games
         </Link>
-    </Toolbar>
+      </Toolbar>
     </AppBar>
-  )
+  );
 };
 
 export default ScoreMenu;

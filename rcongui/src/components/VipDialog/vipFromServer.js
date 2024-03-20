@@ -1,5 +1,5 @@
-import { fromJS } from "immutable";
-import { reduce } from "lodash";
+import { fromJS } from 'immutable';
+import { reduce } from 'lodash';
 
 export function vipListFromServer(data) {
   return fromJS(

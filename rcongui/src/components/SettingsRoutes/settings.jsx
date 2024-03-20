@@ -1,8 +1,8 @@
-import { Grid } from "@mui/material";
-import { Route, Switch } from "react-router-dom/cjs/react-router-dom.min";
-import HLLSettings from "../SettingsView/hllSettings";
-import RconSettings from "../RconSettings/rconSettings";
-import settingRoutes from "../../routes/settings"
+import { Grid } from '@mui/material';
+import { Route, Switch } from 'react-router-dom/cjs/react-router-dom.min';
+import HLLSettings from '../SettingsView/hllSettings';
+import RconSettings from '../RconSettings/rconSettings';
+import settingRoutes from '../../routes/settings';
 
 const Settings = () => {
   const generateSettingRoutes = (routes) => {

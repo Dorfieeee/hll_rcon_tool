@@ -1,28 +1,28 @@
-import React, { Fragment } from "react";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
-import ListItemText from "@mui/material/ListItemText";
-import "react-toastify/dist/ReactToastify.css";
-import { PlayerActions } from "./playerActions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { Fragment } from 'react';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import ListItemText from '@mui/material/ListItemText';
+import 'react-toastify/dist/ReactToastify.css';
+import { PlayerActions } from './playerActions';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faExclamationCircle,
   faLock,
   faQuestionCircle,
   faStar,
-} from "@fortawesome/free-solid-svg-icons";
-import { faSteam, faXbox, faWindows } from "@fortawesome/free-brands-svg-icons";
-import Link from "@mui/material/Link";
-import Icon from "@mui/material/Icon";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import { getEmojiFlag } from "../../utils/emoji";
-import { List as IList, Map } from "immutable";
-import { getName } from "country-list";
-import Popover from "@mui/material/Popover";
-import Typography from "@mui/material/Typography";
+} from '@fortawesome/free-solid-svg-icons';
+import { faSteam, faXbox, faWindows } from '@fortawesome/free-brands-svg-icons';
+import Link from '@mui/material/Link';
+import Icon from '@mui/material/Icon';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import { getEmojiFlag } from '../../utils/emoji';
+import { List as IList, Map } from 'immutable';
+import { getName } from 'country-list';
+import Popover from '@mui/material/Popover';
+import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Avatar,
   Badge,
@@ -30,34 +30,36 @@ import {
   Chip,
   Grid,
   ListItemAvatar,
-} from "@mui/material";
-import makePlayerProfileUrl from "../../utils/makePlayerProfileUrl";
-import moment from "moment";
+} from '@mui/material';
+import makePlayerProfileUrl from '../../utils/makePlayerProfileUrl';
+import moment from 'moment';
 
 // FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
-const withWidth = () => (WrappedComponent) => (props) => <WrappedComponent {...props} width="xs" />;
+const withWidth = () => (WrappedComponent) => (props) => (
+  <WrappedComponent {...props} width="xs" />
+);
 
-const zeroPad = (num, places) => String(num).padStart(places, "0");
+const zeroPad = (num, places) => String(num).padStart(places, '0');
 
 const useStyles = makeStyles((theme) => ({
   popover: {
-    pointerEvents: "none",
+    pointerEvents: 'none',
   },
   paper: {
     padding: theme.spacing(1),
   },
   paperBackground: {
-    backgroundColor: theme.palette.mode == "dark" ? "" : "grey",
+    backgroundColor: theme.palette.mode == 'dark' ? '' : 'grey',
   },
   darkBackground: {
-    backgroundColor: theme.palette.mode == "dark" ? "" : "grey",
+    backgroundColor: theme.palette.mode == 'dark' ? '' : 'grey',
   },
   primaryBackground: {
     backgroundColor: theme.palette.primary.dark,
   },
   customBadge: {
-    backgroundColor: "grey",
-    color: "white",
+    backgroundColor: 'grey',
+    color: 'white',
   },
 }));
 
@@ -78,8 +80,8 @@ function WithPopOver(props) {
   return (
     <React.Fragment>
       <Typography
-        style={{ display: "inline" }}
-        aria-owns={open ? "mouse-over-popover" : undefined}
+        style={{ display: 'inline' }}
+        aria-owns={open ? 'mouse-over-popover' : undefined}
         aria-haspopup="true"
         onMouseEnter={handlePopoverOpen}
         onMouseLeave={handlePopoverClose}
@@ -95,12 +97,12 @@ function WithPopOver(props) {
         open={open}
         anchorEl={anchorEl}
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
+          vertical: 'bottom',
+          horizontal: 'left',
         }}
         transformOrigin={{
-          vertical: "top",
-          horizontal: "left",
+          vertical: 'top',
+          horizontal: 'left',
         }}
         onClose={handlePopoverClose}
         disableRestoreFocus
@@ -119,16 +121,16 @@ function seconds_to_time(seconds) {
 }
 
 const getCountry = (player) => {
-  const country = player.get("country");
+  const country = player.get('country');
 
-  if (country === "private") {
+  if (country === 'private') {
     return (
       <WithPopOver content="Account is private">
         <FontAwesomeIcon icon={faLock} />
       </WithPopOver>
     );
   }
-  if (country === "" || country === null) {
+  if (country === '' || country === null) {
     return (
       <WithPopOver content="No country specified">
         <FontAwesomeIcon icon={faQuestionCircle} />
@@ -138,47 +140,48 @@ const getCountry = (player) => {
   return (
     <img
       alt={country}
-      title={country ? getName(country) : ""}
-      style={{ height: "12px" }}
+      title={country ? getName(country) : ''}
+      style={{ height: '12px' }}
       src={`https://catamphetamine.gitlab.io/country-flag-icons/3x2/${country}.svg`}
     />
   );
 };
 
 const getBans = (profile) => {
-  return profile.get("steam_bans") &&
-    profile.get("steam_bans").get("has_bans") === true ? (
+  return profile.get('steam_bans') &&
+    profile.get('steam_bans').get('has_bans') === true ? (
     <WithPopOver
-      content={`Players has bans: ${JSON.stringify(profile.get("steam_bans"))}`}
+      content={`Players has bans: ${JSON.stringify(profile.get('steam_bans'))}`}
     >
       <FontAwesomeIcon color="red" icon={faExclamationCircle} />
     </WithPopOver>
   ) : (
-    ""
+    ''
   );
 };
 
 const Flag = ({ data, onDeleteFlag }) => (
   <Link
     onClick={() =>
-      window.confirm("Delete flag?") ? onDeleteFlag(data.get("id")) : ""
+      window.confirm('Delete flag?') ? onDeleteFlag(data.get('id')) : ''
     }
   >
-    <WithPopOver content={`Comment: ${data.get("comment")}`}>
-      {getEmojiFlag(data.get("flag"), 22)}
+    <WithPopOver content={`Comment: ${data.get('comment')}`}>
+      {getEmojiFlag(data.get('flag'), 22)}
     </WithPopOver>
   </Link>
 );
 
 const formatPunitions = (profile) => {
-  const formatTime = (item) => moment.utc(item.get("time")).local().format("ddd Do MMM HH:mm:ss");
+  const formatTime = (item) =>
+    moment.utc(item.get('time')).local().format('ddd Do MMM HH:mm:ss');
   return profile
-    .get("received_actions", [])
+    .get('received_actions', [])
     .map((item) => (
       <Typography display="block" variant="caption" key={item}>{`${formatTime(
         item
-      )} ${item.get("action_type")} by ${item.get("by")}: ${item.get(
-        "reason"
+      )} ${item.get('action_type')} by ${item.get('by')}: ${item.get(
+        'reason'
       )}`}</Typography>
     ));
 };
@@ -197,7 +200,7 @@ const ScoreChips = ({ player, backgroundClass }) => {
               src="icons/roles/score_combat.png"
             />
           }
-          label={player.get("combat", 0)}
+          label={player.get('combat', 0)}
         />
       </Grid>
       <Grid item>
@@ -211,7 +214,7 @@ const ScoreChips = ({ player, backgroundClass }) => {
               src="icons/roles/score_offensive.png"
             />
           }
-          label={player.get("offense", 0)}
+          label={player.get('offense', 0)}
         />
       </Grid>
       <Grid item>
@@ -225,7 +228,7 @@ const ScoreChips = ({ player, backgroundClass }) => {
               src="icons/roles/score_defensive.png"
             />
           }
-          label={player.get("defense", 0)}
+          label={player.get('defense', 0)}
         />
       </Grid>
       <Grid item>
@@ -239,7 +242,7 @@ const ScoreChips = ({ player, backgroundClass }) => {
               src="icons/roles/score_support.png"
             />
           }
-          label={player.get("support", 0)}
+          label={player.get('support', 0)}
         />
       </Grid>
     </Fragment>
@@ -247,21 +250,20 @@ const ScoreChips = ({ player, backgroundClass }) => {
 };
 
 const KDChips = ({ player }) => {
-
   return (
     <Fragment>
       <Grid item>
         <Chip
           size="small"
           variant="outlined"
-          label={`K: ${player.get("kills")}`}
+          label={`K: ${player.get('kills')}`}
         />
       </Grid>
       <Grid item>
         <Chip
           size="small"
           variant="outlined"
-          label={`D: ${player.get("deaths")}`}
+          label={`D: ${player.get('deaths')}`}
         />
       </Grid>
       <Grid item>
@@ -269,16 +271,16 @@ const KDChips = ({ player }) => {
           size="small"
           variant="outlined"
           label={`KD: ${(
-            player.get("kills", 0) / Math.max(player.get("deaths", 1), 1)
+            player.get('kills', 0) / Math.max(player.get('deaths', 1), 1)
           ).toFixed(2)}`}
         />
       </Grid>
-      {player.get("loadout") ? (
+      {player.get('loadout') ? (
         <Grid item>
-          <Chip size="small" label={player.get("loadout", "")} />
+          <Chip size="small" label={player.get('loadout', '')} />
         </Grid>
       ) : (
-        ""
+        ''
       )}
     </Fragment>
   );
@@ -318,9 +320,9 @@ const PlayerItem = ({
   onSelect,
   isSelected,
 }) => {
-  const profile = player.get("profile") ? player.get("profile") : new Map();
-  const name = player.get("name");
-  const steamID64 = player.get("steam_id_64");
+  const profile = player.get('profile') ? player.get('profile') : new Map();
+  const name = player.get('name');
+  const steamID64 = player.get('steam_id_64');
   const classes = useStyles();
 
   return (
@@ -328,23 +330,23 @@ const PlayerItem = ({
       {playerHasExtraInfo ? (
         <ListItemAvatar>
           <Badge
-            badgeContent={player.get("level", 0)}
+            badgeContent={player.get('level', 0)}
             max={999}
             classes={{ badge: classes.customBadge }}
             anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "right",
+              vertical: 'bottom',
+              horizontal: 'right',
             }}
           >
             <Avatar
               variant="square"
               className={avatarBackround || classes.darkBackground}
-              src={`icons/roles/${player.get("role", "rifleman")}.png`}
+              src={`icons/roles/${player.get('role', 'rifleman')}.png`}
             ></Avatar>
           </Badge>
         </ListItemAvatar>
       ) : (
-        ""
+        ''
       )}
 
       <ListItemText
@@ -352,53 +354,51 @@ const PlayerItem = ({
         primary={
           <React.Fragment>
             <WithPopOver content={formatPunitions(profile)}>{name}</WithPopOver>
-            {" - "}
+            {' - '}
             {getCountry(player)}
-            {" - "}
-            {player.get("is_vip") ? (
+            {' - '}
+            {player.get('is_vip') ? (
               <React.Fragment>
                 <FontAwesomeIcon icon={faStar} />
-                {" - "}
+                {' - '}
               </React.Fragment>
             ) : (
-              ""
+              ''
             )}
             <Link
               className={classes.marginRight}
               target="_blank"
-              color={"inherit"}
+              color={'inherit'}
               href={makePlayerProfileUrl(steamID64, name)}
             >
-              <FontAwesomeIcon icon={(steamID64.length === 17) ? faSteam : faWindows} />
+              <FontAwesomeIcon
+                icon={steamID64.length === 17 ? faSteam : faWindows}
+              />
             </Link>
           </React.Fragment>
         }
         secondary={
           <React.Fragment>
             <span>
-              {seconds_to_time(profile.get("current_playtime_seconds"))} - #
-              {profile.get("sessions_count")} - {getBans(player)}
-            </span>{" "}
+              {seconds_to_time(profile.get('current_playtime_seconds'))} - #
+              {profile.get('sessions_count')} - {getBans(player)}
+            </span>{' '}
             <Link
               color="inherit"
               component={RouterLink}
-              to={`/player/${player.get("steam_id_64")}`}
+              to={`/player/${player.get('steam_id_64')}`}
             >
               {steamID64} <Icon component={OpenInNewIcon} fontSize="inherit" />
             </Link>
             <div className={classes.noPaddingMargin}>
-              {profile.get("flags", []).map((d) => (
+              {profile.get('flags', []).map((d) => (
                 <Flag key={d} data={d} onDeleteFlag={onDeleteFlag} />
               ))}
             </div>
           </React.Fragment>
         }
       />
-      {playerHasExtraInfo ? (
-        <ScoreListText player={player} />
-      ) : (
-        ""
-      )}
+      {playerHasExtraInfo ? <ScoreListText player={player} /> : ''}
 
       {handleAction ? (
         <ListItemSecondaryAction>
@@ -408,15 +408,15 @@ const PlayerItem = ({
             onFlag={onFlag}
             displayCount={nbButtons}
             isWatched={
-              profile.get("watchlist")
-                ? profile.get("watchlist").get("is_watched", false)
+              profile.get('watchlist')
+                ? profile.get('watchlist').get('is_watched', false)
                 : false
             }
-            penaltyCount={profile.get("penalty_count", Map())}
+            penaltyCount={profile.get('penalty_count', Map())}
           />
         </ListItemSecondaryAction>
       ) : (
-        ""
+        ''
       )}
 
       {onSelect ? (
@@ -424,7 +424,7 @@ const PlayerItem = ({
           <Checkbox checked={isSelected} onChange={onSelect} />
         </ListItemSecondaryAction>
       ) : (
-        ""
+        ''
       )}
     </ListItem>
   );
@@ -441,42 +441,42 @@ const weightedPenalities = (penaltiesMap) => {
     (sum, value, key) => sum + weights[key] * value,
     0
   );
-  console.log("Weighted penalites", res);
+  console.log('Weighted penalites', res);
   return res;
 };
 
 const getSortedPlayers = (players, sortType) => {
   let myPlayers = players;
-  const [direction, type] = sortType.split("_");
+  const [direction, type] = sortType.split('_');
 
-  if (!sortType || sortType === "") {
+  if (!sortType || sortType === '') {
     return myPlayers;
   }
 
   const sortFuncs = {
-    alpha: (p) => p.get("name").toLowerCase(),
+    alpha: (p) => p.get('name').toLowerCase(),
     time: (p) =>
-      !p.get("profile") ? 0 : p.get("profile").get("current_playtime_seconds"),
+      !p.get('profile') ? 0 : p.get('profile').get('current_playtime_seconds'),
     country: (p) => {
-      const country = p.get("country");
+      const country = p.get('country');
       if (!country) {
-        return "zzy";
+        return 'zzy';
       }
-      if (country === "private") return "zzz";
+      if (country === 'private') return 'zzz';
       return country;
     },
     sessions: (p) =>
-      !p.get("profile") ? 0 : p.get("profile").get("sessions_count"),
+      !p.get('profile') ? 0 : p.get('profile').get('sessions_count'),
     penalties: (p) =>
-      !p.get("profile")
+      !p.get('profile')
         ? 0
-        : weightedPenalities(p.get("profile").get("penalty_count")),
-    vips: (p) => p.get("is_vip"),
+        : weightedPenalities(p.get('profile').get('penalty_count')),
+    vips: (p) => p.get('is_vip'),
   };
 
   myPlayers = myPlayers.sortBy(sortFuncs[type]);
 
-  if (direction === "desc") {
+  if (direction === 'desc') {
     myPlayers = myPlayers.reverse();
   }
 
@@ -496,7 +496,7 @@ const CompactList = ({
     try {
       myPlayers = getSortedPlayers(players, sortType);
     } catch (err) {
-      console.log("Unable to sort ", err);
+      console.log('Unable to sort ', err);
     }
     return myPlayers;
   }, [players, sortType]);
@@ -515,25 +515,25 @@ const CompactList = ({
         <PlayerItem
           nbButtons={sizes[width]}
           player={player}
-          key={player.get("steam_id_64")}
+          key={player.get('steam_id_64')}
           handleAction={(actionType) =>
             handleAction(
               actionType,
-              player.get("name"),
+              player.get('name'),
               null,
               null,
               2,
-              player.get("steam_id_64")
+              player.get('steam_id_64')
             )
           }
           onFlag={() =>
             onFlag(
               Map({
-                steam_id_64: player.get("steam_id_64"),
-                names: (player.get("profile")
-                  ? player.get("profile")
+                steam_id_64: player.get('steam_id_64'),
+                names: (player.get('profile')
+                  ? player.get('profile')
                   : new Map()
-                ).get("names", IList([Map({ name: player.get("name") })])),
+                ).get('names', IList([Map({ name: player.get('name') })])),
               })
             )
           }

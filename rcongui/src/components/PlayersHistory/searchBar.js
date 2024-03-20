@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Button,
   Card,
@@ -13,12 +13,12 @@ import {
   Select,
   Switch,
   TextField,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3"
-import { Picker } from "emoji-mart";
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
+import { Picker } from 'emoji-mart';
 
 const SearchBar = ({
   name,
@@ -109,19 +109,22 @@ const SearchBar = ({
               <CardHeader
                 title="Pick emojis"
                 action={
-                  <IconButton onClick={() => setShowEmojiPicker(false)} size="large">
+                  <IconButton
+                    onClick={() => setShowEmojiPicker(false)}
+                    size="large"
+                  >
                     <CloseIcon />
                   </IconButton>
                 }
               />
               <CardContent>
                 <Picker
-                  onSelect={(emoji) => setFlags(flags + emoji.native + ",")}
+                  onSelect={(emoji) => setFlags(flags + emoji.native + ',')}
                 />
               </CardContent>
             </Card>
           ) : (
-            ""
+            ''
           )}
         </Grid>
 

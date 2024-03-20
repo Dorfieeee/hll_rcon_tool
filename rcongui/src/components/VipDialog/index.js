@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   ButtonGroup,
@@ -7,16 +7,23 @@ import {
   DialogContent,
   DialogTitle,
   Grid,
-} from "@mui/material";
+} from '@mui/material';
 
-import { LocalizationProvider, DateTimePicker } from "@mui/x-date-pickers/";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3"
-import moment from "moment";
-import { PlayerVipSummary } from "./PlayerVipSummary";
-import { ForwardCheckBox } from "../commonComponent";
+import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers/';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
+import moment from 'moment';
+import { PlayerVipSummary } from './PlayerVipSummary';
+import { ForwardCheckBox } from '../commonComponent';
 
 // this array could probably be moved to a config file
-const vipButtons = [[48, "hours"], [3, "days"], [7, "days"], [30, "days"], [60, "days"], [90, "days"]];
+const vipButtons = [
+  [48, 'hours'],
+  [3, 'days'],
+  [7, 'days'],
+  [30, 'days'],
+  [60, 'days'],
+  [90, 'days'],
+];
 
 const VipTimeButtons = ({
   amount,
@@ -59,10 +66,10 @@ export function VipExpirationDialog(props) {
 
   /* open is either a boolean or the passed in player Map */
   useEffect(() => {
-    if (!(typeof open === "boolean") && open) {
-      setIsVip(!!vips.get(open.get("steam_id_64")));
-      if (open.get("vip_expiration")) {
-        setExpirationTimestamp(open.get("vip_expiration"));
+    if (!(typeof open === 'boolean') && open) {
+      setIsVip(!!vips.get(open.get('steam_id_64')));
+      if (open.get('vip_expiration')) {
+        setExpirationTimestamp(open.get('vip_expiration'));
       }
     }
   }, [open, vips]);
@@ -103,7 +110,7 @@ export function VipExpirationDialog(props) {
                   setExpirationTimestamp(value.format());
                 }}
                 format="YYYY/MM/DD HH:mm"
-                maxDate={moment("3000-01-01T00:00:00+00:00")}
+                maxDate={moment('3000-01-01T00:00:00+00:00')}
               />
             </LocalizationProvider>
           </Grid>
@@ -112,7 +119,11 @@ export function VipExpirationDialog(props) {
       <DialogActions>
         <Button
           onClick={() => {
-            handleConfirm(open, moment("3000-01-01T00:00:00+00:00").format(), forward);
+            handleConfirm(
+              open,
+              moment('3000-01-01T00:00:00+00:00').format(),
+              forward
+            );
           }}
           color="primary"
         >
@@ -142,7 +153,7 @@ export function VipExpirationDialog(props) {
           onClick={() => {
             handleConfirm(
               open,
-              moment.utc(expirationTimestamp).format("YYYY-MM-DD HH:mm:ssZ"),
+              moment.utc(expirationTimestamp).format('YYYY-MM-DD HH:mm:ssZ'),
               forward
             );
           }}

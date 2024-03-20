@@ -1,20 +1,22 @@
-import React from "react";
-import Grid from "@mui/material/Grid";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Checkbox from "@mui/material/Checkbox";
-import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
-import Divider from "@mui/material/Divider";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import React from 'react';
+import Grid from '@mui/material/Grid';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Checkbox from '@mui/material/Checkbox';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import Divider from '@mui/material/Divider';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 // FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
-const withWidth = () => (WrappedComponent) => (props) => <WrappedComponent {...props} width="xs" />;
+const withWidth = () => (WrappedComponent) => (props) => (
+  <WrappedComponent {...props} width="xs" />
+);
 
 function not(a, b) {
   return a.filter((value) => b.indexOf(value) === -1);
@@ -79,7 +81,7 @@ const MapRotationTransferList = ({
                   checked={checked.indexOf(value) !== -1}
                   tabIndex={-1}
                   disableRipple
-                  inputProps={{ "aria-labelledby": labelId }}
+                  inputProps={{ 'aria-labelledby': labelId }}
                 />
               </ListItemIcon>
               <ListItemText id={labelId} primary={value} />
@@ -94,7 +96,7 @@ const MapRotationTransferList = ({
   return (
     <Grid container spacing={2} justifyContent="center" alignItems="center">
       <Grid item xs={12} sm={5}>
-        {customList(availableMaps, "Remaining unused maps")}
+        {customList(availableMaps, 'Remaining unused maps')}
       </Grid>
       <Grid item xs={12} sm={2}>
         <Grid container direction="column" alignItems="center">
@@ -105,7 +107,7 @@ const MapRotationTransferList = ({
             disabled={leftChecked.length === 0}
             aria-label="move selected right"
           >
-            {width === "xs" ? (
+            {width === 'xs' ? (
               <KeyboardArrowDownIcon />
             ) : (
               <KeyboardArrowRightIcon />
@@ -118,7 +120,7 @@ const MapRotationTransferList = ({
             disabled={rightChecked.length === 0}
             aria-label="move selected left"
           >
-            {width === "xs" ? (
+            {width === 'xs' ? (
               <KeyboardArrowUpIcon />
             ) : (
               <KeyboardArrowLeftIcon />
@@ -127,7 +129,7 @@ const MapRotationTransferList = ({
         </Grid>
       </Grid>
       <Grid item xs={12} sm={5}>
-        {customList(mapRotation, "Current map rotation")}
+        {customList(mapRotation, 'Current map rotation')}
       </Grid>
     </Grid>
   );

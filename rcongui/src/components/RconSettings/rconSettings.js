@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import withTheme from '@mui/styles/withTheme';
 import {
   Button,
@@ -7,7 +7,7 @@ import {
   TextField,
   Typography,
   Tooltip,
-} from "@mui/material";
+} from '@mui/material';
 import {
   addPlayerToWatchList,
   get,
@@ -15,38 +15,38 @@ import {
   handle_http_errors,
   postData,
   showResponse,
-} from "../../utils/fetchUtils";
-import Blacklist from "./blacklist";
-import { toast } from "react-toastify";
-import _ from "lodash";
-import Padlock from "../../components/SettingsView/padlock";
-import TextHistoryManager, { SelectNameSpace } from "./textHistoryManager";
-import TextHistory from "../textHistory";
-import ServicesList from "../Services";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormHelperText from "@mui/material/FormHelperText";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { ManualPlayerInput, WordList } from "../commonComponent";
-import DeleteIcon from "@mui/icons-material/Delete";
-import AddIcon from "@mui/icons-material/Add";
-import SaveIcon from "@mui/icons-material/Save";
-import RealVip from "./realVip";
-import HelpIcon from "@mui/icons-material/Help";
-import ServerName from "./serverName";
-import AutoSettings from "./autoSettings";
+} from '../../utils/fetchUtils';
+import Blacklist from './blacklist';
+import { toast } from 'react-toastify';
+import _ from 'lodash';
+import Padlock from '../../components/SettingsView/padlock';
+import TextHistoryManager, { SelectNameSpace } from './textHistoryManager';
+import TextHistory from '../textHistory';
+import ServicesList from '../Services';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { ManualPlayerInput, WordList } from '../commonComponent';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import SaveIcon from '@mui/icons-material/Save';
+import RealVip from './realVip';
+import HelpIcon from '@mui/icons-material/Help';
+import ServerName from './serverName';
+import AutoSettings from './autoSettings';
 
 const ManualWatchList = () => {
-  const [name, setName] = React.useState("");
-  const [steamId64, setSteamId64] = React.useState("");
-  const [reason, setReason] = React.useState("");
+  const [name, setName] = React.useState('');
+  const [steamId64, setSteamId64] = React.useState('');
+  const [reason, setReason] = React.useState('');
   const [sharedMessages, setSharedMessages] = React.useState([]);
 
   React.useEffect(() => {
-    getSharedMessages("punishments").then((data) => setSharedMessages(data));
+    getSharedMessages('punishments').then((data) => setSharedMessages(data));
   }, []);
-  const textHistory = new TextHistory("watchlist");
+  const textHistory = new TextHistory('watchlist');
 
   return (
     <ManualPlayerInput
@@ -58,7 +58,6 @@ const ManualWatchList = () => {
       setReason={setReason}
       textHistory={textHistory}
       sharedMessages={sharedMessages}
-      
       actionName="Watch"
       tooltipText="You will get a notification on you watchlist discord hook when this player enters your server"
       onSubmit={() => addPlayerToWatchList(steamId64, reason, null, name)}
@@ -67,7 +66,7 @@ const ManualWatchList = () => {
 };
 
 const Hook = ({
-  hook = "",
+  hook = '',
   roles = [],
   onAddHook,
   onDeleteHook,
@@ -98,12 +97,20 @@ const Hook = ({
         />
       </Grid>
       <Grid item xs={2}>
-        {actionType === "delete" ? (
+        {actionType === 'delete' ? (
           <React.Fragment>
-            <IconButton edge="start" onClick={() => onDeleteHook(myHook, myRoles)} size="large">
+            <IconButton
+              edge="start"
+              onClick={() => onDeleteHook(myHook, myRoles)}
+              size="large"
+            >
               <DeleteIcon />
             </IconButton>
-            <IconButton edge="start" onClick={() => onUpdateHook(myHook, myRoles)} size="large">
+            <IconButton
+              edge="start"
+              onClick={() => onUpdateHook(myHook, myRoles)}
+              size="large"
+            >
               <SaveIcon />
             </IconButton>
           </React.Fragment>
@@ -112,10 +119,11 @@ const Hook = ({
             edge="start"
             onClick={() => {
               onAddHook(myHook, myRoles);
-              setMyRoles("");
-              setMyHook("");
+              setMyRoles('');
+              setMyHook('');
             }}
-            size="large">
+            size="large"
+          >
             <AddIcon />
           </IconButton>
         )}
@@ -127,8 +135,8 @@ const Hook = ({
 const WebhooksConfig = () => {
   const [hooks, setHooks] = React.useState([]);
   React.useEffect(() => {
-    get("get_hooks")
-      .then((res) => showResponse(res, "get_hooks", false))
+    get('get_hooks')
+      .then((res) => showResponse(res, 'get_hooks', false))
       .then((res) => setHooks(res.result))
       .catch(handle_http_errors);
   }, []);
@@ -156,7 +164,7 @@ const WebhooksConfig = () => {
       {hooks.map((hookConfig) => (
         <Grid container>
           <Grid item xs={12}>
-            <Typography variant="h6" style={{ "text-transform": "capitalize" }}>
+            <Typography variant="h6" style={{ 'text-transform': 'capitalize' }}>
               For: {hookConfig.name}
             </Typography>
             <Grid container>
@@ -200,7 +208,7 @@ function makeBool(text) {
   if (text === null) {
     return false;
   }
-  return text === "true";
+  return text === 'true';
 }
 
 class RconSettings extends React.Component {
@@ -210,7 +218,7 @@ class RconSettings extends React.Component {
       rawBroadcastMessages: [],
       broadcastMessages: [],
       standardMessages: [],
-      standardMessagesType: "punishments",
+      standardMessagesType: 'punishments',
       randomize: false,
       enabled: false,
       cameraBroadcast: false,
@@ -218,10 +226,10 @@ class RconSettings extends React.Component {
       autovotekickEnabled: false,
       autovotekickMinIngameMods: 0,
       autovotekickMinOnlineMods: 0,
-      autovotekickConditionType: "OR",
-      autosettings: "{}",
+      autovotekickConditionType: 'OR',
+      autosettings: '{}',
       forwardAutoSettings: makeBool(
-        window.localStorage.getItem("forwardAutoSettings")
+        window.localStorage.getItem('forwardAutoSettings')
       ),
     };
     this.editorRef = React.createRef();
@@ -243,7 +251,7 @@ class RconSettings extends React.Component {
 
   async loadCameraConfig() {
     return get(`get_camera_notification_config`)
-      .then((res) => showResponse(res, "get_camera_notification_config", false))
+      .then((res) => showResponse(res, 'get_camera_notification_config', false))
       .then(
         (data) =>
           !data.failed &&
@@ -260,14 +268,14 @@ class RconSettings extends React.Component {
       `${process.env.REACT_APP_API_URL}set_camera_notification_config`,
       data
     )
-      .then((res) => showResponse(res, "set_camera_notification_config", true))
+      .then((res) => showResponse(res, 'set_camera_notification_config', true))
       .then(this.loadCameraConfig)
       .catch(handle_http_errors);
   }
 
   async loadAutoVotekickConfig() {
     return get(`get_votekick_autotoggle_config`)
-      .then((res) => showResponse(res, "get_votekick_autotoggle_config", false))
+      .then((res) => showResponse(res, 'get_votekick_autotoggle_config', false))
       .then(
         (data) =>
           !data.failed &&
@@ -286,20 +294,20 @@ class RconSettings extends React.Component {
       `${process.env.REACT_APP_API_URL}set_votekick_autotoggle_config`,
       data
     )
-      .then((res) => showResponse(res, "set_votekick_autotoggle_config", true))
+      .then((res) => showResponse(res, 'set_votekick_autotoggle_config', true))
       .then(this.loadAutoVotekickConfig)
       .catch(handle_http_errors);
   }
 
   async loadBroadcastsSettings() {
     return get(`get_auto_broadcasts_config`)
-      .then((res) => showResponse(res, "get_auto_broadcasts_config", false))
+      .then((res) => showResponse(res, 'get_auto_broadcasts_config', false))
       .then(
         (data) =>
           !data.failed &&
           this.setState({
             broadcastMessages: data.result.messages.map(
-              (m) => m.time_sec + " " + m.message
+              (m) => m.time_sec + ' ' + m.message
             ),
             randomize: data.result.randomize,
             enabled: data.result.enabled,
@@ -313,7 +321,7 @@ class RconSettings extends React.Component {
       `${process.env.REACT_APP_API_URL}set_auto_broadcasts_config`,
       data
     )
-      .then((res) => showResponse(res, "set_auto_broadcasts_config", true))
+      .then((res) => showResponse(res, 'set_auto_broadcasts_config', true))
       .then((res) => !res.failed && this.setState(data))
       .catch(handle_http_errors);
   }
@@ -358,7 +366,7 @@ class RconSettings extends React.Component {
 
   async loadAutoSettings() {
     return get(`get_auto_settings`)
-      .then((res) => showResponse(res, "get_auto_settings", false))
+      .then((res) => showResponse(res, 'get_auto_settings', false))
       .then(
         (data) =>
           !data.failed &&
@@ -385,7 +393,7 @@ class RconSettings extends React.Component {
 
   async clearCache() {
     return postData(`${process.env.REACT_APP_API_URL}clear_cache`, {})
-      .then((res) => showResponse(res, "clear_cache", true))
+      .then((res) => showResponse(res, 'clear_cache', true))
       .catch(handle_http_errors);
   }
 
@@ -394,14 +402,14 @@ class RconSettings extends React.Component {
       `${process.env.REACT_APP_API_URL}do_reconnect_gameserver`,
       {}
     )
-      .then((res) => showResponse(res, "do_reconnect_gameserver", true))
+      .then((res) => showResponse(res, 'do_reconnect_gameserver', true))
       .catch(handle_http_errors);
   }
 
   validate_messages() {
     let hasErrors = false;
     _.forEach(this.state.broadcastMessages, (m) => {
-      const split = _.split(m, " ");
+      const split = _.split(m, ' ');
 
       if (_.isNaN(_.toNumber(split[0]))) {
         toast.error(`Invalid line, must start with number of seconds: ${m}`);
@@ -458,11 +466,11 @@ class RconSettings extends React.Component {
     const { theme } = this.props;
 
     return (
-      <Grid container  spacing={3}>
+      <Grid container spacing={3}>
         <Grid item xs={12}>
           <h2>Advanced RCON settings</h2>
         </Grid>
-        <Grid item xs={12} >
+        <Grid item xs={12}>
           <Typography variant="h6">Automated broadcast cycle</Typography>
         </Grid>
         <Grid item xs={12}>
@@ -503,12 +511,12 @@ class RconSettings extends React.Component {
             minRows={4}
             maxRows={30}
             value={_.join(
-              broadcastMessages.map((m) => m.replace(/\n/g, "\\n")),
-              "\n"
+              broadcastMessages.map((m) => m.replace(/\n/g, '\\n')),
+              '\n'
             )}
             onChange={(e) =>
               this.setState({
-                broadcastMessages: _.split(e.target.value, "\n"),
+                broadcastMessages: _.split(e.target.value, '\n'),
               })
             }
             placeholder="Insert your messages here, one per line, with format: <number of seconds to display> <a message (write: \n if you want a line return)>"
@@ -528,7 +536,7 @@ class RconSettings extends React.Component {
             Save auto broadcast messages
           </Button>
         </Grid>
-        <Grid item xs={12} >
+        <Grid item xs={12}>
           <Typography variant="h6">
             Manage your personal text history
           </Typography>
@@ -539,16 +547,15 @@ class RconSettings extends React.Component {
           alignContent="center"
           justifyContent="center"
           alignItems="center"
-          
         >
-          <Grid item xs={12} >
-            <TextHistoryManager  />
+          <Grid item xs={12}>
+            <TextHistoryManager />
           </Grid>
         </Grid>
-        <Grid item xs={12} >
+        <Grid item xs={12}>
           <Typography variant="h6">Manage shared standard messages</Typography>
         </Grid>
-        <Grid item xs={12} >
+        <Grid item xs={12}>
           <SelectNameSpace
             value={standardMessagesType}
             handleChange={(v) =>
@@ -557,7 +564,7 @@ class RconSettings extends React.Component {
                 this.loadStandardMessages
               )
             }
-            values={["punishments", "welcome", "broadcast"]}
+            values={['punishments', 'welcome', 'broadcast']}
           />
         </Grid>
         <Grid item xs={12}>
@@ -568,11 +575,11 @@ class RconSettings extends React.Component {
             minRows={4}
             maxRows={30}
             value={_.join(
-              standardMessages.map((m) => m.replace(/\n/g, "\\n")),
-              "\n"
+              standardMessages.map((m) => m.replace(/\n/g, '\\n')),
+              '\n'
             )}
             onChange={(e) =>
-              this.setState({ standardMessages: _.split(e.target.value, "\n") })
+              this.setState({ standardMessages: _.split(e.target.value, '\n') })
             }
             placeholder="Set one message per line. If you want a line return in one of the message write: \n"
             variant="outlined"
@@ -588,25 +595,25 @@ class RconSettings extends React.Component {
             Save shared messages
           </Button>
         </Grid>
-        <Grid item  justifyContent="center" xs={12}>
+        <Grid item justifyContent="center" xs={12}>
           <Typography variant="h5">Blacklist player by Steam ID</Typography>
         </Grid>
-        <Grid item  justifyContent="center" xs={12}>
-          <Blacklist  />
+        <Grid item justifyContent="center" xs={12}>
+          <Blacklist />
         </Grid>
-        <Grid item  justifyContent="center" xs={12}>
+        <Grid item justifyContent="center" xs={12}>
           <Typography variant="h5">Add player to watchlist</Typography>
         </Grid>
         <Grid item xs={12}>
-          <ManualWatchList  />
+          <ManualWatchList />
         </Grid>
-        <Grid item  justifyContent="center" xs={12}>
+        <Grid item justifyContent="center" xs={12}>
           <Typography variant="h5">Manage services</Typography>
         </Grid>
-        <Grid item  justifyContent="center" xs={12}>
+        <Grid item justifyContent="center" xs={12}>
           <Grid container justifyContent="center">
             <Grid item md={8} xs={12}>
-              <ServicesList  />
+              <ServicesList />
             </Grid>
           </Grid>
         </Grid>
@@ -633,9 +640,9 @@ class RconSettings extends React.Component {
         >
           <WebhooksConfig  type="camera" />
         </Grid> */}
-        <Grid item  justifyContent="center" xs={12}>
+        <Grid item justifyContent="center" xs={12}>
           <Typography variant="h5">
-            Auto votekick toggle{" "}
+            Auto votekick toggle{' '}
             <Tooltip title="When enabled this feature manages the votekicks ingame by turning it off if the conditions you set below are met, and turning it back on if they are NOT met">
               <HelpIcon fontSize="small" />
             </Tooltip>
@@ -644,7 +651,6 @@ class RconSettings extends React.Component {
         </Grid>
         <Grid
           container
-          
           alignContent="center"
           justifyContent="center"
           alignItems="center"
@@ -714,12 +720,11 @@ class RconSettings extends React.Component {
             />
           </Grid>
         </Grid>
-        <Grid item  justifyContent="center" xs={12}>
+        <Grid item justifyContent="center" xs={12}>
           <Typography variant="h5">Camera notification config</Typography>
         </Grid>
         <Grid
           container
-          
           alignContent="center"
           justifyContent="center"
           alignItems="center"
@@ -741,14 +746,13 @@ class RconSettings extends React.Component {
         </Grid>
         <Grid
           container
-          
           alignContent="center"
           justifyContent="center"
           alignItems="center"
         >
           <Grid item xs={12}>
             <Typography variant="h5">
-              Real VIP slots{" "}
+              Real VIP slots{' '}
               <Tooltip
                 title=" When enabled each VIP that enters the servers takes 1 VIP slot that is
             not release until a VIP leaves. This is done by dynaically settings
@@ -758,36 +762,34 @@ class RconSettings extends React.Component {
             If you use the autoSettings don't forget not set the VIPs in there or it will override the realVip system"
               >
                 <HelpIcon fontSize="small" />
-              </Tooltip>{" "}
+              </Tooltip>{' '}
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <RealVip  />
+            <RealVip />
           </Grid>
         </Grid>
         <Grid
           container
-          
           alignContent="center"
           justifyContent="center"
           alignItems="center"
         >
           <Grid item xs={12}>
             <Typography variant="h5">
-              Server Name{" "}
+              Server Name{' '}
               <Tooltip title="Only users with a GTX server can use this, it won't work for others. GTX users must set extra info in config/config.yml for it to work. The name change is only applied after a change of map">
                 <HelpIcon fontSize="small" />
-              </Tooltip>{" "}
+              </Tooltip>{' '}
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <ServerName  />
+            <ServerName />
           </Grid>
         </Grid>
 
         <Grid
           container
-          
           alignContent="center"
           justifyContent="center"
           alignItems="center"
@@ -809,16 +811,15 @@ class RconSettings extends React.Component {
             }
             onSave={() => this.saveAutoSettings(autosettings)}
             forward={forwardAutoSettings}
-            onFowardChange={() => this.toggle("forwardAutoSettings")}
+            onFowardChange={() => this.toggle('forwardAutoSettings')}
             onEditorMount={this.handleEditorDidMount}
-            theme={theme.editor ? theme.editor : "vs"}
+            theme={theme.editor ? theme.editor : 'vs'}
           />
         </Grid>
 
         <Grid
           item
           xs={12}
-          
           alignContent="center"
           justifyContent="center"
           alignItems="center"
@@ -834,7 +835,6 @@ class RconSettings extends React.Component {
         <Grid
           item
           xs={12}
-          
           alignContent="center"
           justifyContent="center"
           alignItems="center"

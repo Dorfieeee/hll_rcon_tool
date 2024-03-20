@@ -3,33 +3,33 @@ import {
   handle_http_errors,
   postData,
   showResponse,
-} from "../../utils/fetchUtils";
-import React from "react";
-import { Avatar, Button, Grid, Link, Popover } from "@mui/material";
+} from '../../utils/fetchUtils';
+import React from 'react';
+import { Avatar, Button, Grid, Link, Popover } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import Typography from "@mui/material/Typography";
-import { ExpandMore } from "@mui/icons-material";
-import moment from "moment";
-import MUIDataTable from "mui-datatables";
-import { withRouter } from "react-router";
-import "./PlayerInfo.css";
-import { ChatContent } from "../ChatWidget";
-import MessageHistory from "../MessageHistory";
-import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
-import CollapseCard from "../collapseCard";
-import makePlayerProfileUrl from "../../utils/makePlayerProfileUrl";
+import Typography from '@mui/material/Typography';
+import { ExpandMore } from '@mui/icons-material';
+import moment from 'moment';
+import MUIDataTable from 'mui-datatables';
+import { withRouter } from 'react-router';
+import './PlayerInfo.css';
+import { ChatContent } from '../ChatWidget';
+import MessageHistory from '../MessageHistory';
+import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
+import CollapseCard from '../collapseCard';
+import makePlayerProfileUrl from '../../utils/makePlayerProfileUrl';
 
 // return a label for steam and windows ids types
 const getLinkLabel = (id) => {
   if (id.length === 17) {
     // valid steam id is 17 digits...
-    return "Steam";
+    return 'Steam';
   } else {
     // xbox gamertags are unique and cost $$ to change...
     // otherwise assume it's a T17 guid and return
     // a url to https://xboxgamertag.com/search/ name
-    return "xboxgamertag.com";
+    return 'xboxgamertag.com';
   }
 };
 
@@ -51,7 +51,7 @@ const NamePopOver = ({ names }) => {
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? "name-popover" : undefined;
+  const id = open ? 'name-popover' : undefined;
   const styles = useStyles();
   // TODO replace with a List with sublist so that on can copy past the names, also see at what time it was created + last seen
   return (
@@ -65,12 +65,12 @@ const NamePopOver = ({ names }) => {
         anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "center",
+          vertical: 'bottom',
+          horizontal: 'center',
         }}
         transformOrigin={{
-          vertical: "top",
-          horizontal: "center",
+          vertical: 'top',
+          horizontal: 'center',
         }}
       >
         <Grid container className={styles.padding}>
@@ -91,25 +91,25 @@ const NamePopOver = ({ names }) => {
 
 const Punishment = ({ punishments }) => {
   const [myRowPerPage, setRowPerPage] = React.useState(
-    Number(window.localStorage.getItem("punishments_row_per_page")) || 50
+    Number(window.localStorage.getItem('punishments_row_per_page')) || 50
   );
   const saveRowsPerPage = (rowPerPage) => {
-    window.localStorage.setItem("punishments_row_per_page", rowPerPage);
+    window.localStorage.setItem('punishments_row_per_page', rowPerPage);
     setRowPerPage(Number(rowPerPage));
   };
   const columns = [
-    { name: "action_type", label: "Type" },
-    { name: "reason", label: "Reason" },
-    { name: "by", label: "By" },
+    { name: 'action_type', label: 'Type' },
+    { name: 'reason', label: 'Reason' },
+    { name: 'by', label: 'By' },
     {
-      name: "time",
-      label: "Time",
+      name: 'time',
+      label: 'Time',
       options: {
         customBodyRenderLite: (dataIndex) =>
           moment
             .utc(punishments[dataIndex].time)
             .local()
-            .format("ddd Do MMM HH:mm:ss"),
+            .format('ddd Do MMM HH:mm:ss'),
       },
     },
   ];
@@ -117,7 +117,7 @@ const Punishment = ({ punishments }) => {
   const options = {
     filter: false,
     rowsPerPage: myRowPerPage,
-    selectableRows: "none",
+    selectableRows: 'none',
     rowsPerPageOptions: [10, 25, 50, 100, 250, 500, 1000],
     onChangeRowsPerPage: saveRowsPerPage,
   };
@@ -140,12 +140,12 @@ const Is = ({ bool, text }) =>
       </Typography>
     </Grid>
   ) : (
-    ""
+    ''
   );
 
 const PlayerInfoFunc = () => {
   const { steamId64 } = useParams();
-  const [created, setCreated] = React.useState("0");
+  const [created, setCreated] = React.useState('0');
   const [names, setNames] = React.useState([]);
   const [sessions, setSessions] = React.useState([]);
   const [sessionsCount, setSessionsCount] = React.useState(1086);
@@ -162,8 +162,8 @@ const PlayerInfoFunc = () => {
   });
   const [blacklist, setBlacklist] = React.useState({
     is_blacklisted: false,
-    reason: "",
-    by: "",
+    reason: '',
+    by: '',
   });
   const [flags, setFlags] = React.useState([]);
   const [watchlist, setWatchlist] = React.useState({});
@@ -181,13 +181,13 @@ const PlayerInfoFunc = () => {
    */
   const fetchPlayerBan = (steamId64) => {
     get(`get_ban?steam_id_64=${steamId64}`)
-      .then((response) => showResponse(response, "get_ban", false))
+      .then((response) => showResponse(response, 'get_ban', false))
       .then((data) => {
         const temp = data.result.find((ban, index) => {
-          return ban.type === "temp";
+          return ban.type === 'temp';
         });
         const perma = data.result.find((ban, index) => {
-          return ban.type === "perma";
+          return ban.type === 'perma';
         });
         if (temp !== undefined) {
           setTemp(true);
@@ -205,7 +205,7 @@ const PlayerInfoFunc = () => {
    */
   const fetchPlayer = (steamId64) => {
     get(`player?steam_id_64=${steamId64}`)
-      .then((response) => showResponse(response, "get_user", false))
+      .then((response) => showResponse(response, 'get_user', false))
       .then((data) => {
         if (
           data.result !== undefined &&
@@ -232,7 +232,7 @@ const PlayerInfoFunc = () => {
 
   const fetchMessages = (steamId64) => {
     get(`get_player_messages?steam_id_64=${steamId64}`)
-      .then((response) => showResponse(response, "get_player_messages", false))
+      .then((response) => showResponse(response, 'get_player_messages', false))
       .then((data) => {
         if (
           data.result !== undefined &&
@@ -247,7 +247,7 @@ const PlayerInfoFunc = () => {
 
   const fetchPlayerComments = (steamId64) => {
     get(`get_player_comment?steam_id_64=${steamId64}`)
-      .then((response) => showResponse(response, "get_player_comments", false))
+      .then((response) => showResponse(response, 'get_player_comments', false))
       .then((data) => {
         if (
           data.result !== undefined &&
@@ -266,12 +266,12 @@ const PlayerInfoFunc = () => {
       comment: newComment,
     })
       .then((response) => {
-        return showResponse(response, "post_player_comments", false);
+        return showResponse(response, 'post_player_comments', false);
       })
       .then(() => {
         fetchPlayerComments(steamId64);
       })
-      .catch((error) => toast.error("Unable to connect to API " + error));
+      .catch((error) => toast.error('Unable to connect to API ' + error));
   };
 
   React.useEffect(() => {
@@ -298,9 +298,9 @@ const PlayerInfoFunc = () => {
                 <Grid item>
                   <Avatar
                     style={{
-                      height: "150px",
-                      width: "150px",
-                      fontSize: "5rem",
+                      height: '150px',
+                      width: '150px',
+                      fontSize: '5rem',
                     }}
                     variant="square"
                     src={steaminfo?.profile?.avatarfull}
@@ -310,7 +310,9 @@ const PlayerInfoFunc = () => {
                 </Grid>
                 <Grid item>
                   <Typography variant="h6">
-                    <Link href={makePlayerProfileUrl(steamId64, names[0]?.name)}>
+                    <Link
+                      href={makePlayerProfileUrl(steamId64, names[0]?.name)}
+                    >
                       {getLinkLabel(steamId64)} Profile
                     </Link>
                   </Typography>
@@ -319,7 +321,7 @@ const PlayerInfoFunc = () => {
                   <Typography variant="h6">Last connection</Typography>
                   <Typography>
                     {moment(sessions[0]?.end || sessions[0]?.start).format(
-                      "ddd Do MMM HH:mm:ss"
+                      'ddd Do MMM HH:mm:ss'
                     )}
                   </Typography>
                 </Grid>
@@ -327,7 +329,7 @@ const PlayerInfoFunc = () => {
                   <Typography variant="h6">Total play time</Typography>
                   <Typography>
                     {moment
-                      .duration(totalPlaytimeSeconds, "seconds")
+                      .duration(totalPlaytimeSeconds, 'seconds')
                       .humanize()}
                   </Typography>
                 </Grid>
@@ -370,10 +372,10 @@ const PlayerInfoFunc = () => {
                 <Grid item sm={12}>
                   <Grid container spacing={2}>
                     {[
-                      [vip, "VIP"],
-                      [perma, "IS PERMABANNED"],
-                      [temp, "IS TEMPBANNED"],
-                      [blacklist?.is_blacklisted, "IS BLACKLISTED"],
+                      [vip, 'VIP'],
+                      [perma, 'IS PERMABANNED'],
+                      [temp, 'IS TEMPBANNED'],
+                      [blacklist?.is_blacklisted, 'IS BLACKLISTED'],
                     ].map((e) => (
                       <Is bool={e[0]} text={e[1]} />
                     ))}
@@ -387,7 +389,7 @@ const PlayerInfoFunc = () => {
             <Grid item xl={3} xs={12}>
               <Grid container spacing={1}>
                 <Grid item xs={12}>
-                  <CollapseCard title="Comments"  startOpen>
+                  <CollapseCard title="Comments" startOpen>
                     <ChatContent
                       data={comments}
                       handleMessageSend={handleNewComment}
@@ -395,11 +397,7 @@ const PlayerInfoFunc = () => {
                   </CollapseCard>
                 </Grid>
                 <Grid item xs={12}>
-                  <CollapseCard
-                    title="Message History"
-                    
-                    startOpen
-                  >
+                  <CollapseCard title="Message History" startOpen>
                     <MessageHistory data={messages} />
                   </CollapseCard>
                 </Grid>
@@ -419,8 +417,8 @@ class PlayerInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      steam_id_64: "",
-      created: "0",
+      steam_id_64: '',
+      created: '0',
       names: [],
       sessions: [],
       sessions_count: 1086,
@@ -435,8 +433,8 @@ class PlayerInfo extends React.Component {
       },
       blacklist: {
         is_blacklisted: false,
-        reason: "",
-        by: "",
+        reason: '',
+        by: '',
       },
       flags: [],
       watchlist: {},
@@ -457,13 +455,13 @@ class PlayerInfo extends React.Component {
    */
   fetchPlayerBan(steamId64) {
     get(`get_ban?steam_id_64=${steamId64}`)
-      .then((response) => showResponse(response, "get_ban", false))
+      .then((response) => showResponse(response, 'get_ban', false))
       .then((data) => {
         const temp = data.result.find((ban, index) => {
-          return ban.type === "temp";
+          return ban.type === 'temp';
         });
         const perma = data.result.find((ban, index) => {
-          return ban.type === "perma";
+          return ban.type === 'perma';
         });
         if (temp !== undefined && this._mounted) {
           this.setState({ temp: true });
@@ -481,7 +479,7 @@ class PlayerInfo extends React.Component {
    */
   fetchPlayer(steamId64) {
     get(`player?steam_id_64=${steamId64}`)
-      .then((response) => showResponse(response, "get_user", false))
+      .then((response) => showResponse(response, 'get_user', false))
       .then((data) => {
         if (
           data.result !== undefined &&
@@ -510,7 +508,7 @@ class PlayerInfo extends React.Component {
 
   fetchPlayerComments(steamId64) {
     get(`get_player_comment?steam_id_64=${steamId64}`)
-      .then((response) => showResponse(response, "get_player_comments", false))
+      .then((response) => showResponse(response, 'get_player_comments', false))
       .then((data) => {
         if (
           data.result !== undefined &&
@@ -530,12 +528,12 @@ class PlayerInfo extends React.Component {
       comment: newComment,
     })
       .then((response) => {
-        return showResponse(response, "post_player_comments", false);
+        return showResponse(response, 'post_player_comments', false);
       })
       .then(() => {
         this.fetchPlayerComments(steamId64);
       })
-      .catch((error) => toast.error("Unable to connect to API " + error));
+      .catch((error) => toast.error('Unable to connect to API ' + error));
   }
 
   componentDidMount() {
@@ -576,9 +574,9 @@ class PlayerInfo extends React.Component {
                   <Grid item>
                     <Avatar
                       style={{
-                        height: "150px",
-                        width: "150px",
-                        fontSize: "5rem",
+                        height: '150px',
+                        width: '150px',
+                        fontSize: '5rem',
                       }}
                       variant="square"
                       src={this.state.steaminfo?.profile?.avatarfull}
@@ -592,14 +590,14 @@ class PlayerInfo extends React.Component {
                       {moment(
                         this.state.sessions[0]?.end ||
                           this.state.sessions[0]?.start
-                      ).format("ddd Do MMM HH:mm:ss")}
+                      ).format('ddd Do MMM HH:mm:ss')}
                     </Typography>
                   </Grid>
                   <Grid item>
                     <Typography variant="h6">Total play time</Typography>
                     <Typography>
                       {moment
-                        .duration(this.state.total_playtime_seconds, "seconds")
+                        .duration(this.state.total_playtime_seconds, 'seconds')
                         .humanize()}
                     </Typography>
                   </Grid>
@@ -651,12 +649,12 @@ class PlayerInfo extends React.Component {
                   <Grid item sm={12}>
                     <Grid container spacing={2}>
                       {[
-                        [this.state.vip, "VIP"],
-                        [this.state.perma, "IS PERMABANNED"],
-                        [this.state.temp, "IS TEMPBANNED"],
+                        [this.state.vip, 'VIP'],
+                        [this.state.perma, 'IS PERMABANNED'],
+                        [this.state.temp, 'IS TEMPBANNED'],
                         [
                           this.state.blacklist?.is_blacklisted,
-                          "IS BLACKLISTED",
+                          'IS BLACKLISTED',
                         ],
                       ].map((e) => (
                         <Is bool={e[0]} text={e[1]} />

@@ -44,14 +44,18 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",
-    "prettier": "^2.8.8",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.1",
+    "prettier": "^3.2.5",
     "vite": "^4.5.2"
   },
   "scripts": {
     "start": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "test": "jest"
+    "test": "jest",
+    "format:write": "prettier src/ --write",
+    "lint": "eslint src/"
   },
   "browserslist": {
     "production": [

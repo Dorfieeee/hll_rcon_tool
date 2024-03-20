@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Button,
   Checkbox,
@@ -6,10 +6,10 @@ import {
   Grid,
   Popover,
   Tooltip,
-} from "@mui/material";
-import Chip from "@mui/material/Chip";
+} from '@mui/material';
+import Chip from '@mui/material/Chip';
 import Autocomplete from '@mui/material/Autocomplete';
-import TextField from "@mui/material/TextField";
+import TextField from '@mui/material/TextField';
 
 export const WithPopver = ({ popoverContent, children }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -34,12 +34,12 @@ export const WithPopver = ({ popoverContent, children }) => {
         open={open}
         anchorEl={anchorEl}
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
+          vertical: 'bottom',
+          horizontal: 'left',
         }}
         transformOrigin={{
-          vertical: "top",
-          horizontal: "left",
+          vertical: 'top',
+          horizontal: 'left',
         }}
         onClose={handlePopoverClose}
         disableRestoreFocus
@@ -98,16 +98,12 @@ export const ManualPlayerInput = ({
         )}
       />
     </Grid>
-    <Grid
-      item
-      xs={12}
-      md={2}
-    >
+    <Grid item xs={12} md={2}>
       <Tooltip fullWidth title={tooltipText} arrow>
         <Button
           color="secondary"
           variant="outlined"
-          disabled={steam_id === "" || reason === ""}
+          disabled={steam_id === '' || reason === ''}
           onClick={() => {
             onSubmit();
             textHistory.saveText(reason);

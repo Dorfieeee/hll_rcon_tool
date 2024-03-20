@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Grid,
   IconButton,
@@ -6,23 +6,23 @@ import {
   ListItem,
   ListItemSecondaryAction,
   ListItemText,
-} from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import TextHistory, { getAllNamespaces } from "../textHistory";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import TextHistory, { getAllNamespaces } from '../textHistory';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 const SelectNameSpace = ({ value, values, handleChange }) => (
   <FormControl>
     <InputLabel htmlFor="age-native-simple">Category</InputLabel>
     <Select
       native
-      style={{ minWidth: "100px" }}
+      style={{ minWidth: '100px' }}
       value={value}
       onChange={(e) => handleChange(e.target.value)}
       inputProps={{
-        name: "namespace",
+        name: 'namespace',
       }}
     >
       <option value="" />
@@ -52,7 +52,8 @@ class TextHistoryList extends React.Component {
                   textHistory.deleteTextByIdx(idx);
                   this.forceUpdate();
                 }}
-                size="large">
+                size="large"
+              >
                 <DeleteIcon />
               </IconButton>
             </ListItemSecondaryAction>
@@ -64,7 +65,7 @@ class TextHistoryList extends React.Component {
 }
 
 const TextHistoryManager = () => {
-  const [namespace, setNamespace] = React.useState("");
+  const [namespace, setNamespace] = React.useState('');
   const nameSpaces = getAllNamespaces();
 
   return (
@@ -83,9 +84,7 @@ const TextHistoryManager = () => {
           </Grid>
         </React.Fragment>
       ) : (
-        <Grid xs={12}>
-          No text recorded yet
-        </Grid>
+        <Grid xs={12}>No text recorded yet</Grid>
       )}
     </Grid>
   );

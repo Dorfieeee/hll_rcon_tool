@@ -1,36 +1,36 @@
-import React from "react";
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
-import "react-toastify/dist/ReactToastify.css";
-import TextHistory from "../textHistory";
+import React from 'react';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import 'react-toastify/dist/ReactToastify.css';
+import TextHistory from '../textHistory';
 import Autocomplete from '@mui/material/Autocomplete';
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormHelperText from "@mui/material/FormHelperText";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { getSharedMessages } from "../../utils/fetchUtils";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { getSharedMessages } from '../../utils/fetchUtils';
 
 const Reason = ({
   handleMessageChange,
   extraClasses,
-  helperText = "Leave blank if you want a confirmation popup",
+  helperText = 'Leave blank if you want a confirmation popup',
   message,
-  label = "In Game Message/Punish/Kick/Ban message",
+  label = 'In Game Message/Punish/Kick/Ban message',
   textHistory,
   saveMessage,
   setSaveMessage,
 }) => {
   const autoCompletehistory = textHistory
     ? textHistory.getTexts()
-    : new TextHistory("punishments").getTexts();
+    : new TextHistory('punishments').getTexts();
 
   const [sharedMessages, setSharedMessages] = React.useState([]);
   React.useEffect(() => {
-    getSharedMessages("punishments").then((data) => setSharedMessages(data));
+    getSharedMessages('punishments').then((data) => setSharedMessages(data));
   }, []);
 
   return (
@@ -68,7 +68,7 @@ const Reason = ({
           label="Save message as template"
         />
       ) : (
-        ""
+        ''
       )}
     </React.Fragment>
   );
@@ -85,7 +85,12 @@ const TextInputBar = ({
   /* todo refactor */
   return (
     <Grid item xs={12}>
-      <Grid container justifyContent="flex-start" direction="row" alignItems="center">
+      <Grid
+        container
+        justifyContent="flex-start"
+        direction="row"
+        alignItems="center"
+      >
         <Grid item xs={12} lg={3}>
           <FormControl>
             <InputLabel>Sort</InputLabel>
@@ -96,18 +101,18 @@ const TextInputBar = ({
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value={"asc_alpha"}>Asc. Alpha</MenuItem>
-              <MenuItem value={"desc_alpha"}>Desc. Alpha</MenuItem>
-              <MenuItem value={"asc_time"}>Asc. Time</MenuItem>
-              <MenuItem value={"desc_time"}>Desc. Time</MenuItem>
-              <MenuItem value={"asc_country"}>Asc. Country</MenuItem>
-              <MenuItem value={"desc_country"}>Desc. Country</MenuItem>
-              <MenuItem value={"asc_sessions"}>Asc. #Sessions</MenuItem>
-              <MenuItem value={"desc_sessions"}>Desc. #Sessions</MenuItem>
-              <MenuItem value={"asc_penalties"}>Asc. Penalties</MenuItem>
-              <MenuItem value={"desc_penalties"}>Desc. Penalties</MenuItem>
-              <MenuItem value={"asc_vips"}>Asc. VIPs</MenuItem>
-              <MenuItem value={"desc_vips"}>Desc. VIPs</MenuItem>
+              <MenuItem value={'asc_alpha'}>Asc. Alpha</MenuItem>
+              <MenuItem value={'desc_alpha'}>Desc. Alpha</MenuItem>
+              <MenuItem value={'asc_time'}>Asc. Time</MenuItem>
+              <MenuItem value={'desc_time'}>Desc. Time</MenuItem>
+              <MenuItem value={'asc_country'}>Asc. Country</MenuItem>
+              <MenuItem value={'desc_country'}>Desc. Country</MenuItem>
+              <MenuItem value={'asc_sessions'}>Asc. #Sessions</MenuItem>
+              <MenuItem value={'desc_sessions'}>Desc. #Sessions</MenuItem>
+              <MenuItem value={'asc_penalties'}>Asc. Penalties</MenuItem>
+              <MenuItem value={'desc_penalties'}>Desc. Penalties</MenuItem>
+              <MenuItem value={'asc_vips'}>Asc. VIPs</MenuItem>
+              <MenuItem value={'desc_vips'}>Desc. VIPs</MenuItem>
             </Select>
             <FormHelperText>Sort the player list</FormHelperText>
           </FormControl>

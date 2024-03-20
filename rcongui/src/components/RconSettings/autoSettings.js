@@ -1,7 +1,7 @@
-import React from "react";
-import { Button, Grid, Typography } from "@mui/material";
-import { ForwardCheckBox } from "../commonComponent";
-import Editor from "@monaco-editor/react";
+import React from 'react';
+import { Button, Grid, Typography } from '@mui/material';
+import { ForwardCheckBox } from '../commonComponent';
+import Editor from '@monaco-editor/react';
 
 const AutoSettings = ({
   words,
@@ -28,11 +28,11 @@ const AutoSettings = ({
       />
     </Grid>
     <Typography variant="caption" align="left" color="textSecondary">
-      For more info on how to use Auto Settings see{" "}
+      For more info on how to use Auto Settings see{' '}
       <a href="https://youtu.be/2IKZwHj9PJw" target="_blank">
         this video
-      </a>{" "}
-      or{" "}
+      </a>{' '}
+      or{' '}
       <a
         href="https://cdn.discordapp.com/attachments/729998051288285256/886276109484826634/autosettings_flow.PNG"
         target="_blank"

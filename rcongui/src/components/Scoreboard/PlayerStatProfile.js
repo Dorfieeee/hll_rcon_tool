@@ -1,5 +1,5 @@
-import React from "react";
-import { Set } from "immutable";
+import React from 'react';
+import { Set } from 'immutable';
 import {
   Grid,
   Link,
@@ -12,23 +12,23 @@ import {
   Typography,
   Paper,
   IconButton,
-} from "@mui/material";
-import CancelIcon from "@mui/icons-material/Cancel";
-import { safeGetSteamProfile } from "./Scores";
-import { SubList } from "./SubList";
-import makePlayerProfileUrl from "../../utils/makePlayerProfileUrl";
+} from '@mui/material';
+import CancelIcon from '@mui/icons-material/Cancel';
+import { safeGetSteamProfile } from './Scores';
+import { SubList } from './SubList';
+import makePlayerProfileUrl from '../../utils/makePlayerProfileUrl';
 
 export const PlayerStatProfile = ({ playerScore, onClose }) => {
   const steamProfile = safeGetSteamProfile(playerScore);
   const excludedKeys = new Set([
-    "player_id",
-    "id",
-    "steaminfo",
-    "map_id",
-    "most_killed",
-    "weapons",
-    "death_by",
-    "death_by_weapons",
+    'player_id',
+    'id',
+    'steaminfo',
+    'map_id',
+    'most_killed',
+    'weapons',
+    'death_by',
+    'death_by_weapons',
   ]);
 
   return (
@@ -39,7 +39,7 @@ export const PlayerStatProfile = ({ playerScore, onClose }) => {
             <List>
               <ListItem divider>
                 <ListItemAvatar>
-                  <Avatar src={steamProfile.get("avatar")}></Avatar>
+                  <Avatar src={steamProfile.get('avatar')}></Avatar>
                 </ListItemAvatar>
                 <ListItemText
                   primary={
@@ -47,17 +47,17 @@ export const PlayerStatProfile = ({ playerScore, onClose }) => {
                       <Link
                         color="inherit"
                         href={
-                          steamProfile.get("profileurl") ||
+                          steamProfile.get('profileurl') ||
                           makePlayerProfileUrl(
-                            playerScore.get("steam_id_64"),
-                            playerScore.get("player") ||
-                              steamProfile.get("personaname")
+                            playerScore.get('steam_id_64'),
+                            playerScore.get('player') ||
+                              steamProfile.get('personaname')
                           )
                         }
                         target="_blank"
                       >
-                        {playerScore.get("player") ||
-                          steamProfile.get("personaname")}
+                        {playerScore.get('player') ||
+                          steamProfile.get('personaname')}
                       </Link>
                     </Typography>
                   }

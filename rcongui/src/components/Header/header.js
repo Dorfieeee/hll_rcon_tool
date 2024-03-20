@@ -1,21 +1,21 @@
-import React from "react";
-import "react-toastify/dist/ReactToastify.css";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import { Link as RouterLink } from "react-router-dom";
-import Button from "@mui/material/Button";
-import ServerStatus from "./serverStatus";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+import React from 'react';
+import 'react-toastify/dist/ReactToastify.css';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import { Link as RouterLink } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import ServerStatus from './serverStatus';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import makeStyles from '@mui/styles/makeStyles';
-import LoginBox from "./login";
-import { Stack } from "@mui/material";
+import LoginBox from './login';
+import { Stack } from '@mui/material';
 
 const MenuSelection = (props) => {
   return (
     <Stack>
       <Button
-        style={{ textTransform: "capitalize" }}
+        style={{ textTransform: 'capitalize' }}
         id={`${props.name}-button`}
         onClick={props.handleClick}
         color="inherit"
@@ -29,185 +29,183 @@ const MenuSelection = (props) => {
         open={props.open}
         anchorEl={props.anchorEl}
       >
-        {props.routes.map(route => {
+        {props.routes.map((route) => {
           return (
             <MenuItem key={route.path} onClick={props.handleClose}>
-              <RouterLink to={route.path}>
-                {route.name}
-              </RouterLink>
+              <RouterLink to={route.path}>{route.name}</RouterLink>
             </MenuItem>
-          )
+          );
         })}
       </Menu>
     </Stack>
-  )
-}
+  );
+};
 
 const menuConfigs = [
   {
-    name: "live",
+    name: 'live',
     routes: [
       {
-        name: "Live",
-        path: "/"
+        name: 'Live',
+        path: '/',
       },
       {
-        name: "Game view",
-        path: "/gameview"
+        name: 'Game view',
+        path: '/gameview',
       },
-    ]
+    ],
   },
   {
-    name: "history",
+    name: 'history',
     routes: [
       {
-        name: "Players",
-        path: "/history"
+        name: 'Players',
+        path: '/history',
       },
       {
-        name: "Logs",
-        path: "/logs"
+        name: 'Logs',
+        path: '/logs',
       },
       {
-        name: "Combined",
-        path: "/combined_history"
+        name: 'Combined',
+        path: '/combined_history',
       },
       {
-        name: "Audit Logs",
-        path: "/auditlogs"
+        name: 'Audit Logs',
+        path: '/auditlogs',
       },
-    ]
+    ],
   },
   {
-    name: "Settings",
+    name: 'Settings',
     routes: [
       {
-        name: "Settings",
-        path: "/settings/settings"
+        name: 'Settings',
+        path: '/settings/settings',
       },
       {
-        name: "Audit Webhooks",
-        path: "/settings/audit-webhooks"
+        name: 'Audit Webhooks',
+        path: '/settings/audit-webhooks',
       },
       {
-        name: "Admin Ping Webhooks",
-        path: "/settings/admin-webhooks"
+        name: 'Admin Ping Webhooks',
+        path: '/settings/admin-webhooks',
       },
       {
-        name: "Watchlist Webhooks",
-        path: "/settings/watchlist-webhooks"
+        name: 'Watchlist Webhooks',
+        path: '/settings/watchlist-webhooks',
       },
       {
-        name: "Camera Webhooks",
-        path: "/settings/camera-webhooks"
+        name: 'Camera Webhooks',
+        path: '/settings/camera-webhooks',
       },
       {
-        name: "Chat Webhooks",
-        path: "/settings/chat-webhooks"
+        name: 'Chat Webhooks',
+        path: '/settings/chat-webhooks',
       },
       {
-        name: "Kill/Teamkills Webhooks",
-        path: "/settings/kill-webhooks"
+        name: 'Kill/Teamkills Webhooks',
+        path: '/settings/kill-webhooks',
       },
       {
-        name: "Level Auto Mod",
-        path: "/settings/automod-level"
+        name: 'Level Auto Mod',
+        path: '/settings/automod-level',
       },
       {
-        name: "No Leader Auto Mod",
-        path: "/settings/automod-no-leader"
+        name: 'No Leader Auto Mod',
+        path: '/settings/automod-no-leader',
       },
       {
-        name: "Seeding Auto Mod",
-        path: "/settings/automod-seeding"
+        name: 'Seeding Auto Mod',
+        path: '/settings/automod-seeding',
       },
       {
-        name: "No Solo Tank Auto Mod",
-        path: "/settings/automod-solo-tank"
+        name: 'No Solo Tank Auto Mod',
+        path: '/settings/automod-solo-tank',
       },
       {
-        name: "RCON Game Server Connection",
-        path: "/settings/rcon-gameserver"
+        name: 'RCON Game Server Connection',
+        path: '/settings/rcon-gameserver',
       },
       {
-        name: "CRCON Settings",
-        path: "/settings/rcon-server"
+        name: 'CRCON Settings',
+        path: '/settings/rcon-server',
       },
       {
-        name: "Chat Commands",
-        path: "/settings/chatcommands"
+        name: 'Chat Commands',
+        path: '/settings/chatcommands',
       },
       {
-        name: "Scorebot",
-        path: "/settings/scorebot"
+        name: 'Scorebot',
+        path: '/settings/scorebot',
       },
       {
-        name: "Steam API",
-        path: "/settings/steam"
+        name: 'Steam API',
+        path: '/settings/steam',
       },
       {
-        name: "VAC/Game Bans",
-        path: "/settings/vac-gamebans"
+        name: 'VAC/Game Bans',
+        path: '/settings/vac-gamebans',
       },
       {
-        name: "TK Ban On Connect",
-        path: "/settings/tk-ban"
+        name: 'TK Ban On Connect',
+        path: '/settings/tk-ban',
       },
       {
-        name: "Name Kicks",
-        path: "/settings/name-kicks"
+        name: 'Name Kicks',
+        path: '/settings/name-kicks',
       },
       {
-        name: "Log Line Webhooks",
-        path: "/settings/log-lines"
+        name: 'Log Line Webhooks',
+        path: '/settings/log-lines',
       },
       {
-        name: "Expired VIP",
-        path: "/settings/expired-vip"
+        name: 'Expired VIP',
+        path: '/settings/expired-vip',
       },
       {
-        name: "GTX Server Name Change",
-        path: "/settings/gtx-server-name-change"
+        name: 'GTX Server Name Change',
+        path: '/settings/gtx-server-name-change',
       },
-    ]
+    ],
   },
   {
-    name: "Stats",
+    name: 'Stats',
     routes: [
       {
-        name: "Live Sessions",
-        path: "/livescore"
+        name: 'Live Sessions',
+        path: '/livescore',
       },
       {
-        name: "Live Game",
-        path: "/livegamescore"
+        name: 'Live Game',
+        path: '/livegamescore',
       },
       {
-        name: "Games",
-        path: "/gamescoreboard"
+        name: 'Games',
+        path: '/gamescoreboard',
       },
-    ]
+    ],
   },
-]
+];
 
 // TODO: Make this reactive, it's causing the view on mobile to be bigger then it should
 const Header = () => {
   const classes = makeStyles((theme) => ({
     appbar: {
-      borderBottom: `1px solid ${theme.palette.divider}`
+      borderBottom: `1px solid ${theme.palette.divider}`,
     },
     toolbar: {
-      flexDirection: "row",
-      gap: "0.25rem"
+      flexDirection: 'row',
+      gap: '0.25rem',
     },
     navigation: {
-      display: "flex",
+      display: 'flex',
       flexGrow: 1,
-    }
-  }))()
+    },
+  }))();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [openedMenu, setOpenedMenu] = React.useState("");
+  const [openedMenu, setOpenedMenu] = React.useState('');
 
   const handleClick = (event, name) => {
     setAnchorEl(event.currentTarget);
@@ -216,18 +214,28 @@ const Header = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
-    setOpenedMenu("")
+    setOpenedMenu('');
   };
 
   const createMenu = (menu) => {
-    return <MenuSelection key={menu.name} name={menu.name} routes={menu.routes} anchorEl={anchorEl} open={menu.name === openedMenu} handleClose={handleClose} handleClick={(e) => handleClick(e, menu.name)} />
-  }
+    return (
+      <MenuSelection
+        key={menu.name}
+        name={menu.name}
+        routes={menu.routes}
+        anchorEl={anchorEl}
+        open={menu.name === openedMenu}
+        handleClose={handleClose}
+        handleClick={(e) => handleClick(e, menu.name)}
+      />
+    );
+  };
 
   return (
     <AppBar position="static" elevation={0}>
       <Toolbar>
         <ServerStatus />
-        <Stack direction={"row"} sx={{flexGrow: 1}}>
+        <Stack direction={'row'} sx={{ flexGrow: 1 }}>
           {menuConfigs.map(createMenu)}
         </Stack>
         <LoginBox />

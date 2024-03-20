@@ -1,5 +1,5 @@
-import React from "react";
-import UserSetting from ".";
+import React from 'react';
+import UserSetting from '.';
 
 export const LevelAutoMod = ({
   description,

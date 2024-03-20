@@ -1,19 +1,19 @@
-import * as React from "react";
+import * as React from 'react';
 import makeStyles from '@mui/styles/makeStyles';
-import Paper from "@mui/material/Paper";
-import DraggableList from "./DraggableList";
-import { getItems, reorder } from "./helpers";
+import Paper from '@mui/material/Paper';
+import DraggableList from './DraggableList';
+import { getItems, reorder } from './helpers';
 import {
   get,
   handle_http_errors,
   postData,
   sendAction,
   showResponse,
-} from "../../utils/fetchUtils";
-import { Button, CircularProgress, Grid, Typography } from "@mui/material";
-import Chip from "@mui/material/Chip";
+} from '../../utils/fetchUtils';
+import { Button, CircularProgress, Grid, Typography } from '@mui/material';
+import Chip from '@mui/material/Chip';
 import Autocomplete from '@mui/material/Autocomplete';
-import TextField from "@mui/material/TextField";
+import TextField from '@mui/material/TextField';
 
 const MapRotation = () => {
   const [maps, setMaps] = React.useState([]);
@@ -49,21 +49,21 @@ const MapRotation = () => {
   };
 
   const getVoteMapConfig = () => {
-    get("get_votemap_config")
-      .then((res) => showResponse(res, "get_votemap_config", false))
-      .then((data) => (data.failed ? "" : setVoteMapConfig(data.result)))
+    get('get_votemap_config')
+      .then((res) => showResponse(res, 'get_votemap_config', false))
+      .then((data) => (data.failed ? '' : setVoteMapConfig(data.result)))
       .catch(handle_http_errors);
   };
 
   const loadMapRotation = () => {
-    return loadToState("get_map_rotation", false, (data) => {
+    return loadToState('get_map_rotation', false, (data) => {
       setCurrentRotation(Array.from(data.result));
       setRotation(Array.from(data.result));
     });
   };
 
   const loadAllMaps = () => {
-    return loadToState("get_maps", false, (data) => setMaps(data.result));
+    return loadToState('get_maps', false, (data) => setMaps(data.result));
   };
 
   const loadAllData = () => {
@@ -106,7 +106,7 @@ const MapRotation = () => {
       </Grid>
       <Grid item xs={12}>
         <Button variant="text" onClick={loadAllData}>
-          <Typography variant="caption">Refresh</Typography>{" "}
+          <Typography variant="caption">Refresh</Typography>{' '}
         </Button>
       </Grid>
       <Grid item xs={12}>
@@ -136,7 +136,7 @@ const MapRotation = () => {
           <Grid item xs={2}>
             <Button
               fullWidth
-              style={{ height: "100%" }}
+              style={{ height: '100%' }}
               variant="outlined"
               onClick={() => {
                 setRotation(rotation.concat(mapsToAdd));
@@ -160,7 +160,7 @@ const MapRotation = () => {
           ) : voteMapConfig.enabled ? (
             "You can't change the rotation while votemap is on"
           ) : (
-            "Save rotation"
+            'Save rotation'
           )}
         </Button>
       </Grid>

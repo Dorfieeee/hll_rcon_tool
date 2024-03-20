@@ -1,4 +1,4 @@
-import faker from "faker";
+import faker from 'faker';
 
 // a little function to help us with reordering the result
 export const reorder = (list, startIndex, endIndex) => {

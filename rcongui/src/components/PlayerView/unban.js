@@ -1,13 +1,15 @@
-import React from "react";
+import React from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import { DialogActions, DialogContent, DialogTitle } from "../dialog";
-import FormHelperText from "@mui/material/FormHelperText";
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import { DialogActions, DialogContent, DialogTitle } from '../dialog';
+import FormHelperText from '@mui/material/FormHelperText';
 
 // FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
-const withWidth = () => (WrappedComponent) => (props) => <WrappedComponent {...props} width="xs" />;
+const withWidth = () => (WrappedComponent) => (props) => (
+  <WrappedComponent {...props} width="xs" />
+);
 
 const Unban = ({
   bannedPlayers,
@@ -51,17 +53,12 @@ const Unban = ({
             )}
           />
         ) : (
-          "Unable to show bans. Please retry"
+          'Unable to show bans. Please retry'
         )}
         <FormHelperText>
           Don't forget to remove the Blacklisting as well for permabans
         </FormHelperText>
-        <Button
-          autoFocus
-          onClick={onReload}
-          variant="outlined"
-          color="primary"
-        >
+        <Button autoFocus onClick={onReload} variant="outlined" color="primary">
           RELOAD LIST
         </Button>
       </DialogContent>

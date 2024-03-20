@@ -1,16 +1,16 @@
-import React from "react";
-import Grid from "@mui/material/Grid";
-import ListItemText from "@mui/material/ListItemText";
-import LinearProgress from "@mui/material/LinearProgress";
-import "react-toastify/dist/ReactToastify.css";
-import useStyles from "../useStyles";
-import Button from "@mui/material/Button";
-import Link from "@mui/material/Link";
-import { toast } from "react-toastify";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import FullscreenIcon from "@mui/icons-material/Fullscreen";
-import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
-import { IconButton } from "@mui/material";
+import React from 'react';
+import Grid from '@mui/material/Grid';
+import ListItemText from '@mui/material/ListItemText';
+import LinearProgress from '@mui/material/LinearProgress';
+import 'react-toastify/dist/ReactToastify.css';
+import useStyles from '../useStyles';
+import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
+import { toast } from 'react-toastify';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
+import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
+import { IconButton } from '@mui/material';
 
 const AutoRefreshBar = ({
   intervalFunction,
@@ -47,15 +47,15 @@ const AutoRefreshBar = ({
       <Grid className={classes.textLeft} container justifyContent="flex-start">
         <Grid item xs={12}>
           <Grid container justifyContent="space-between">
-            <Grid style={{ textAlign: "left" }} item xs={6}>
+            <Grid style={{ textAlign: 'left' }} item xs={6}>
               <h1>
-                Players view{" "}
+                Players view{' '}
                 <IconButton onClick={onFullScreenClick} size="large">
                   {isFullScreen ? <FullscreenExitIcon /> : <FullscreenIcon />}
                 </IconButton>
               </h1>
             </Grid>
-            <Grid item xs={6} style={{ textAlign: "right" }}>
+            <Grid item xs={6} style={{ textAlign: 'right' }}>
               <ButtonGroup
                 className={classes.margin}
                 orientation="vertical"
@@ -71,9 +71,9 @@ const AutoRefreshBar = ({
         </Grid>
         <Grid item xs={12}>
           <Link
-            style={{ cursor: "pointer" }}
+            style={{ cursor: 'pointer' }}
             onClick={() =>
-              intervalFunction().then(() => toast.success("Refreshed"))
+              intervalFunction().then(() => toast.success('Refreshed'))
             }
           >
             <ListItemText secondary="Refresh now. Next auto refresh:" />

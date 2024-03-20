@@ -1,10 +1,10 @@
-import React from "react";
-import { Grid, TextField } from "@mui/material";
+import React from 'react';
+import { Grid, TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
-import SplitButton from "../splitButton";
-import TextHistory from "../textHistory";
-import { getSharedMessages } from "../../utils/fetchUtils";
-import { ForwardCheckBox } from "../commonComponent";
+import SplitButton from '../splitButton';
+import TextHistory from '../textHistory';
+import { getSharedMessages } from '../../utils/fetchUtils';
+import { ForwardCheckBox } from '../commonComponent';
 
 const ServerMessage = ({
   type,
@@ -57,7 +57,7 @@ const ServerMessage = ({
           options={[
             `Set ${type}`,
             `Set ${type} and save as template`,
-            "Save as template",
+            'Save as template',
           ]}
           clickHandlers={[
             () => onSave(value),
@@ -67,7 +67,7 @@ const ServerMessage = ({
             },
             () => textHistory.saveText(value, sharedMessages),
           ]}
-          buttonProps={{ variant: "outlined" }}
+          buttonProps={{ variant: 'outlined' }}
         />
       </Grid>
     </Grid>

@@ -1,66 +1,64 @@
-import React from "react";
+import React from 'react';
 import {
   handle_http_errors,
   postData,
   showResponse,
-} from "../../utils/fetchUtils";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Select from "@mui/material/Select";
-import Grid from "@mui/material/Grid";
-import { Button, IconButton, Switch } from "@mui/material";
+} from '../../utils/fetchUtils';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Select from '@mui/material/Select';
+import Grid from '@mui/material/Grid';
+import { Button, IconButton, Switch } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
-import TextField from "@mui/material/TextField";
-import RefreshIcon from "@mui/icons-material/Refresh";
-import Paper from "@mui/material/Paper";
-import moment from "moment";
-import AutoRefreshLine from "../autoRefreshLine";
-import ListItemText from "@mui/material/ListItemText";
-import FullscreenIcon from "@mui/icons-material/Fullscreen";
-import FullscreenExitIcon from "@mui/icons-material/FullscreenExit";
+import TextField from '@mui/material/TextField';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import Paper from '@mui/material/Paper';
+import moment from 'moment';
+import AutoRefreshLine from '../autoRefreshLine';
+import ListItemText from '@mui/material/ListItemText';
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
+import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 
 // FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
-const withWidth = () => (WrappedComponent) => (props) => <WrappedComponent {...props} width="xs" />;
+const withWidth = () => (WrappedComponent) => (props) => (
+  <WrappedComponent {...props} width="xs" />
+);
 
 const formatClass = (action, classes, highlightLogs) => {
   // if the message is a chat message
   if (highlightLogs) {
-    if (action.toLowerCase().includes("chat")) {
-      if (action.toLowerCase().includes("allies")) {
+    if (action.toLowerCase().includes('chat')) {
+      if (action.toLowerCase().includes('allies')) {
         return classes.logsChatAllies;
       }
-      if (action.toLowerCase().includes("axis")) {
+      if (action.toLowerCase().includes('axis')) {
         return classes.logsChatAxis;
       }
-    }
-    else if (action.toLowerCase().includes("admin")) {
+    } else if (action.toLowerCase().includes('admin')) {
       return classes.logsAdmin;
-    }
-    else if (action.toLowerCase().includes("tk")) {
+    } else if (action.toLowerCase().includes('tk')) {
       return classes.logsTK;
-    }
-    else if (action.toLowerCase().includes("match")) {
+    } else if (action.toLowerCase().includes('match')) {
       return classes.logsMatch;
-    }
-    else if (action.toLowerCase().includes("vote")) {
+    } else if (action.toLowerCase().includes('vote')) {
       return classes.logsVote;
-    }
-    else switch (action.toLowerCase()) {
-      case "message":
-        return classes.logsMessage;
-      case "team kill":
-        return classes.logsTeamKill;
-      case "kill":
-        return classes.logsKill;
-      case "teamswitch":
-        return classes.logsTeamSwitch;
-      case "disconnected":
-        return classes.logsDisconnected;
-      case "connected":
-        return classes.logsConnected;
-    }
+    } else
+      switch (action.toLowerCase()) {
+        case 'message':
+          return classes.logsMessage;
+        case 'team kill':
+          return classes.logsTeamKill;
+        case 'kill':
+          return classes.logsKill;
+        case 'teamswitch':
+          return classes.logsTeamSwitch;
+        case 'disconnected':
+          return classes.logsDisconnected;
+        case 'connected':
+          return classes.logsConnected;
+      }
   }
   return classes.logs;
 };
@@ -87,7 +85,7 @@ const Selector = ({
           <em>{defaultText}</em>
         </MenuItem>
       ) : (
-        ""
+        ''
       )}
       {values.map((a) => (
         <MenuItem key={a} value={a}>
@@ -102,31 +100,31 @@ class Logs extends React.Component {
   constructor(props) {
     super(props);
     console.log(
-      "logs_action_type",
-      JSON.parse(localStorage.getItem("logs_action_type"))
+      'logs_action_type',
+      JSON.parse(localStorage.getItem('logs_action_type'))
     );
     this.state = {
       logs: [],
       actions: [],
       players: [],
-      playersFilter: localStorage.getItem("logs_player_filters")
-        ? JSON.parse(localStorage.getItem("logs_player_filters"))
+      playersFilter: localStorage.getItem('logs_player_filters')
+        ? JSON.parse(localStorage.getItem('logs_player_filters'))
         : [],
-      actionsFilter: localStorage.getItem("logs_action_filters")
-        ? JSON.parse(localStorage.getItem("logs_action_filters"))
+      actionsFilter: localStorage.getItem('logs_action_filters')
+        ? JSON.parse(localStorage.getItem('logs_action_filters'))
         : [],
       inclusiveFilter:
-        localStorage.getItem("logs_action_type") !== null
-          ? JSON.parse(localStorage.getItem("logs_action_type"))
+        localStorage.getItem('logs_action_type') !== null
+          ? JSON.parse(localStorage.getItem('logs_action_type'))
           : true,
-      limit: localStorage.getItem("logs_limit")
-        ? localStorage.getItem("logs_limit")
+      limit: localStorage.getItem('logs_limit')
+        ? localStorage.getItem('logs_limit')
         : 500,
       limitOptions: [
         100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000,
       ],
-      highlightLogs: localStorage.getItem("logs_highlight_logs")
-        ? localStorage.getItem("logs_highlight_logs") === 'true'
+      highlightLogs: localStorage.getItem('logs_highlight_logs')
+        ? localStorage.getItem('logs_highlight_logs') === 'true'
         : false,
     };
 
@@ -153,7 +151,7 @@ class Logs extends React.Component {
       filter_player: playersFilter,
       inclusive_filter: inclusiveFilter,
     })
-      .then((response) => showResponse(response, "get_logs"))
+      .then((response) => showResponse(response, 'get_logs'))
       .then((data) => {
         this.setState({
           logs: data.result.logs,
@@ -166,22 +164,22 @@ class Logs extends React.Component {
 
   setActionFilter(actionsFilter) {
     this.setState({ actionsFilter }, this.loadLogs);
-    localStorage.setItem("logs_action_filters", JSON.stringify(actionsFilter));
+    localStorage.setItem('logs_action_filters', JSON.stringify(actionsFilter));
   }
 
   setActionsFilterInclusivity(e) {
     this.setState({ inclusiveFilter: e.target.value }, this.loadLogs);
-    localStorage.setItem("logs_action_type", JSON.stringify(e.target.value));
+    localStorage.setItem('logs_action_type', JSON.stringify(e.target.value));
   }
 
   setLimit(limit) {
     this.setState({ limit }, this.loadLogs);
-    localStorage.setItem("logs_limit", limit);
+    localStorage.setItem('logs_limit', limit);
   }
 
   setHighlightLogs(highlightLogs) {
     this.setState({ highlightLogs });
-    localStorage.setItem("logs_highlight_logs", highlightLogs);
+    localStorage.setItem('logs_highlight_logs', highlightLogs);
   }
 
   render() {
@@ -201,12 +199,9 @@ class Logs extends React.Component {
     return (
       <React.Fragment>
         <Grid container justifyContent="flex-start">
-          <Grid
-            item
-            xs={12}
-          >
+          <Grid item xs={12}>
             <h1>
-              Logs view{" "}
+              Logs view{' '}
               <IconButton onClick={onFullScreen} size="large">
                 {isFullScreen ? <FullscreenExitIcon /> : <FullscreenIcon />}
               </IconButton>
@@ -280,12 +275,12 @@ class Logs extends React.Component {
               filterSelectedOptions
               onChange={(e, value) => {
                 this.setState(
-                  { playersFilter: value ? value : "" },
+                  { playersFilter: value ? value : '' },
                   this.loadLogs
                 );
                 if (value) {
                   localStorage.setItem(
-                    "logs_player_filters",
+                    'logs_player_filters',
                     JSON.stringify(value)
                   );
                 }
@@ -316,9 +311,9 @@ class Logs extends React.Component {
               {logs.map((l) => (
                 <pre key={l.raw}>
                   {moment(new Date(l.timestamp_ms)).format(
-                    "HH:mm:ss - ddd, MMM D"
+                    'HH:mm:ss - ddd, MMM D'
                   ) +
-                    "\t" +
+                    '\t' +
                     l.action.padEnd(20) +
                     l.message}
                 </pre>

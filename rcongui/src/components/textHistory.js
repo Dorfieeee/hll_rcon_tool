@@ -1,12 +1,12 @@
-import _ from "lodash";
+import _ from 'lodash';
 
-const PREFIX = "autocomplete_";
+const PREFIX = 'autocomplete_';
 
 const getAllNamespaces = () => {
-  let namespaces = ["punishments", "welcome", "broadcast", "watchlist"];
+  let namespaces = ['punishments', 'welcome', 'broadcast', 'watchlist'];
 
   return namespaces.filter((v) => {
-    if (!v || v.includes("undefined")) {
+    if (!v || v.includes('undefined')) {
       return false;
     }
     const texts = new TextHistory(v).getTexts();

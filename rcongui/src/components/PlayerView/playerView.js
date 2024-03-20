@@ -1,25 +1,25 @@
-import React, { Component } from "react";
-import "react-toastify/dist/ReactToastify.css";
+import React, { Component } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   get,
   handle_http_errors,
   postData,
   showResponse,
-} from "../../utils/fetchUtils";
-import AutoRefreshBar from "./header";
-import TextInputBar from "./textInputBar";
-import CompactList from "./playerList";
-import Chip from "@mui/material/Chip";
-import { ReasonDialog } from "./playerActions";
-import GroupActions from "./groupActions";
-import Unban from "./unban";
-import { fromJS, List } from "immutable";
-import { FlagDialog } from "../PlayersHistory";
-import { getEmojiFlag } from "../../utils/emoji";
+} from '../../utils/fetchUtils';
+import AutoRefreshBar from './header';
+import TextInputBar from './textInputBar';
+import CompactList from './playerList';
+import Chip from '@mui/material/Chip';
+import { ReasonDialog } from './playerActions';
+import GroupActions from './groupActions';
+import Unban from './unban';
+import { fromJS, List } from 'immutable';
+import { FlagDialog } from '../PlayersHistory';
+import { getEmojiFlag } from '../../utils/emoji';
 
 function stripDiacritics(string) {
-  return typeof string.normalize !== "undefined"
-    ? string.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+  return typeof string.normalize !== 'undefined'
+    ? string.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     : string;
 }
 
@@ -30,15 +30,15 @@ const PlayerSummary = ({ player, flag }) => {
         Add flag: {flag ? getEmojiFlag(flag) : <small>Please choose</small>}
       </p>
       <p>
-        To:{" "}
-        {player.get("names")
-          ? player.get("names", []).map((n) => <Chip label={n.get("name")} />)
-          : "No name recorded"}
+        To:{' '}
+        {player.get('names')
+          ? player.get('names', []).map((n) => <Chip label={n.get('name')} />)
+          : 'No name recorded'}
       </p>
-      <p>Steamd id: {player.get("steam_id_64", "")}</p>
+      <p>Steamd id: {player.get('steam_id_64', '')}</p>
     </React.Fragment>
   ) : (
-    ""
+    ''
   );
 };
 
@@ -50,13 +50,13 @@ class PlayerView extends Component {
       bannedPlayers: null,
       players: new List(),
       filteredPlayers: new List(),
-      filter: "",
+      filter: '',
       filterTimeout: null,
-      actionMessage: "",
+      actionMessage: '',
       doConfirm: false,
-      sortType: localStorage.getItem("player_sort")
-        ? localStorage.getItem("player_sort")
-        : "",
+      sortType: localStorage.getItem('player_sort')
+        ? localStorage.getItem('player_sort')
+        : '',
       openGroupAction: false,
       openUnban: false,
       flag: false,
@@ -76,11 +76,11 @@ class PlayerView extends Component {
 
   addFlagToPlayer(playerObj, flag, comment = null) {
     return postData(`${process.env.REACT_APP_API_URL}flag_player`, {
-      steam_id_64: playerObj.get("steam_id_64"),
+      steam_id_64: playerObj.get('steam_id_64'),
       flag: flag,
       comment: comment,
     })
-      .then((response) => showResponse(response, "flag_player", true))
+      .then((response) => showResponse(response, 'flag_player', true))
       .then(() => this.setState({ flag: false }))
       .then(this.loadPlayers)
       .catch(handle_http_errors);
@@ -90,7 +90,7 @@ class PlayerView extends Component {
     return postData(`${process.env.REACT_APP_API_URL}unflag_player`, {
       flag_id: flag_id,
     })
-      .then((response) => showResponse(response, "unflag_player", true))
+      .then((response) => showResponse(response, 'unflag_player', true))
       .then(this.loadPlayers)
       .catch(handle_http_errors);
   }
@@ -120,9 +120,9 @@ class PlayerView extends Component {
     }
 
     if (
-      message === "" &&
-      !actionType.startsWith("switch_") &&
-      !actionType.startsWith("unwatch_")
+      message === '' &&
+      !actionType.startsWith('switch_') &&
+      !actionType.startsWith('unwatch_')
     ) {
       this.setState({
         doConfirm: {
@@ -141,8 +141,8 @@ class PlayerView extends Component {
         message: message,
         save_message: save_message,
       };
-      if (actionType === "temp_ban") {
-        data["forward"] = "yes";
+      if (actionType === 'temp_ban') {
+        data['forward'] = 'yes';
       }
       postData(`${process.env.REACT_APP_API_URL}do_${actionType}`, data)
         .then((response) =>
@@ -158,12 +158,12 @@ class PlayerView extends Component {
         try {
           console.log(this.state.players);
           steamid = this.state.players
-            .filter((p) => p.get("name") === player_name)
+            .filter((p) => p.get('name') === player_name)
             .get(0)
-            .get("steam_id_64");
+            .get('steam_id_64');
           console.log(steamid);
         } catch (err) {
-          console.log("Unable to get steamId", err);
+          console.log('Unable to get steamId', err);
         }
       }
       postData(`${process.env.REACT_APP_API_URL}post_player_comment`, {
@@ -190,7 +190,7 @@ class PlayerView extends Component {
   }
 
   loadPlayers() {
-    return this.load("get_players", (data) => {
+    return this.load('get_players', (data) => {
       this.setState(
         { players: data.result === null ? new List() : fromJS(data.result) },
         () => {
@@ -202,7 +202,7 @@ class PlayerView extends Component {
   }
 
   loadBans() {
-    return this.load("get_bans", (data) =>
+    return this.load('get_bans', (data) =>
       this.setState({ bannedPlayers: data.result })
     );
   }
@@ -221,7 +221,7 @@ class PlayerView extends Component {
     if (filter) {
       const filteredPlayers = players.filter(
         (p) =>
-          stripDiacritics(p.get("name"))
+          stripDiacritics(p.get('name'))
             .toLowerCase()
             .indexOf(filter.toLowerCase()) >= 0
       );
@@ -235,7 +235,7 @@ class PlayerView extends Component {
 
   sortTypeChange(sortType) {
     this.setState({ sortType });
-    localStorage.setItem("player_sort", sortType);
+    localStorage.setItem('player_sort', sortType);
   }
 
   componentDidMount() {

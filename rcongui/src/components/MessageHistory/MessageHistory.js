@@ -1,31 +1,31 @@
-import React, { useEffect, useRef, useState } from "react";
-import Badge from "@mui/material/Badge";
-import { Comment, Send } from "@mui/icons-material";
-import { Box, Button, Chip, Drawer, Grid, TextField } from "@mui/material";
+import React, { useEffect, useRef, useState } from 'react';
+import Badge from '@mui/material/Badge';
+import { Comment, Send } from '@mui/icons-material';
+import { Box, Button, Chip, Drawer, Grid, TextField } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import moment from "moment";
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
   message: {
-    whiteSpace: "pre-wrap",
-    marginTop: "5px",
-    marginBottom: "5px",
+    whiteSpace: 'pre-wrap',
+    marginTop: '5px',
+    marginBottom: '5px',
   },
   date: {
     color: theme.palette.disabledColor,
   },
   padding: {
     padding: theme.spacing(1),
-    overflow: "auto",
-    maxHeight: "68vh",
+    overflow: 'auto',
+    maxHeight: '68vh',
   },
 }));
 
 const MessageHistory = ({ data }) => {
   const classes = useStyles();
-  const [comment, setComment] = React.useState("");
+  const [comment, setComment] = React.useState('');
 
   return (
     <React.Fragment>
@@ -51,13 +51,14 @@ const MessageHistory = ({ data }) => {
                 >
                   <Grid item>
                     <Chip
-                      style={{ height: "auto", paddingTop: "-10px" }}
+                      style={{ height: 'auto', paddingTop: '-10px' }}
                       color="primary"
                       label={
                         <Typography align="left" className={classes.message}>
                           {message.reason}
                         </Typography>
-                      } />
+                      }
+                    />
                   </Grid>
                   <Grid item>
                     <Typography
@@ -69,7 +70,7 @@ const MessageHistory = ({ data }) => {
                       {moment
                         .utc(message.time)
                         .local()
-                        .format("ddd Do MMM HH:mm:ss")}{" "}
+                        .format('ddd Do MMM HH:mm:ss')}{' '}
                       by {message.by}
                     </Typography>
                   </Grid>

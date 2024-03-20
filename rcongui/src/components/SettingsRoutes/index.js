@@ -1,1 +1,1 @@
-export { default as SettingsRoutes } from "./settings";
+export { default as SettingsRoutes } from './settings';

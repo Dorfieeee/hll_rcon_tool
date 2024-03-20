@@ -1,27 +1,27 @@
-import React from "react";
-import "./App.css";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import CssBaseline from "@mui/material/CssBaseline";
-import { HashRouter, Route, Switch, BrowserRouter } from "react-router-dom";
-import Footer from "./components/Footer/footer";
-import Header from "./components/Header";
-import ScoreMenu from "./components/Scoreboard/ScoreMenu";
-import themes from "./themes";
-import publicRoutes from "./routes/public";
-import adminRoutes from "./routes/admin";
-import { Container, ThemeProvider } from "@mui/material";
+import React from 'react';
+import './App.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import CssBaseline from '@mui/material/CssBaseline';
+import { HashRouter, Route, Switch, BrowserRouter } from 'react-router-dom';
+import Footer from './components/Footer/footer';
+import Header from './components/Header';
+import ScoreMenu from './components/Scoreboard/ScoreMenu';
+import themes from './themes';
+import publicRoutes from './routes/public';
+import adminRoutes from './routes/admin';
+import { Container, ThemeProvider } from '@mui/material';
 
 const generateRoutes = (routes) => {
-  return routes.map(route => {
+  return routes.map((route) => {
     const ChildComponent = route.component;
     return (
       <Route key={route.path} path={route.path} exact={route.exact}>
         <ChildComponent />
       </Route>
-    )
-  })
-}
+    );
+  });
+};
 
 const EmbedApp = () => {
   return (
@@ -30,12 +30,14 @@ const EmbedApp = () => {
       <BrowserRouter>
         <Switch>
           {generateRoutes(publicRoutes)}
-          {!process.env.REACT_APP_PUBLIC_BUILD ? generateRoutes(adminRoutes) : null}
+          {!process.env.REACT_APP_PUBLIC_BUILD
+            ? generateRoutes(adminRoutes)
+            : null}
         </Switch>
       </BrowserRouter>
     </ThemeProvider>
   );
-}
+};
 
 const PublicBuildApp = () => (
   <ThemeProvider theme={themes.HLL}>
@@ -43,16 +45,14 @@ const PublicBuildApp = () => (
     <CssBaseline />
     <ScoreMenu />
     <HashRouter>
-      <Switch>
-        {generateRoutes(publicRoutes)}
-      </Switch>
+      <Switch>{generateRoutes(publicRoutes)}</Switch>
     </HashRouter>
     <Footer />
   </ThemeProvider>
-)
+);
 
 const DefaultApp = () => {
-  const userTheme = localStorage.getItem("crconTheme")
+  const userTheme = localStorage.getItem('crconTheme');
 
   return (
     <ThemeProvider theme={themes[userTheme] ?? themes.Light}>
@@ -60,17 +60,19 @@ const DefaultApp = () => {
       <ToastContainer />
       <HashRouter>
         <Header />
-        <Container >
+        <Container>
           <Switch>
             {generateRoutes(publicRoutes)}
-            {!process.env.REACT_APP_PUBLIC_BUILD ? generateRoutes(adminRoutes) : null}
+            {!process.env.REACT_APP_PUBLIC_BUILD
+              ? generateRoutes(adminRoutes)
+              : null}
           </Switch>
         </Container>
         <Footer />
       </HashRouter>
     </ThemeProvider>
   );
-}
+};
 
 function App() {
   const isPublicBuild = process.env.REACT_APP_PUBLIC_BUILD;
@@ -79,20 +81,18 @@ function App() {
   React.useEffect(() => {
     const serarchParams = new URLSearchParams(window.location.search);
 
-    setIsEmbed(serarchParams.has("embed"));
+    setIsEmbed(serarchParams.has('embed'));
   }, [window.location.search]);
 
-
   if (isEmbed) {
-    return <EmbedApp />
+    return <EmbedApp />;
   }
 
   if (isPublicBuild) {
-    return <PublicBuildApp />
+    return <PublicBuildApp />;
   }
 
-  return <DefaultApp />
-
+  return <DefaultApp />;
 }
 
 export default App;

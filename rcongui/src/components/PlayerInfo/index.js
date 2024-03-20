@@ -1,3 +1,3 @@
-import PlayerInfo from "./PlayerInfo";
+import PlayerInfo from './PlayerInfo';
 
 export default PlayerInfo;

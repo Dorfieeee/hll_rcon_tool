@@ -1,7 +1,12 @@
-import * as React from "react";
-import {get, handle_http_errors, postData, showResponse,} from "../../utils/fetchUtils";
-import {Grid, Typography} from "@mui/material";
-import Padlock from "../SettingsView/padlock";
+import * as React from 'react';
+import {
+  get,
+  handle_http_errors,
+  postData,
+  showResponse,
+} from '../../utils/fetchUtils';
+import { Grid, Typography } from '@mui/material';
+import Padlock from '../SettingsView/padlock';
 
 const MapRotationSettings = () => {
   const [shuffleEnabled, setShuffleEnabled] = React.useState(false);
@@ -14,14 +19,16 @@ const MapRotationSettings = () => {
   };
 
   const getShuffleEnabled = () => {
-    loadToState("get_map_shuffle_enabled", false, setShuffleEnabled);
+    loadToState('get_map_shuffle_enabled', false, setShuffleEnabled);
   };
 
   const toggleShuffleEnabled = (enabled) => {
     return postData(`${process.env.REACT_APP_API_URL}set_map_shuffle_enabled`, {
       enabled: enabled,
     })
-      .then((res) => showResponse(res, `set_map_shuffle_enabled: ${enabled}`, true))
+      .then((res) =>
+        showResponse(res, `set_map_shuffle_enabled: ${enabled}`, true)
+      )
       .catch(handle_http_errors);
   };
 
@@ -43,10 +50,20 @@ const MapRotationSettings = () => {
     >
       <Grid item xs={12}>
         <Padlock
-          label={<div style={{textAlign: 'start', display: 'flex', flexDirection: 'column'}}>
-            <Typography variant={'body'}>Shuffle map rotation</Typography>
-            <Typography variant={'caption'}>Will reset to default enabled when server restarts.</Typography>
-          </div>}
+          label={
+            <div
+              style={{
+                textAlign: 'start',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              <Typography variant={'body'}>Shuffle map rotation</Typography>
+              <Typography variant={'caption'}>
+                Will reset to default enabled when server restarts.
+              </Typography>
+            </div>
+          }
           checked={shuffleEnabled}
           handleChange={(v) => {
             toggleShuffleEnabled(!shuffleEnabled);

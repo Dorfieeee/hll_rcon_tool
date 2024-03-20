@@ -8,17 +8,17 @@ import {
   ImageList,
   ImageListItem,
   ImageListItemBar,
-} from "@mui/material";
+} from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import React from "react";
-import { get, handle_http_errors, showResponse } from "../../utils/fetchUtils";
-import { List as iList, Map, fromJS } from "immutable";
-import moment from "moment";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { useTheme, alpha } from "@mui/material/styles";
-import Scores from "./Scores";
-import { getMapImageUrl } from "./utils";
-import { Link as RouterLink } from "react-router-dom";
+import React from 'react';
+import { get, handle_http_errors, showResponse } from '../../utils/fetchUtils';
+import { List as iList, Map, fromJS } from 'immutable';
+import moment from 'moment';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme, alpha } from '@mui/material/styles';
+import Scores from './Scores';
+import { getMapImageUrl } from './utils';
+import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   padRight: {
@@ -29,24 +29,24 @@ const useStyles = makeStyles((theme) => ({
   },
   transparentPaper: {
     backgroundColor: alpha(theme.palette.background.paper, 0.6),
-    borderRadius: "0px",
+    borderRadius: '0px',
   },
   root: {
-    display: "flex",
+    display: 'flex',
   },
   details: {
-    display: "flex",
-    flexDirection: "column",
+    display: 'flex',
+    flexDirection: 'column',
   },
   content: {
-    flex: "1 0 auto",
+    flex: '1 0 auto',
   },
   cover: {
     width: 200,
   },
   controls: {
-    display: "flex",
-    alignItems: "center",
+    display: 'flex',
+    alignItems: 'center',
     paddingLeft: theme.spacing(1),
     paddingBottom: theme.spacing(1),
   },
@@ -56,11 +56,11 @@ const useStyles = makeStyles((theme) => ({
   },
   titleBar: {
     background:
-      "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
+      'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
   },
   titleBarTop: {
     background:
-      "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
+      'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
   },
 }));
 
@@ -71,22 +71,14 @@ const LiveSessionScore = () => (
     explainText={
       <React.Fragment>
         Only ingame players are shown. Stats are reset on disconnection, not per
-        game, check the{" "}
-        <Link
-          color="inherit"
-          component={RouterLink}
-          to="/livegamescore"
-        >
+        game, check the{' '}
+        <Link color="inherit" component={RouterLink} to="/livegamescore">
           Live Game
-        </Link>{" "}
-        or{" "}
-        <Link
-          color="inherit"
-          component={RouterLink}
-          to="/gamescoreboard"
-        >
+        </Link>{' '}
+        or{' '}
+        <Link color="inherit" component={RouterLink} to="/gamescoreboard">
           Past games
-        </Link>{" "}
+        </Link>{' '}
         for historical data. Real deaths only are counted (e.g. not redeploys /
         revives)
       </React.Fragment>
@@ -100,22 +92,14 @@ const LiveGameScore = () => (
     title="CURRENT GAME"
     explainText={
       <React.Fragment>
-        All players that are or were in the game are shown, check the{" "}
-        <Link
-          color="inherit"
-          component={RouterLink}
-          to="/livescore"
-        >
+        All players that are or were in the game are shown, check the{' '}
+        <Link color="inherit" component={RouterLink} to="/livescore">
           Live Sessions
-        </Link>{" "}
-        for live stats accross several games or{" "}
-        <Link
-          color="inherit"
-          component={RouterLink}
-          to="/gamescoreboard"
-        >
+        </Link>{' '}
+        for live stats accross several games or{' '}
+        <Link color="inherit" component={RouterLink} to="/gamescoreboard">
           Past games
-        </Link>{" "}
+        </Link>{' '}
         for historical data. Real deaths only are counted (e.g. not redeploys /
         revives)
       </React.Fragment>
@@ -132,25 +116,25 @@ const LiveScore = ({ endpoint, explainText, title }) => {
   const [refreshIntervalSec, setRefreshIntervalSec] = React.useState(10);
   const durationToHour = (val) =>
     new Date(val * 1000).toISOString().substr(11, 5);
-  const scores = stats.get("stats", new iList());
-  const lastRefresh = stats.get("snapshot_timestamp")
-    ? moment.unix(stats.get("snapshot_timestamp")).format()
-    : "N/A";
+  const scores = stats.get('stats', new iList());
+  const lastRefresh = stats.get('snapshot_timestamp')
+    ? moment.unix(stats.get('snapshot_timestamp')).format()
+    : 'N/A';
 
   const getData = () => {
     setIsLoading(true);
-    console.log("Loading data");
+    console.log('Loading data');
     get(endpoint)
       .then((res) => showResponse(res, endpoint, false))
       .then((data) => {
         const map_ = fromJS(data.result || new iList());
         setStats(map_);
-        setRefreshIntervalSec(map_.get("refresh_interval_sec", 10));
+        setRefreshIntervalSec(map_.get('refresh_interval_sec', 10));
         // TODO add code to sync the refresh time with one of the server by checking the last refresh timestamp
       })
       .catch(handle_http_errors);
-    get("public_info")
-      .then((res) => showResponse(res, "public_info", false))
+    get('public_info')
+      .then((res) => showResponse(res, 'public_info', false))
       .then((data) => setServerState(fromJS(data.result)))
       .then(() => setIsLoading(false))
       .catch(handle_http_errors);
@@ -165,85 +149,71 @@ const LiveScore = ({ endpoint, explainText, title }) => {
     }
   }, [isPaused, refreshIntervalSec]);
 
-  document.title = serverState.get("name", "HLL Stats");
-  let started = serverState.get("current_map", new Map()).get("start");
+  document.title = serverState.get('name', 'HLL Stats');
+  let started = serverState.get('current_map', new Map()).get('start');
   started = started
     ? new Date(Date.now() - new Date(started * 1000))
-      .toISOString()
-      .substr(11, 8)
-    : "N/A";
+        .toISOString()
+        .substr(11, 8)
+    : 'N/A';
 
-  return <>
-    <Grid
-      container
-      spacing={2}
-      justifyContent="center"
-    >
-      <Grid
-        item
-        xs={12}
-      >
+  return (
+    <>
+      <Grid container spacing={2} justifyContent="center">
+        <Grid item xs={12}>
+          {process.env.REACT_APP_PUBLIC_BUILD ? (
+            <Typography color="secondary" variant="h4">
+              {serverState.get('name')}
+            </Typography>
+          ) : (
+            <Link
+              href={`http://${window.location.hostname}:${serverState.get(
+                'public_stats_port'
+              )}`}
+              target="_blank"
+            >
+              Public version on port {serverState.get('public_stats_port')} -
+              https: {serverState.get('public_stats_port_https')}
+            </Link>
+          )}
+        </Grid>
+
         {process.env.REACT_APP_PUBLIC_BUILD ? (
-          <Typography color="secondary" variant="h4">
-            {serverState.get("name")}
-          </Typography>
+          <Grid xs={12} md={10} lg={10} xl={8}>
+            <LiveHeader
+              serverState={serverState}
+              styles={styles}
+              started={started}
+              lastRefresh={lastRefresh}
+              refreshIntervalSec={refreshIntervalSec}
+              setPaused={setPaused}
+              isPaused={isPaused}
+              isLoading={isLoading}
+              explainText={explainText}
+              title={title}
+            />
+          </Grid>
         ) : (
-          <Link
-            href={`http://${window.location.hostname}:${serverState.get(
-              "public_stats_port"
-            )}`}
-            target="_blank"
-          >
-            Public version on port {serverState.get("public_stats_port")} -
-            https: {serverState.get("public_stats_port_https")}
-          </Link>
+          ''
         )}
       </Grid>
-
-      {process.env.REACT_APP_PUBLIC_BUILD ? (
-        <Grid
-          xs={12}
-          md={10}
-          lg={10}
-          xl={8}
-        >
-          <LiveHeader
-            serverState={serverState}
-            styles={styles}
-            started={started}
-            lastRefresh={lastRefresh}
-            refreshIntervalSec={refreshIntervalSec}
-            setPaused={setPaused}
-            isPaused={isPaused}
-            isLoading={isLoading}
-            explainText={explainText}
-            title={title}
-          />
-        </Grid>
-      ) : (
-        ""
-      )}
-    </Grid>
-    <Grid
-      container
-      spacing={2}
-      justifyContent="center"
-    >
-      <Scores
-        serverState={serverState}
-        styles={styles}
-        started={started}
-        lastRefresh={lastRefresh}
-        refreshIntervalSec={refreshIntervalSec}
-        setPaused={setPaused}
-        isPaused={isPaused}
-        isLoading={isLoading}
-        scores={scores}
-        durationToHour={durationToHour}
-        type="live"
-      />
-    </Grid>
-  </>;
+      <Grid container spacing={2} justifyContent="center">
+        <Scores
+          serverState={serverState}
+          styles={styles}
+          started={started}
+          lastRefresh={lastRefresh}
+          refreshIntervalSec={refreshIntervalSec}
+          setPaused={setPaused}
+          isPaused={isPaused}
+          isLoading={isLoading}
+          scores={scores}
+          durationToHour={durationToHour}
+          type="live"
+        />
+      </Grid>
+    </>
+  );
 };
 
 const LiveHeader = ({
@@ -262,11 +232,11 @@ const LiveHeader = ({
   const isXs = useMediaQuery(theme.breakpoints.down('xl'));
   const nextMapString = React.useMemo(() => {
     const [map, nbVotes] = serverState
-      .get("vote_status")
-      ?.get("winning_maps")
-      ?.get(0) || ["", 0];
-    const totalVotes = serverState.get("vote_status")?.get("total_votes");
-    const nextMap = serverState.get("next_map")?.get("name");
+      .get('vote_status')
+      ?.get('winning_maps')
+      ?.get(0) || ['', 0];
+    const totalVotes = serverState.get('vote_status')?.get('total_votes');
+    const nextMap = serverState.get('next_map')?.get('name');
 
     if (map === nextMap) {
       return `Nextmap ${nextMap} with ${nbVotes} out of ${totalVotes} votes`;
@@ -275,7 +245,7 @@ const LiveHeader = ({
   }, [serverState]);
 
   return (
-    <AppBar position="relative" style={{ minHeight: "144px" }}>
+    <AppBar position="relative" style={{ minHeight: '144px' }}>
       <Toolbar>
         <ImageList cols={isXs ? 1 : 2}>
           <ImageListItem>
@@ -290,39 +260,36 @@ const LiveHeader = ({
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="caption">
-                  Auto-refresh every {refreshIntervalSec} seconds:{" "}
+                  Auto-refresh every {refreshIntervalSec} seconds:{' '}
                   <Link onClick={() => setPaused(!isPaused)} color="secondary">
-                    {isPaused ? "click to unpause" : "click to pause"}
-                  </Link>{" "}
+                    {isPaused ? 'click to unpause' : 'click to pause'}
+                  </Link>{' '}
                   - Last update: {lastRefresh}
                 </Typography>
               </Grid>
               <Grid item xs={12}>
                 <LinearProgress
-                  style={{ visibility: isLoading ? "visible" : "hidden" }}
+                  style={{ visibility: isLoading ? 'visible' : 'hidden' }}
                   color="secondary"
                 />
               </Grid>
             </Grid>
           </ImageListItem>
           <ImageListItem>
-            <img
-              alt="Map"
-              src={getMapImageUrl(serverState.get('name'))}
-            />
+            <img alt="Map" src={getMapImageUrl(serverState.get('name'))} />
             <ImageListItemBar
               className={styles.titleBarTop}
               title={serverState
-                .get("current_map", new Map())
-                .get("human_name", "N/A")}
+                .get('current_map', new Map())
+                .get('human_name', 'N/A')}
               subtitle=""
               titlePosition="top"
             />
             <ImageListItemBar
               className={styles.titleBarBottom}
               title={`Elapsed: ${started} - Players: ${serverState.get(
-                "player_count"
-              )}/${serverState.get("max_player_count")}`}
+                'player_count'
+              )}/${serverState.get('max_player_count')}`}
               subtitle={nextMapString}
               titlePosition="bottom"
             />

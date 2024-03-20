@@ -1,25 +1,25 @@
-import React, { useEffect, useRef, useState } from "react";
-import Badge from "@mui/material/Badge";
-import { Comment, Send } from "@mui/icons-material";
-import { Box, Button, Chip, Drawer, Grid, TextField } from "@mui/material";
+import React, { useEffect, useRef, useState } from 'react';
+import Badge from '@mui/material/Badge';
+import { Comment, Send } from '@mui/icons-material';
+import { Box, Button, Chip, Drawer, Grid, TextField } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import moment from "moment";
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
   message: {
-    whiteSpace: "pre-wrap",
-    marginTop: "5px",
-    marginBottom: "5px",
+    whiteSpace: 'pre-wrap',
+    marginTop: '5px',
+    marginBottom: '5px',
   },
   date: {
     color: theme.palette.disabledColor,
   },
   padding: {
     padding: theme.spacing(1),
-    overflow: "auto",
-    maxHeight: "68vh",
+    overflow: 'auto',
+    maxHeight: '68vh',
   },
 }));
 
@@ -31,7 +31,7 @@ const AlwaysScrollToBottom = () => {
 
 const ChatContent = ({ data, handleMessageSend }) => {
   const classes = useStyles();
-  const [comment, setComment] = React.useState("");
+  const [comment, setComment] = React.useState('');
 
   return (
     <React.Fragment>
@@ -57,13 +57,14 @@ const ChatContent = ({ data, handleMessageSend }) => {
                 >
                   <Grid item>
                     <Chip
-                      style={{ height: "auto", paddingTop: "-10px" }}
+                      style={{ height: 'auto', paddingTop: '-10px' }}
                       color="primary"
                       label={
                         <Typography align="left" className={classes.message}>
                           {message.content}
                         </Typography>
-                      } />
+                      }
+                    />
                   </Grid>
                   <Grid item>
                     <Typography
@@ -75,7 +76,7 @@ const ChatContent = ({ data, handleMessageSend }) => {
                       {moment
                         .utc(message.creation_time)
                         .local()
-                        .format("ddd Do MMM HH:mm:ss")}{" "}
+                        .format('ddd Do MMM HH:mm:ss')}{' '}
                       by {message.by}
                     </Typography>
                   </Grid>
@@ -110,7 +111,7 @@ const ChatContent = ({ data, handleMessageSend }) => {
                 color="secondary"
                 onClick={(e) => {
                   handleMessageSend(comment);
-                  setComment("");
+                  setComment('');
                 }}
               >
                 <Send />
@@ -128,7 +129,7 @@ const ChatWidget = ({ data, handleMessageSend }) => {
   const [open, setOpen] = useState(false);
 
   const handleChange = (reason) => {
-    if (reason === "clickaway") {
+    if (reason === 'clickaway') {
       return;
     }
     setOpen(!open);
@@ -139,16 +140,12 @@ const ChatWidget = ({ data, handleMessageSend }) => {
       <Badge color="secondary" overlap="circular" badgeContent={data?.length}>
         <Grid container className={classes.shape}>
           <IconButton onClick={handleChange} size="large">
-            <Comment style={{ color: "white" }} />
+            <Comment style={{ color: 'white' }} />
           </IconButton>
         </Grid>
       </Badge>
       <Drawer anchor="right" open={open} onClose={handleChange}>
-        <ChatContent
-          data={data}
-          handleMessageSend={handleMessageSend}
-          
-        />
+        <ChatContent data={data} handleMessageSend={handleMessageSend} />
       </Drawer>
     </div>
   );

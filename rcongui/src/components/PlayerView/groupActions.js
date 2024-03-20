@@ -1,55 +1,51 @@
-import React from "react";
+import React from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import { Duration, PlayerActions } from "./playerActions";
-import { Reason } from "./textInputBar";
-import Grid from "@mui/material/Grid";
-import { DialogActions, DialogContent, DialogTitle } from "../dialog";
-import { join } from "lodash/array";
-import TextHistory from "../textHistory";
-import { List } from "immutable";
-import { sortBy } from "lodash/collection";
-import { getSharedMessages } from "../../utils/fetchUtils";
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import { Duration, PlayerActions } from './playerActions';
+import { Reason } from './textInputBar';
+import Grid from '@mui/material/Grid';
+import { DialogActions, DialogContent, DialogTitle } from '../dialog';
+import { join } from 'lodash/array';
+import TextHistory from '../textHistory';
+import { List } from 'immutable';
+import { sortBy } from 'lodash/collection';
+import { getSharedMessages } from '../../utils/fetchUtils';
 
 // FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
-const withWidth = () => (WrappedComponent) => (props) => <WrappedComponent {...props} width="xs" />;
+const withWidth = () => (WrappedComponent) => (props) => (
+  <WrappedComponent {...props} width="xs" />
+);
 
 const compactProfile = (player) => {
-  let s = "";
+  let s = '';
   if (!player || !player.profile) {
     return s;
   }
-  s += ": ";
+  s += ': ';
   if (player.profile.flags) {
     s += join(
       player.profile.flags.map((f) => f.flag),
-      ""
+      ''
     );
   }
 
   return s;
 };
 
-const GroupActions = ({
-  players,
-  width,
-  handleAction,
-  onClose,
-  open,
-}) => {
-  const [message, setMessage] = React.useState("");
+const GroupActions = ({ players, width, handleAction, onClose, open }) => {
+  const [message, setMessage] = React.useState('');
   const [selectedPlayers, setSelectedPlayers] = React.useState([]);
   const [durationNumber, setDurationNumber] = React.useState(2);
   const [durationMultiplier, setDurationMultiplier] = React.useState(1);
   const [saveMessage, setSaveMessage] = React.useState(true);
-  const [comment, setComment] = React.useState("");
-  const textHistory = new TextHistory("punishments");
-  const nbButton = ["xs"].indexOf(width) !== -1 ? 3 : 6;
+  const [comment, setComment] = React.useState('');
+  const textHistory = new TextHistory('punishments');
+  const nbButton = ['xs'].indexOf(width) !== -1 ? 3 : 6;
   const [sharedMessages, setSharedMessages] = React.useState([]);
   React.useEffect(() => {
-    getSharedMessages("punishments").then((data) => setSharedMessages(data));
+    getSharedMessages('punishments').then((data) => setSharedMessages(data));
   }, []);
 
   let myPlayers = new List(players);
@@ -60,7 +56,7 @@ const GroupActions = ({
       onClose={onClose}
       aria-labelledby="customized-dialog-title"
       open={open}
-      fullWidth={!!width}     
+      fullWidth={!!width}
       maxWidth={width}
     >
       <DialogTitle id="customized-dialog-title" onClose={onClose}>
@@ -77,11 +73,7 @@ const GroupActions = ({
           filterSelectedOptions
           onChange={(e, val) => setSelectedPlayers(val)}
           renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Select players"
-              fullWidth
-            />
+            <TextField {...params} label="Select players" fullWidth />
           )}
         />
 
@@ -90,7 +82,7 @@ const GroupActions = ({
             <Reason
               message={message}
               handleMessageChange={setMessage}
-              helperText={"A message is mandatory"}
+              helperText={'A message is mandatory'}
               saveMessage={saveMessage}
               setSaveMessage={setSaveMessage}
               textHistory={textHistory}
@@ -127,7 +119,7 @@ const GroupActions = ({
                 })
               }
               message={message}
-              disable={message === ""}
+              disable={message === ''}
               displayCount={nbButton}
             />
           </Grid>

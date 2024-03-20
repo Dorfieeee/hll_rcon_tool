@@ -1,20 +1,20 @@
-import React from "react";
+import React from 'react';
 import {
   getSharedMessages,
   handle_http_errors,
   postData,
   showResponse,
-} from "../../utils/fetchUtils";
-import TextHistory from "../textHistory";
-import { ManualPlayerInput } from "../commonComponent";
+} from '../../utils/fetchUtils';
+import TextHistory from '../textHistory';
+import { ManualPlayerInput } from '../commonComponent';
 
 class Blacklist extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      steam_id: "",
-      name: "",
-      reason: "",
+      steam_id: '',
+      name: '',
+      reason: '',
       sharedMessages: [],
     };
 
@@ -27,23 +27,23 @@ class Blacklist extends React.Component {
       name: this.state.name,
       reason: this.state.reason,
     })
-      .then((res) => showResponse(res, "blacklist_player", true))
+      .then((res) => showResponse(res, 'blacklist_player', true))
       .then(
         (res) =>
-          !res.failed && this.setState({ steam_id: "", name: "", reason: "" })
+          !res.failed && this.setState({ steam_id: '', name: '', reason: '' })
       )
       .catch(handle_http_errors);
   }
 
   componentDidMount() {
-    getSharedMessages("punishments").then((data) =>
+    getSharedMessages('punishments').then((data) =>
       this.setState({ sharedMessages: data })
     );
   }
 
   render() {
     const { steam_id, name, reason, sharedMessages } = this.state;
-    const textHistory = new TextHistory("punishments");
+    const textHistory = new TextHistory('punishments');
 
     return (
       <ManualPlayerInput

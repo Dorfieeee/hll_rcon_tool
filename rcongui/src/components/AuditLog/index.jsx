@@ -1,53 +1,54 @@
-import React from "react";
+import React from 'react';
 import {
   get,
   handle_http_errors,
   postData,
   showResponse,
-} from "../../utils/fetchUtils";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+} from '../../utils/fetchUtils';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
-import { Button } from "@mui/material";
+import { Button } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
-import TextField from "@mui/material/TextField";
-import moment from "moment";
-import { List as IList, fromJS } from "immutable";
+import TextField from '@mui/material/TextField';
+import moment from 'moment';
+import { List as IList, fromJS } from 'immutable';
 
-import { Grid } from "@mui/material";
+import { Grid } from '@mui/material';
 
-import MUIDataTable from "mui-datatables";
+import MUIDataTable from 'mui-datatables';
 
 const AuditLogsTable = ({ auditLogs }) => {
   const [myRowPerPage, setRowPerPage] = React.useState(
-    window.localStorage.getItem("auditlogs_row_per_page") || 50
+    window.localStorage.getItem('auditlogs_row_per_page') || 50
   );
   const saveRowsPerPage = (rowPerPage) => {
-    window.localStorage.setItem("auditlogs_row_per_page", rowPerPage);
+    window.localStorage.setItem('auditlogs_row_per_page', rowPerPage);
     setRowPerPage(rowPerPage);
   };
   const columns = [
     {
-      name: "creation_time",
-      label: "Time",
+      name: 'creation_time',
+      label: 'Time',
       options: {
         customBodyRenderLite: (dataIndex) =>
-          moment.utc(auditLogs.get(dataIndex)?.get("creation_time")).local().format(
-            "ddd Do MMM HH:mm:ss"
-          ),
+          moment
+            .utc(auditLogs.get(dataIndex)?.get('creation_time'))
+            .local()
+            .format('ddd Do MMM HH:mm:ss'),
       },
     },
-    { name: "username", label: "User name" },
-    { name: "command", label: "Command" },
-    { name: "command_arguments", label: "Command Parameters" },
-    { name: "command_result", label: "Command Result" },
+    { name: 'username', label: 'User name' },
+    { name: 'command', label: 'Command' },
+    { name: 'command_arguments', label: 'Command Parameters' },
+    { name: 'command_result', label: 'Command Result' },
   ];
 
   const options = {
     filter: false,
     rowsPerPage: myRowPerPage,
-    selectableRows: "none",
+    selectableRows: 'none',
     rowsPerPageOptions: [10, 25, 50, 100, 250, 500, 1000],
     onChangeRowsPerPage: saveRowsPerPage,
   };
@@ -56,7 +57,7 @@ const AuditLogsTable = ({ auditLogs }) => {
     <Grid container justifyContent="center">
       <Grid item>
         <MUIDataTable
-          title={"Audit logs"}
+          title={'Audit logs'}
           data={auditLogs.toJS()}
           columns={columns}
           options={options}
@@ -72,24 +73,27 @@ const AuditLog = () => {
   const [commands, setCommands] = React.useState(new IList());
   const [usernameSearch, setUsernameSearch] = React.useState([]);
   const [commandSearch, setCommandSearch] = React.useState([]);
-  const [paramSearch, setParamSearch] = React.useState("");
-  const [timeSort, setTimeSort] = React.useState("desc");
+  const [paramSearch, setParamSearch] = React.useState('');
+  const [timeSort, setTimeSort] = React.useState('desc');
 
   const getAuditLogs = () => {
-    get("get_audit_logs?" + new URLSearchParams({
-      usernames: usernameSearch,
-      commands: commandSearch,
-      parameters: paramSearch,
-      time_sort: timeSort,
-    }))
-      .then((res) => showResponse(res, "get_audit_logs", false))
+    get(
+      'get_audit_logs?' +
+        new URLSearchParams({
+          usernames: usernameSearch,
+          commands: commandSearch,
+          parameters: paramSearch,
+          time_sort: timeSort,
+        })
+    )
+      .then((res) => showResponse(res, 'get_audit_logs', false))
       .then((res) => {
         setAuditLogs(fromJS(res.result));
       });
   };
 
   const getMetdata = () => {
-    get("get_audit_logs_autocomplete")
+    get('get_audit_logs_autocomplete')
       .then((res) => res.json())
       .then((res) => {
         console.log(res);
@@ -111,13 +115,7 @@ const AuditLog = () => {
   }, []);
 
   return (
-    <Grid
-      container
-      spacing={2}
-      
-      justifyContent="flex-start"
-      alignItems="center"
-    >
+    <Grid container spacing={2} justifyContent="flex-start" alignItems="center">
       <Grid item xs={3}>
         <Autocomplete
           multiple
@@ -164,7 +162,6 @@ const AuditLog = () => {
           label="Parameters search"
           value={paramSearch}
           onChange={(e) => setParamSearch(e.target.value)}
-          
         />
       </Grid>
       <Grid item>
@@ -175,12 +172,12 @@ const AuditLog = () => {
             value={timeSort}
             onChange={(e) => setTimeSort(e.target.value)}
             inputProps={{
-              name: "age",
-              id: "age-native-simple",
+              name: 'age',
+              id: 'age-native-simple',
             }}
           >
-            <option value={"asc"}>Asc</option>
-            <option value={"desc"}>Desc</option>
+            <option value={'asc'}>Asc</option>
+            <option value={'desc'}>Desc</option>
           </Select>
         </FormControl>
       </Grid>

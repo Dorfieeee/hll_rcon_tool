@@ -1,66 +1,39 @@
-import React from "react";
-import { Grid } from "@mui/material";
-import ListItemText from "@mui/material/ListItemText";
-import "react-toastify/dist/ReactToastify.css";
-import { fromJS, List as IList } from "immutable";
-import Typography from "@mui/material/Typography";
-import Switch from "@mui/material/Switch";
-import Chip from "@mui/material/Chip";
-import { get, postData, showResponse } from "../../utils/fetchUtils";
+import React from 'react';
+import { Grid } from '@mui/material';
+import ListItemText from '@mui/material/ListItemText';
+import 'react-toastify/dist/ReactToastify.css';
+import { fromJS, List as IList } from 'immutable';
+import Typography from '@mui/material/Typography';
+import Switch from '@mui/material/Switch';
+import Chip from '@mui/material/Chip';
+import { get, postData, showResponse } from '../../utils/fetchUtils';
 
 const StatusToColor = {
-  RUNNING: "primary",
-  STARTING: "primary",
-  STOPPED: "default",
-  STOPPING: "default",
-  BACKOFF: "secondary",
-  EXITED: "secondary",
-  FATAL: "secondary",
-  UNKNOWN: "secondary",
+  RUNNING: 'primary',
+  STARTING: 'primary',
+  STOPPED: 'default',
+  STOPPING: 'default',
+  BACKOFF: 'secondary',
+  EXITED: 'secondary',
+  FATAL: 'secondary',
+  UNKNOWN: 'secondary',
 };
 
-const Process = ({
-  name,
-  description,
-  upTime,
-  status,
-  isOn,
-  onToggle,
-}) => (
-  <Grid
-    container
-    justifyContent="space-around"
-    spacing={1}
-    
-  >
+const Process = ({ name, description, upTime, status, isOn, onToggle }) => (
+  <Grid container justifyContent="space-around" spacing={1}>
     <Grid item xs={12} spacing={1}>
       <Grid container>
         <Grid item xs={6}>
-          <Grid
-            container
-          >
+          <Grid container>
             <Grid item xs={12}>
-              <Typography
-                
-                variant="h6"
-              >
-                {name}
-              </Typography>
-              <ListItemText
-                primary=""
-                secondary={description}
-                
-              />
+              <Typography variant="h6">{name}</Typography>
+              <ListItemText primary="" secondary={description} />
             </Grid>
           </Grid>
         </Grid>
         <Grid item xs={4}>
           <Chip label={status} color={StatusToColor[status]} />
-          <ListItemText
-            primary=""
-            secondary={upTime}
-            
-          />
+          <ListItemText primary="" secondary={upTime} />
         </Grid>
         <Grid item xs={2}>
           <Switch checked={isOn} onChange={onToggle} name="Start/Stop" />
@@ -104,23 +77,23 @@ class ServicesList extends React.Component {
 
   async getServices() {
     return get(`get_services`)
-      .then((res) => showResponse(res, "get_services", false))
+      .then((res) => showResponse(res, 'get_services', false))
       .then((res) =>
-        res.result ? this.setState({ services: fromJS(res.result) }) : ""
+        res.result ? this.setState({ services: fromJS(res.result) }) : ''
       );
   }
 
   async toggleService(serviceName, start) {
     return postData(`${process.env.REACT_APP_API_URL}do_service`, {
       service_name: serviceName,
-      action: start ? "START" : "STOP",
-    }).then((res) => showResponse(res, "do_service", true));
+      action: start ? 'START' : 'STOP',
+    }).then((res) => showResponse(res, 'do_service', true));
   }
 
   isOK(processInfo) {
     return (
-      processInfo.get("statename") === "RUNNING" ||
-      processInfo.get("statename") === "STARTING"
+      processInfo.get('statename') === 'RUNNING' ||
+      processInfo.get('statename') === 'STARTING'
     );
   }
 
@@ -132,14 +105,13 @@ class ServicesList extends React.Component {
         <Grid item xs={12}>
           {services.map((s) => (
             <Process
-              
-              name={s.get("name")}
-              description={s.get("info")}
-              status={s.get("statename")}
-              upTime={s.get("description", " , ").split(",")[1]}
+              name={s.get('name')}
+              description={s.get('info')}
+              status={s.get('statename')}
+              upTime={s.get('description', ' , ').split(',')[1]}
               isOn={this.isOK(s)}
               onToggle={() =>
-                this.toggleService(s.get("name"), !this.isOK(s)).then(
+                this.toggleService(s.get('name'), !this.isOK(s)).then(
                   this.getServices
                 )
               }

@@ -1,8 +1,8 @@
-import { Grid } from "@mui/material";
-import React from "react";
-import { WithPopver } from "../../commonComponent";
-import moment from "moment";
-import { List } from "immutable";
+import { Grid } from '@mui/material';
+import React from 'react';
+import { WithPopver } from '../../commonComponent';
+import moment from 'moment';
+import { List } from 'immutable';
 
 function truncateString(str, num) {
   // If the length of str is less than or equal to num
@@ -11,17 +11,20 @@ function truncateString(str, num) {
     return str;
   }
   // Return str truncated with '...' concatenated to the end of str.
-  return str.slice(0, num) + "...";
+  return str.slice(0, num) + '...';
 }
 
 export const Penalites = ({ player }) => (
   <div>
-    {player.get("received_actions", new List()).size < 1 ? "Clean record" : ""}
-    {player.get("received_actions", new List()).map((action) => (
-      <p>{`${action.get("action_type")} ${moment.utc(action.get("time")).local().format(
-        "ddd Do MMM HH:mm:ss"
-      )}: ${truncateString(action.get("reason"), 50)} by ${action.get(
-        "by"
+    {player.get('received_actions', new List()).size < 1 ? 'Clean record' : ''}
+    {player.get('received_actions', new List()).map((action) => (
+      <p>{`${action.get('action_type')} ${moment
+        .utc(action.get('time'))
+        .local()
+        .format(
+          'ddd Do MMM HH:mm:ss'
+        )}: ${truncateString(action.get('reason'), 50)} by ${action.get(
+        'by'
       )}`}</p>
     ))}
   </div>
@@ -29,15 +32,13 @@ export const Penalites = ({ player }) => (
 
 export const PlayerPenalties = ({ player }) => (
   <Grid container>
-    <Grid item xs={12} >
-      <WithPopver
-        popoverContent={<Penalites player={player} />}
-      >
+    <Grid item xs={12}>
+      <WithPopver popoverContent={<Penalites player={player} />}>
         <small>
           {player
-            .get("penalty_count")
+            .get('penalty_count')
             .map((v, k) => `${k}: ${v}`)
-            .join(" ")}
+            .join(' ')}
         </small>
       </WithPopver>
     </Grid>

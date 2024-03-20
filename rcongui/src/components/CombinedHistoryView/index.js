@@ -1,1 +1,1 @@
-export { default as CombinedHistory } from "./combinedHistory";
+export { default as CombinedHistory } from './combinedHistory';

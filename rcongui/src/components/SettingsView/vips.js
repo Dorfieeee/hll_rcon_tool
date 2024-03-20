@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Grid,
   IconButton,
@@ -10,27 +10,21 @@ import {
   Button,
   Tooltip,
   Typography,
-} from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import AddIcon from "@mui/icons-material/Add";
-import { ForwardCheckBox } from "../commonComponent";
-import { get, handle_http_errors, showResponse } from "../../utils/fetchUtils";
+} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import { ForwardCheckBox } from '../commonComponent';
+import { get, handle_http_errors, showResponse } from '../../utils/fetchUtils';
 
-import moment from "moment";
-import { VipExpirationDialog } from "../VipDialog";
-import { fromJS } from "immutable";
-import { vipListFromServer } from "../VipDialog/vipFromServer";
+import moment from 'moment';
+import { VipExpirationDialog } from '../VipDialog';
+import { fromJS } from 'immutable';
+import { vipListFromServer } from '../VipDialog/vipFromServer';
 
-const AddVipItem = ({
-  name,
-  setName,
-  steamID64,
-  setSteamID64,
-  onAdd,
-}) => (
+const AddVipItem = ({ name, setName, steamID64, setSteamID64, onAdd }) => (
   <ListItem>
     <Grid container>
-      <Grid item xs={6} >
+      <Grid item xs={6}>
         <TextField
           InputLabelProps={{
             shrink: true,
@@ -40,7 +34,7 @@ const AddVipItem = ({
           onChange={(e) => setName(e.target.value)}
         />
       </Grid>
-      <Grid item xs={6} >
+      <Grid item xs={6}>
         <TextField
           InputLabelProps={{
             shrink: true,
@@ -56,7 +50,8 @@ const AddVipItem = ({
         edge="end"
         aria-label="delete"
         onClick={() => onAdd(name, steamID64)}
-        size="large">
+        size="large"
+      >
         <AddIcon />
       </IconButton>
     </ListItemSecondaryAction>
@@ -81,24 +76,24 @@ const VipUpload = () => {
 
   const handleSubmission = () => {
     const formData = new FormData();
-    formData.append("File", selectedFile);
+    formData.append('File', selectedFile);
 
     fetch(`${process.env.REACT_APP_API_URL}async_upload_vips`, {
-      method: "POST",
+      method: 'POST',
       body: formData,
-      mode: "cors", // no-cors, *cors, same-origin
-      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: "include", // include, *same-origin, omit
+      mode: 'cors', // no-cors, *cors, same-origin
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'include', // include, *same-origin, omit
     })
-      .then((res) => showResponse(res, "upload_vip", true))
-      .then((res) => (!res.failed ? pollResult() : ""))
+      .then((res) => showResponse(res, 'upload_vip', true))
+      .then((res) => (!res.failed ? pollResult() : ''))
       .catch(handle_http_errors);
     setIsFilePicked(false);
   };
 
   const getResult = () =>
-    get("async_upload_vips_result")
-      .then((res) => showResponse(res, "async_upload_vips_result", false))
+    get('async_upload_vips_result')
+      .then((res) => showResponse(res, 'async_upload_vips_result', false))
       .then((res) => {
         setResult(JSON.stringify(res.result, null, 2));
         console.log(res);
@@ -149,23 +144,23 @@ const VipUpload = () => {
         <Grid item xs={12}>
           <Typography variant="body2" color="secondary">
             The job may take a while, here's the current status, do not resubmit
-            unless you see a "finished" or "failed" status:{" "}
+            unless you see a "finished" or "failed" status:{' '}
           </Typography>
           <pre>{result}</pre>
         </Grid>
       ) : (
-        ""
+        ''
       )}
     </Grid>
   );
 };
 
 function nameOf(playerObj) {
-  const names = playerObj.get("names");
+  const names = playerObj.get('names');
   if (names.size === 0) {
-    return "";
+    return '';
   }
-  return playerObj.get("names").get(0).get("name");
+  return playerObj.get('names').get(0).get('name');
 }
 
 const VipEditableList = ({
@@ -175,21 +170,21 @@ const VipEditableList = ({
   forward,
   onFowardChange,
 }) => {
-  const [name, setName] = React.useState("");
-  const [steamID64, setSteamID64] = React.useState("");
+  const [name, setName] = React.useState('');
+  const [steamID64, setSteamID64] = React.useState('');
   const [VIPPlayer, setVIPPlayer] = React.useState(false);
 
   const formatExpirationDate = (player) => {
     if (player.vip_expiration) {
       let date = moment(player.vip_expiration);
       /* For display purposes, show dates really far in the future as indefinite */
-      if (date.isSameOrAfter(moment().add(100, "years"))) {
-        return "Never";
+      if (date.isSameOrAfter(moment().add(100, 'years'))) {
+        return 'Never';
       } else {
-        return moment(player.vip_expiration).format("YYYY-MM-DD HH:mm:ssZ");
+        return moment(player.vip_expiration).format('YYYY-MM-DD HH:mm:ssZ');
       }
     } else {
-      return "Never";
+      return 'Never';
     }
   };
 
@@ -211,7 +206,6 @@ const VipEditableList = ({
       <List dense>
         <ForwardCheckBox bool={forward} onChange={onFowardChange} />
         <AddVipItem
-          
           name={name}
           setName={setName}
           steamID64={steamID64}
@@ -222,21 +216,21 @@ const VipEditableList = ({
           <ListItem key={obj.steam_id_64}>
             <ListItemText
               primary={obj.name}
-              secondary={obj.steam_id_64 + " " + formatExpirationDate(obj)}
+              secondary={obj.steam_id_64 + ' ' + formatExpirationDate(obj)}
             />
             <ListItemSecondaryAction>
               <IconButton
                 edge="end"
                 aria-label="delete"
                 onClick={() => onDelete(obj.name, obj.steam_id_64)}
-                size="large">
+                size="large"
+              >
                 <DeleteIcon />
               </IconButton>
             </ListItemSecondaryAction>
           </ListItem>
         ))}
         <AddVipItem
-          
           name={name}
           setName={setName}
           steamID64={steamID64}
@@ -248,14 +242,14 @@ const VipEditableList = ({
           open={VIPPlayer}
           vips={vipListFromServer(peopleList)}
           onDeleteVip={(playerObj) =>
-            onDelete(nameOf(playerObj), playerObj.get("steam_id_64"))
+            onDelete(nameOf(playerObj), playerObj.get('steam_id_64'))
           }
           handleClose={() => setVIPPlayer(false)}
           handleConfirm={(playerObj, expirationTimestamp) => {
             console.log(`vips.js expirationTimestamp=${expirationTimestamp}`);
             onAdd(
               nameOf(playerObj),
-              playerObj.get("steam_id_64"),
+              playerObj.get('steam_id_64'),
               expirationTimestamp
             );
             setVIPPlayer(false);

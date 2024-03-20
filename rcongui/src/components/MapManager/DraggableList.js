@@ -1,9 +1,6 @@
-import * as React from "react";
-import DraggableListItem from "./DraggableListItem";
-import {
-  DragDropContext,
-  Droppable,
-} from "react-beautiful-dnd";
+import * as React from 'react';
+import DraggableListItem from './DraggableListItem';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 const DraggableList = React.memo(({ items, onDragEnd, onRemove }) => {
   return (
@@ -13,7 +10,7 @@ const DraggableList = React.memo(({ items, onDragEnd, onRemove }) => {
           <div
             ref={provided.innerRef}
             {...provided.droppableProps}
-            style={{ "list-style-type": "none" }}
+            style={{ 'list-style-type': 'none' }}
           >
             {items.map((item, index) => (
               <DraggableListItem

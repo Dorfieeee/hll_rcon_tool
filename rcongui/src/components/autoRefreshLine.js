@@ -1,5 +1,5 @@
-import React from "react";
-import LinearProgress from "@mui/material/LinearProgress";
+import React from 'react';
+import LinearProgress from '@mui/material/LinearProgress';
 
 const AutoRefreshLine = ({
   intervalFunction,
@@ -31,10 +31,7 @@ const AutoRefreshLine = ({
 
   return (
     <React.Fragment>
-      <LinearProgress
-        variant="determinate"
-        value={completed}
-      />
+      <LinearProgress variant="determinate" value={completed} />
     </React.Fragment>
   );
 };

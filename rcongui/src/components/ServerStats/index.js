@@ -1,5 +1,5 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,21 +10,21 @@ import {
   Tooltip,
   Legend,
   registerables,
-} from "chart.js";
-import StarIcon from "@mui/icons-material/Star";
-import LinearProgress from "@mui/material/LinearProgress";
-import Switch from "@mui/material/Switch";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import { LocalizationProvider, DateTimePicker } from "@mui/x-date-pickers/";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3"
-import palette from "google-palette";
-import "chartjs-adapter-moment";
-import { Bar } from "react-chartjs-2";
+} from 'chart.js';
+import StarIcon from '@mui/icons-material/Star';
+import LinearProgress from '@mui/material/LinearProgress';
+import Switch from '@mui/material/Switch';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers/';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
+import palette from 'google-palette';
+import 'chartjs-adapter-moment';
+import { Bar } from 'react-chartjs-2';
 import makeStyles from '@mui/styles/makeStyles';
-import { get, handle_http_errors, showResponse } from "../../utils/fetchUtils";
-import { fromJS } from "immutable";
+import { get, handle_http_errors, showResponse } from '../../utils/fetchUtils';
+import { fromJS } from 'immutable';
 import {
   Dialog,
   DialogTitle,
@@ -37,7 +37,7 @@ import {
   DialogContentText,
   Button,
   TextareaAutosize,
-} from "@mui/material";
+} from '@mui/material';
 
 ChartJS.register(
   CategoryScale,
@@ -53,25 +53,25 @@ ChartJS.register(
 function hexToRgb(hex) {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   return result
-    ? "rgb(" +
-    parseInt(result[1], 16) +
-    "," +
-    parseInt(result[2], 16) +
-    "," +
-    parseInt(result[3], 16) +
-    ")"
+    ? 'rgb(' +
+        parseInt(result[1], 16) +
+        ',' +
+        parseInt(result[2], 16) +
+        ',' +
+        parseInt(result[3], 16) +
+        ')'
     : null;
 }
 
 const useStyles = makeStyles((theme) => ({
   modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
+    border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
@@ -99,8 +99,8 @@ function DetailsDialog({
       <DialogTitle>{dataPoint.map}</DialogTitle>
 
       {datasetElementIndex !== null &&
-        datasetsIndex !== null &&
-        Object.keys(dataPoint).length > 0 ? (
+      datasetsIndex !== null &&
+      Object.keys(dataPoint).length > 0 ? (
         <React.Fragment>
           <DialogContent>
             <DialogContentText>
@@ -112,7 +112,7 @@ function DetailsDialog({
                 <li key={el[1]}>
                   <Typography variant="body2">
                     <Link href={`#/player/${el[1]}`}> {el[0]}</Link>
-                    {el[1]} {el[2] ? <StarIcon fontSize="inherit" /> : ""}
+                    {el[1]} {el[2] ? <StarIcon fontSize="inherit" /> : ''}
                   </Typography>
                 </li>
               ))}
@@ -139,7 +139,7 @@ function DetailsDialog({
           </DialogActions>
         </React.Fragment>
       ) : (
-        "No data"
+        'No data'
       )}
     </Dialog>
   );
@@ -164,7 +164,7 @@ function MetricsParams({
       spacing={2}
     >
       <Grid item>
-        <LocalizationProvider dateAdapter={AdapterDateFns} >
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DateTimePicker
             label="From time"
             format="YYYY/MM/DD HH:mm"
@@ -174,7 +174,7 @@ function MetricsParams({
         </LocalizationProvider>
       </Grid>
       <Grid item>
-        <LocalizationProvider dateAdapter={AdapterDateFns} >
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DateTimePicker
             label="Till time"
             format="YYYY/MM/DD HH:mm"
@@ -248,29 +248,29 @@ const ServerStatsPage = () => {
   const [from, setFrom] = React.useState(new Date(new Date() - 1 * 86400000));
   const [till, setTill] = React.useState(new Date());
   const [withPlayer, _setWithPlayer] = React.useState(
-    window.localStorage.getItem("stats_with_players") == "true"
+    window.localStorage.getItem('stats_with_players') == 'true'
   );
   const [dataLoading, setDataLoading] = React.useState(true);
   const [showControls, _setShowControls] = React.useState(
-    window.localStorage.getItem("stats_show_controls") == "true"
+    window.localStorage.getItem('stats_show_controls') == 'true'
   );
 
   const setWithPlayer = (event) => {
     _setWithPlayer(event.target.checked);
-    window.localStorage.setItem("stats_with_players", event.target.checked);
+    window.localStorage.setItem('stats_with_players', event.target.checked);
   };
 
   const toggleShowControls = () => {
     const show = !showControls;
     _setShowControls(show);
-    window.localStorage.setItem("stats_show_controls", show);
+    window.localStorage.setItem('stats_show_controls', show);
   };
 
   const colors = React.useMemo(
     () =>
-      palette("tol-rainbow", stats ? Object.keys(stats).length : 10).map(
+      palette('tol-rainbow', stats ? Object.keys(stats).length : 10).map(
         function (hex) {
-          const s = hexToRgb("#" + hex);
+          const s = hexToRgb('#' + hex);
           console.log(s);
           return s;
         }
@@ -289,21 +289,21 @@ const ServerStatsPage = () => {
           borderColor: colors[i],
           fill: true,
           parsing: {
-            xAxisKey: "minute",
-            yAxisKey: "count",
+            xAxisKey: 'minute',
+            yAxisKey: 'count',
           },
         }))
         .concat(
           Object.keys(stats).map((mapName, i) => ({
             grouped: false,
-            label: "vip",
+            label: 'vip',
             data: stats[mapName],
             parsing: {
-              xAxisKey: "minute",
-              yAxisKey: "vip_count",
+              xAxisKey: 'minute',
+              yAxisKey: 'vip_count',
             },
-            backgroundColor: "#000000",
-            borderColor: "#000000",
+            backgroundColor: '#000000',
+            borderColor: '#000000',
             fill: true,
           }))
         ),
@@ -365,10 +365,10 @@ const ServerStatsPage = () => {
     get(
       `get_server_stats?by_map=true&start=${from.toISOString()}&end=${till.toISOString()}&with_players=${+withPlayer}`
     )
-      .then((res) => showResponse(res, "get_server_stats", false))
+      .then((res) => showResponse(res, 'get_server_stats', false))
       .then((data) => {
         setDataLoading(false);
-        return data.result && data.result ? setStats(data.result) : "";
+        return data.result && data.result ? setStats(data.result) : '';
       })
       .catch(handle_http_errors);
   };
@@ -416,7 +416,7 @@ const ServerStatsPage = () => {
         style={{ paddingTop: 0 }}
       >
         <Grid item xs={12}>
-          {dataLoading ? <LinearProgress color="secondary" /> : ""}
+          {dataLoading ? <LinearProgress color="secondary" /> : ''}
         </Grid>
         <Grid item xs={12}>
           <Bar
@@ -436,7 +436,7 @@ const ServerStatsPage = () => {
                   labels: {
                     filter: function (item, chart) {
                       // Logic to remove a particular legend item goes here
-                      return !item.text.includes("vip");
+                      return !item.text.includes('vip');
                     },
                   },
                 },
@@ -454,17 +454,17 @@ const ServerStatsPage = () => {
                           context[0]?.raw.players
                             .map((el) => el[0])
                             .slice(0, 10)
-                            ?.join("\n") + "\n...\nClick for full list"
+                            ?.join('\n') + '\n...\nClick for full list'
                         );
                       }
 
-                      return "Player list not available";
+                      return 'Player list not available';
                     },
                   },
                 },
               },
               scales: {
-                x: { type: "time", stacked: false },
+                x: { type: 'time', stacked: false },
                 y: { min: 0, max: 100, stacked: false },
               },
             }}
@@ -476,7 +476,7 @@ const ServerStatsPage = () => {
       </Grid>
     </React.Fragment>
   ) : (
-    "No data"
+    'No data'
   );
 };
 

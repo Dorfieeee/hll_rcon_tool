@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Button,
   Grid,
@@ -9,13 +9,13 @@ import {
   Switch,
   Tooltip,
   FormControlLabel,
-} from "@mui/material";
+} from '@mui/material';
 import {
   get,
   handle_http_errors,
   postData,
   showResponse,
-} from "../../utils/fetchUtils";
+} from '../../utils/fetchUtils';
 
 const RealVip = () => {
   const [enabled, setEnabled] = React.useState(null);
@@ -24,8 +24,8 @@ const RealVip = () => {
   const isFirstRender = React.useRef(true);
 
   React.useEffect(() => {
-    get("get_real_vip_config")
-      .then((res) => showResponse(res, "get_real_vip_config", false))
+    get('get_real_vip_config')
+      .then((res) => showResponse(res, 'get_real_vip_config', false))
       .then((res) => {
         if (!res.failed && res.result) {
           setEnabled(res.result.enabled);
@@ -42,7 +42,7 @@ const RealVip = () => {
         desired_total_number_vips: maxVipSlot,
         minimum_number_vip_slots: minVipSlot,
       })
-        .then((res) => showResponse(res, "set_real_vip_config", true))
+        .then((res) => showResponse(res, 'set_real_vip_config', true))
         .catch(handle_http_errors);
     } else if (enabled !== null && maxVipSlot !== -1 && minVipSlot !== -1) {
       isFirstRender.current = false;

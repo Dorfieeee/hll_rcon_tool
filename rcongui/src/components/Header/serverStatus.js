@@ -1,28 +1,28 @@
-import React from "react";
-import "react-toastify/dist/ReactToastify.css";
-import Grid from "@mui/material/Grid";
-import { get, handle_http_errors, showResponse } from "../../utils/fetchUtils";
-import debounce from "lodash/debounce";
+import React from 'react';
+import 'react-toastify/dist/ReactToastify.css';
+import Grid from '@mui/material/Grid';
+import { get, handle_http_errors, showResponse } from '../../utils/fetchUtils';
+import debounce from 'lodash/debounce';
 import makeStyles from '@mui/styles/makeStyles';
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Link from "@mui/material/Link";
-import { fromJS, List } from "immutable";
-import { Button } from "@mui/material";
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Link from '@mui/material/Link';
+import { fromJS, List } from 'immutable';
+import { Button } from '@mui/material';
 
 const useStyles = makeStyles({
   truncatedBtn: {
-    textAlign: "left",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    "&:hover": {
-      whiteSpace: "break-spaces",
-      overflowWrap: "anywhere",
-      overflow: "visible",
+    textAlign: 'left',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    '&:hover': {
+      whiteSpace: 'break-spaces',
+      overflowWrap: 'anywhere',
+      overflow: 'visible',
     },
-  }
-})
+  },
+});
 
 const Status = ({
   name,
@@ -33,7 +33,7 @@ const Status = ({
   balance,
   score,
 }) => {
-  const classes = useStyles()
+  const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -47,7 +47,11 @@ const Status = ({
   return (
     <Grid>
       <Grid item>
-        <Button className={classes.truncatedBtn} color="inherit" onClick={handleClick}>
+        <Button
+          className={classes.truncatedBtn}
+          color="inherit"
+          onClick={handleClick}
+        >
           {name}
         </Button>
         <Menu
@@ -58,24 +62,26 @@ const Status = ({
           onClose={handleClose}
         >
           {serverList.map((s) => {
-            let link = ""
-            if (s.get("link")) {
-              link = new URL(`${s.get('link')}${window.location.hash}`)
+            let link = '';
+            if (s.get('link')) {
+              link = new URL(`${s.get('link')}${window.location.hash}`);
             } else {
               // Everyone should be setting their server URL, but for locally hosted instances just swap out the port
               const regex = /:(\d+)/gm;
-              link = new URL(window.location.href.replace(regex, `:${s.get('port')}`))
+              link = new URL(
+                window.location.href.replace(regex, `:${s.get('port')}`)
+              );
             }
             return (
               <MenuItem onClick={handleClose}>
                 <Link color="inherit" href={link}>
-                  {s.get("name")}
+                  {s.get('name')}
                 </Link>
               </MenuItem>
             );
           })}
         </Menu>
-        <small style={{ display: "block" }}>
+        <small style={{ display: 'block' }}>
           {nbPlayers} ({balance}) - {map} - {timeRemaining} - {score}
         </small>
       </Grid>
@@ -88,9 +94,9 @@ class ServerStatus extends React.Component {
     super(props);
 
     this.state = {
-      name: "",
-      nbPlayers: "",
-      map: "",
+      name: '',
+      nbPlayers: '',
+      map: '',
       serverList: List(),
       refreshIntervalSec: 10,
       listRefreshIntervalSec: 30,
@@ -100,10 +106,10 @@ class ServerStatus extends React.Component {
       numAxisPlayers: 0,
       alliedScore: 0,
       axisScore: 0,
-      timeRemaining: "0:00:00",
-      rawTimeRemaining: "0:00:00",
-      currentMap: "",
-      nextMap: "",
+      timeRemaining: '0:00:00',
+      rawTimeRemaining: '0:00:00',
+      currentMap: '',
+      nextMap: '',
     };
 
     this.debouncedLoad = debounce(
@@ -145,7 +151,7 @@ class ServerStatus extends React.Component {
 
   async load() {
     return get(`get_status`)
-      .then((response) => showResponse(response, "get_status", false))
+      .then((response) => showResponse(response, 'get_status', false))
       .then((data) => {
         this.setState({
           name: data?.result.name,
@@ -159,7 +165,7 @@ class ServerStatus extends React.Component {
 
   async loadInfo() {
     return get(`get_gamestate`)
-      .then((response) => showResponse(response, "get_gamestate", false))
+      .then((response) => showResponse(response, 'get_gamestate', false))
       .then((data) => {
         this.setState({
           numAlliedPlayers: data.result.num_allied_players,
@@ -177,7 +183,7 @@ class ServerStatus extends React.Component {
 
   async loadServerList() {
     return get(`server_list`)
-      .then((response) => showResponse(response, "server_list", false))
+      .then((response) => showResponse(response, 'server_list', false))
       .then((data) => {
         this.setState({
           serverList: fromJS(data.result || []),

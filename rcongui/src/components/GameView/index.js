@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment } from 'react';
 import {
   Grid,
   Link,
@@ -13,32 +13,32 @@ import {
   InputLabel,
   Select,
   MenuItem,
-} from "@mui/material";
+} from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
-import WarningIcon from "@mui/icons-material/Warning";
-import { fromJS, Map, List as IList, OrderedSet } from "immutable";
+import WarningIcon from '@mui/icons-material/Warning';
+import { fromJS, Map, List as IList, OrderedSet } from 'immutable';
 import makeStyles from '@mui/styles/makeStyles';
-import ListSubheader from "@mui/material/ListSubheader";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Collapse from "@mui/material/Collapse";
-import { PlayerItem, KDChips, ScoreChips } from "../PlayerView/playerList";
+import ListSubheader from '@mui/material/ListSubheader';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
+import { PlayerItem, KDChips, ScoreChips } from '../PlayerView/playerList';
 import {
   get,
   handle_http_errors,
   postData,
   showResponse,
-} from "../../utils/fetchUtils";
+} from '../../utils/fetchUtils';
 import {
   Duration,
   PlayerActions,
   ReasonDialog,
-} from "../PlayerView/playerActions";
-import { toast } from "react-toastify";
-import { FlagDialog } from "../PlayersHistory";
-import Padlock from "../SettingsView/padlock";
+} from '../PlayerView/playerActions';
+import { toast } from 'react-toastify';
+import { FlagDialog } from '../PlayersHistory';
+import Padlock from '../SettingsView/padlock';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -83,7 +83,7 @@ const Squad = ({
 
   const squadPlayerNames = React.useMemo(
     () =>
-      squadData.get("players", new IList()).map((player) => player.get("name")),
+      squadData.get('players', new IList()).map((player) => player.get('name')),
     [squadData]
   );
 
@@ -104,12 +104,12 @@ const Squad = ({
       flag_id: flag_id,
     })
       .then((response) =>
-        showResponse(response, "Flag will be removed momentarily", true)
+        showResponse(response, 'Flag will be removed momentarily', true)
       )
-      .catch((error) => toast.error("Unable to connect to API " + error));
+      .catch((error) => toast.error('Unable to connect to API ' + error));
   };
 
-  if (squadName === "commander") return "";
+  if (squadName === 'commander') return '';
 
   return squadData && !shouldHide ? (
     <Fragment>
@@ -118,11 +118,11 @@ const Squad = ({
           <Avatar
             variant="rounded"
             className={classes.primaryBackground}
-            alt={squadData.get("type", "na")}
+            alt={squadData.get('type', 'na')}
             src={
-              squadName.toUpperCase() === "NULL"
+              squadName.toUpperCase() === 'NULL'
                 ? `icons/sleep.png`
-                : `icons/roles/${squadData.get("type")}.png`
+                : `icons/roles/${squadData.get('type')}.png`
             }
           >
             {squadName[0].toUpperCase()}
@@ -132,17 +132,17 @@ const Squad = ({
           primary={
             <Typography variant="h6">
               {`${
-                squadName.toUpperCase() === "NULL"
-                  ? "Unassigned"
+                squadName.toUpperCase() === 'NULL'
+                  ? 'Unassigned'
                   : squadName.toUpperCase()
-              } - ${squadData.get("players", new IList()).size}/${
-                sizes[squadData.get("type", "infantry")]
-              }`}{" "}
-              {squadData.get("has_leader", false) ? (
-                ""
+              } - ${squadData.get('players', new IList()).size}/${
+                sizes[squadData.get('type', 'infantry')]
+              }`}{' '}
+              {squadData.get('has_leader', false) ? (
+                ''
               ) : (
                 <WarningIcon
-                  style={{ verticalAlign: "middle" }}
+                  style={{ verticalAlign: 'middle' }}
                   fontSize="small"
                   color="error"
                 />
@@ -165,9 +165,9 @@ const Squad = ({
             checked={selectedPlayers.isSuperset(squadPlayerNames)}
             onChange={() => {
               if (selectedPlayers.isSuperset(squadPlayerNames)) {
-                selectMultiplePlayers(squadPlayerNames, "delete");
+                selectMultiplePlayers(squadPlayerNames, 'delete');
               } else {
-                selectMultiplePlayers(squadPlayerNames, "add");
+                selectMultiplePlayers(squadPlayerNames, 'add');
               }
             }}
           />
@@ -179,22 +179,21 @@ const Squad = ({
         unmountOnExit
       >
         <List component="div" disablePadding className={classes.nested}>
-          {squadData.get("players", new IList()).map((player) => {
+          {squadData.get('players', new IList()).map((player) => {
             if (
               showOnlySelected &&
-              !selectedPlayers.includes(player.get("name"))
+              !selectedPlayers.includes(player.get('name'))
             )
-              return "";
+              return '';
 
             return (
               <PlayerItem
-                key={player.get("name")}
-                
+                key={player.get('name')}
                 player={player}
                 playerHasExtraInfo={true}
                 onDeleteFlag={(flagId) => deleteFlag(flagId)}
-                onSelect={() => onSelectPlayer(player.get("name"))}
-                isSelected={selectedPlayers?.contains(player.get("name"))}
+                onSelect={() => onSelectPlayer(player.get('name'))}
+                isSelected={selectedPlayers?.contains(player.get('name'))}
               />
             );
           })}
@@ -202,7 +201,7 @@ const Squad = ({
       </Collapse>
     </Fragment>
   ) : (
-    ""
+    ''
   );
 };
 
@@ -237,13 +236,13 @@ const Team = ({
           >
             <Grid item xs={9}>
               <Typography variant="h4" align="left">
-                {teamName} {teamData.get("count", 0)}/50{" "}
+                {teamName} {teamData.get('count', 0)}/50{' '}
                 <Link onClick={onOpenAll} component="button">
-                  {openAll ? "Collapse" : "Expand"} all
-                </Link>{" "}
+                  {openAll ? 'Collapse' : 'Expand'} all
+                </Link>{' '}
                 <Link onClick={selectAll} component="button">
                   Select all
-                </Link>{" "}
+                </Link>{' '}
                 <Link onClick={deselectAll} component="button">
                   Deselect all
                 </Link>
@@ -255,26 +254,25 @@ const Team = ({
       }
       className={classes.root}
     >
-      {teamData.get("commander") &&
+      {teamData.get('commander') &&
       (!showOnlySelected ||
         (showOnlySelected &&
-          selectedPlayers.contains(teamData.get("commander")?.get("name")))) ? (
+          selectedPlayers.contains(teamData.get('commander')?.get('name')))) ? (
         <PlayerItem
-          
-          player={teamData.get("commander")}
+          player={teamData.get('commander')}
           playerHasExtraInfo={true}
           onDeleteFlag={() => null}
           avatarBackround={classes.primaryBackground}
-          onSelect={() => selectPlayer(teamData.get("commander")?.get("name"))}
+          onSelect={() => selectPlayer(teamData.get('commander')?.get('name'))}
           isSelected={selectedPlayers?.contains(
-            teamData.get("commander")?.get("name")
+            teamData.get('commander')?.get('name')
           )}
         />
       ) : (
-        ""
+        ''
       )}
       {teamData
-        .get("squads", new Map())
+        .get('squads', new Map())
         .toOrderedMap()
         .sortBy(sortFunc)
         .entrySeq()
@@ -283,7 +281,6 @@ const Team = ({
             key={key}
             squadName={key}
             squadData={value}
-            
             doOpen={openAll}
             onSelectSquad={() => true}
             onSelectPlayer={selectPlayer}
@@ -294,13 +291,13 @@ const Team = ({
         ))}
     </List>
   ) : (
-    ""
+    ''
   );
 };
 
 const SimplePlayerRenderer = ({ player, flag }) => (
   <Typography variant="h4">
-    Add {!flag ? "<select a flag>" : flag} to all selected players
+    Add {!flag ? '<select a flag>' : flag} to all selected players
   </Typography>
 );
 
@@ -315,9 +312,9 @@ const GameView = () => {
   const [intervalHandle, setIntervalHandle] = React.useState(null);
   const [flag, setFlag] = React.useState(false);
   const [sortType, setSortType] = React.useState(
-    localStorage.getItem("game_view_sorting")
-      ? localStorage.getItem("game_view_sorting")
-      : "name_asc"
+    localStorage.getItem('game_view_sorting')
+      ? localStorage.getItem('game_view_sorting')
+      : 'name_asc'
   );
   /* confirm action needs to be set to a dict to call the popup:
         {
@@ -331,19 +328,19 @@ const GameView = () => {
 
   const sortTypeToFunc = React.useMemo(
     () => ({
-      combat_desc: (squadData, squadName) => -squadData.get("combat", 0),
-      offense_desc: (squadData, squadName) => -squadData.get("offense", 0),
-      defense_desc: (squadData, squadName) => -squadData.get("defense", 0),
-      support_desc: (squadData, squadName) => -squadData.get("support", 0),
-      kills_desc: (squadData, squadName) => -squadData.get("kills", 0),
-      deaths_desc: (squadData, squadName) => -squadData.get("kills", 0),
+      combat_desc: (squadData, squadName) => -squadData.get('combat', 0),
+      offense_desc: (squadData, squadName) => -squadData.get('offense', 0),
+      defense_desc: (squadData, squadName) => -squadData.get('defense', 0),
+      support_desc: (squadData, squadName) => -squadData.get('support', 0),
+      kills_desc: (squadData, squadName) => -squadData.get('kills', 0),
+      deaths_desc: (squadData, squadName) => -squadData.get('kills', 0),
       name_asc: (squadData, squadName) => squadName,
-      combat_asc: (squadData, squadName) => squadData.get("combat", 0),
-      offense_asc: (squadData, squadName) => squadData.get("offense", 0),
-      defense_asc: (squadData, squadName) => squadData.get("defense", 0),
-      support_asc: (squadData, squadName) => squadData.get("support", 0),
-      kills_asc: (squadData, squadName) => squadData.get("kills", 0),
-      deaths_asc: (squadData, squadName) => squadData.get("kills", 0),
+      combat_asc: (squadData, squadName) => squadData.get('combat', 0),
+      offense_asc: (squadData, squadName) => squadData.get('offense', 0),
+      defense_asc: (squadData, squadName) => squadData.get('defense', 0),
+      support_asc: (squadData, squadName) => squadData.get('support', 0),
+      kills_asc: (squadData, squadName) => squadData.get('kills', 0),
+      deaths_asc: (squadData, squadName) => squadData.get('kills', 0),
     }),
     []
   );
@@ -354,22 +351,22 @@ const GameView = () => {
     }
 
     const namesToId = {};
-    ["axis", "allies", "none"].forEach((key) => {
+    ['axis', 'allies', 'none'].forEach((key) => {
       teamView
         .get(key, new Map())
-        .get("squads", new Map())
+        .get('squads', new Map())
         .entrySeq()
         .forEach(([key, value]) =>
-          value.get("players", new IList()).forEach((player) => {
-            namesToId[player.get("name")] = player.get("steam_id_64");
+          value.get('players', new IList()).forEach((player) => {
+            namesToId[player.get('name')] = player.get('steam_id_64');
           })
         );
 
       const commander = teamView
         .get(key, new Map())
-        .get("commander", new Map());
+        .get('commander', new Map());
       if (commander) {
-        namesToId[commander.get("name")] = commander.get("steam_id_64");
+        namesToId[commander.get('name')] = commander.get('steam_id_64');
       }
     });
     return fromJS(namesToId);
@@ -378,15 +375,15 @@ const GameView = () => {
   const getPlayersNamesByTeam = (teamView, teamName) => {
     const commander = teamView
       .get(teamName, new Map())
-      .get("commander", new Map())
-      ?.get("name");
+      .get('commander', new Map())
+      ?.get('name');
 
     const names = teamView
       .get(teamName, new Map())
-      .get("squads", new Map())
+      .get('squads', new Map())
       .entrySeq()
       .map(([key, value]) =>
-        value.get("players", new IList()).map((player) => player.get("name"))
+        value.get('players', new IList()).map((player) => player.get('name'))
       )
       .flatten()
       .toList();
@@ -406,7 +403,7 @@ const GameView = () => {
       return [];
     }
 
-    const res = new IList(["axis", "allies", "none"])
+    const res = new IList(['axis', 'allies', 'none'])
       .map((key) => {
         return getPlayersNamesByTeam(teamView, key);
       })
@@ -417,25 +414,25 @@ const GameView = () => {
   }, [teamView]);
 
   const selectAllTeam = (teamName) => {
-    selectMultiplePlayers(getPlayersNamesByTeam(teamView, teamName), "add");
+    selectMultiplePlayers(getPlayersNamesByTeam(teamView, teamName), 'add');
   };
 
   const deselectAllTeam = (teamName) => {
-    selectMultiplePlayers(getPlayersNamesByTeam(teamView, teamName), "delete");
+    selectMultiplePlayers(getPlayersNamesByTeam(teamView, teamName), 'delete');
   };
 
   const selectPlayer = (playerName, force) => {
     if (
-      force !== "add" &&
-      (selectedPlayers.includes(playerName) || force === "delete")
+      force !== 'add' &&
+      (selectedPlayers.includes(playerName) || force === 'delete')
     ) {
-      console.log("Deleting", playerName, selectedPlayers);
+      console.log('Deleting', playerName, selectedPlayers);
       setSelectedPlayers(selectedPlayers.delete(playerName));
     } else if (
-      force !== "delete" &&
-      (!selectedPlayers.includes(playerName) || force === "add")
+      force !== 'delete' &&
+      (!selectedPlayers.includes(playerName) || force === 'add')
     ) {
-      console.log("Adding", playerName, selectedPlayers);
+      console.log('Adding', playerName, selectedPlayers);
       setSelectedPlayers(selectedPlayers.add(playerName));
     }
   };
@@ -445,16 +442,16 @@ const GameView = () => {
 
     playerNames.forEach((playerName) => {
       if (
-        force !== "add" &&
-        (selectedPlayers.includes(playerName) || force === "delete")
+        force !== 'add' &&
+        (selectedPlayers.includes(playerName) || force === 'delete')
       ) {
-        console.log("Deletingss", playerName, selectedPlayers);
+        console.log('Deletingss', playerName, selectedPlayers);
         newSelectedPlayer = newSelectedPlayer.delete(playerName);
       } else if (
-        force !== "delete" &&
-        (!selectedPlayers.includes(playerName) || force === "add")
+        force !== 'delete' &&
+        (!selectedPlayers.includes(playerName) || force === 'add')
       ) {
-        console.log("Addingss", playerName, selectedPlayers);
+        console.log('Addingss', playerName, selectedPlayers);
         newSelectedPlayer = newSelectedPlayer.add(playerName);
       }
     });
@@ -464,8 +461,8 @@ const GameView = () => {
 
   const loadData = () => {
     setIsLoading(true);
-    return get("get_team_view")
-      .then((response) => showResponse(response, "get_team_view"))
+    return get('get_team_view')
+      .then((response) => showResponse(response, 'get_team_view'))
       .then((data) => {
         setIsLoading(false);
         if (data.result) {
@@ -481,7 +478,7 @@ const GameView = () => {
         try {
           await func();
         } catch (e) {
-          console.warn("Error in periodic refresh", e);
+          console.warn('Error in periodic refresh', e);
         }
         myInterval(func, ms);
       }, ms);
@@ -501,7 +498,7 @@ const GameView = () => {
   }, [resfreshFreqSecs, myInterval]);
 
   const isMessageLessAction = (actionType) =>
-    actionType.startsWith("switch_") || actionType.startsWith("unwatch_");
+    actionType.startsWith('switch_') || actionType.startsWith('unwatch_');
 
   const handleAction = (
     actionType,
@@ -520,7 +517,7 @@ const GameView = () => {
       playerNames.forEach((playerName) => {
         if (allPlayerNames.indexOf(playerName) === -1) {
           toast.error(`Player ${playerName} is not on the server anymore`);
-          selectPlayer(playerName, "delete");
+          selectPlayer(playerName, 'delete');
           return;
         }
         const steam_id_64 = playerNamesToSteamId.get(playerName, null);
@@ -532,8 +529,8 @@ const GameView = () => {
           duration_hours: duration_hours,
           message: message,
         };
-        if (actionType === "temp_ban") {
-          data["forward"] = "yes";
+        if (actionType === 'temp_ban') {
+          data['forward'] = 'yes';
         }
         console.log(`Posting do_${actionType}`, data);
         postData(`${process.env.REACT_APP_API_URL}do_${actionType}`, data)
@@ -563,7 +560,7 @@ const GameView = () => {
         flag: flag,
         comment: comment,
       })
-        .then((response) => showResponse(response, "flag_player", true))
+        .then((response) => showResponse(response, 'flag_player', true))
         .then(() => setFlag(false))
         .catch(handle_http_errors)
     );
@@ -575,7 +572,7 @@ const GameView = () => {
         <Fragment>
           <Grid item xs={12}>
             <LinearProgress
-              style={{ visibility: isLoading ? "visible" : "hidden" }}
+              style={{ visibility: isLoading ? 'visible' : 'hidden' }}
             />
           </Grid>
           <FlagDialog
@@ -650,7 +647,7 @@ const GameView = () => {
                       );
                     } else {
                       setConfirmAction({
-                        player: "All selected players",
+                        player: 'All selected players',
                         actionType: actionType,
                         steam_id_64: null,
                       });
@@ -667,7 +664,7 @@ const GameView = () => {
                 />
               </Grid>
               <Grid item>
-                <FormControl size="small" style={{ minWidth: "120px" }}>
+                <FormControl size="small" style={{ minWidth: '120px' }}>
                   <InputLabel htmlFor="age-native-simple">Sort by</InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
@@ -676,7 +673,7 @@ const GameView = () => {
                     helperText="sort the squads and players"
                     onChange={(e) => {
                       setSortType(e.target.value);
-                      localStorage.setItem("game_view_sorting", e.target.value);
+                      localStorage.setItem('game_view_sorting', e.target.value);
                     }}
                   >
                     {Object.keys(sortTypeToFunc).map((k) => (
@@ -689,7 +686,7 @@ const GameView = () => {
               </Grid>
               <Grid item>
                 <TextField
-                  style={{ minWidth: "125px" }}
+                  style={{ minWidth: '125px' }}
                   type="number"
                   inputProps={{ min: 2, max: 6000 }}
                   label="Refresh seconds"
@@ -702,42 +699,39 @@ const GameView = () => {
           </Grid>
           <Grid item xs={12} md={12} lg={6}>
             <Team
-              
               teamName="Allies"
-              teamData={teamView.get("allies")}
+              teamData={teamView.get('allies')}
               selectedPlayers={selectedPlayers}
               selectPlayer={selectPlayer}
               selectMultiplePlayers={selectMultiplePlayers}
-              selectAll={() => selectAllTeam("allies")}
-              deselectAll={() => deselectAllTeam("allies")}
+              selectAll={() => selectAllTeam('allies')}
+              deselectAll={() => deselectAllTeam('allies')}
               sortFunc={sortTypeToFunc[sortType]}
               showOnlySelected={showOnlySelected && selectedPlayers.size !== 0}
             />
           </Grid>
           <Grid item xs={12} md={12} lg={6}>
             <Team
-              
               teamName="Axis"
-              teamData={teamView.get("axis")}
+              teamData={teamView.get('axis')}
               selectedPlayers={selectedPlayers}
               selectPlayer={selectPlayer}
               selectMultiplePlayers={selectMultiplePlayers}
-              selectAll={() => selectAllTeam("axis")}
-              deselectAll={() => deselectAllTeam("axis")}
+              selectAll={() => selectAllTeam('axis')}
+              deselectAll={() => deselectAllTeam('axis')}
               sortFunc={sortTypeToFunc[sortType]}
               showOnlySelected={showOnlySelected && selectedPlayers.size !== 0}
             />
           </Grid>
           <Grid item xs={12} md={12}>
             <Team
-              
               teamName="Unassigned"
-              teamData={teamView.get("none")}
+              teamData={teamView.get('none')}
               selectedPlayers={selectedPlayers}
               selectPlayer={selectPlayer}
               selectMultiplePlayers={selectMultiplePlayers}
-              selectAll={() => selectAllTeam("none")}
-              deselectAll={() => deselectAllTeam("none")}
+              selectAll={() => selectAllTeam('none')}
+              deselectAll={() => deselectAllTeam('none')}
               sortFunc={sortTypeToFunc[sortType]}
               showOnlySelected={showOnlySelected && selectedPlayers.size !== 0}
             />

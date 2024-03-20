@@ -1,29 +1,29 @@
-import React from "react";
-import Button from "@mui/material/Button";
-import Chip from "@mui/material/Chip";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import TextField from "@mui/material/TextField";
-import _ from "lodash";
-import Badge from "@mui/material/Badge";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import "react-toastify/dist/ReactToastify.css";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import { Map } from "immutable";
-import FlagOutlinedIcon from "@mui/icons-material/FlagOutlined";
-import TextHistory from "../textHistory";
+import React from 'react';
+import Button from '@mui/material/Button';
+import Chip from '@mui/material/Chip';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import TextField from '@mui/material/TextField';
+import _ from 'lodash';
+import Badge from '@mui/material/Badge';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import 'react-toastify/dist/ReactToastify.css';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import { Map } from 'immutable';
+import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
+import TextHistory from '../textHistory';
 import Autocomplete from '@mui/material/Autocomplete';
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import { getSharedMessages } from "../../utils/fetchUtils";
-import { Grid } from "@mui/material";
-import Tooltip from "@mui/material/Tooltip";
-import MessageIcon from "@mui/icons-material/Message";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import { getSharedMessages } from '../../utils/fetchUtils';
+import { Grid } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
+import MessageIcon from '@mui/icons-material/Message';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const Duration = ({
   durationNumber,
@@ -34,7 +34,7 @@ const Duration = ({
   <Grid container spacing={1}>
     <Grid item>
       <TextField
-        style={{ minWidth: "200px" }}
+        style={{ minWidth: '200px' }}
         label="TempBan Duration number"
         type="number"
         shrink
@@ -45,7 +45,7 @@ const Duration = ({
     </Grid>
     <Grid item>
       <TextField
-        style={{ minWidth: "200px" }}
+        style={{ minWidth: '200px' }}
         select
         value={durationMultiplier}
         onChange={(event) => onMultiplierChange(event.target.value)}
@@ -73,8 +73,8 @@ class ReasonDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      reason: "",
-      comment: "",
+      reason: '',
+      comment: '',
       saveMessage: true,
       durationNumber: 2,
       durationMultiplier: 1,
@@ -85,7 +85,7 @@ class ReasonDialog extends React.Component {
   }
 
   componentDidMount() {
-    getSharedMessages("punishments").then((data) =>
+    getSharedMessages('punishments').then((data) =>
       this.setState({ sharedMessages: data })
     );
   }
@@ -100,20 +100,20 @@ class ReasonDialog extends React.Component {
 
   mapActionToText(actionType, playerName) {
     switch (actionType) {
-      case "watch_player":
+      case 'watch_player':
         return `Add a watch to ${playerName}`;
-      case "punish":
+      case 'punish':
         return `Punish (kill in game) ${playerName}`;
-      case "kick":
+      case 'kick':
         return `Kick ${playerName} from the game`;
-      case "temp_ban":
+      case 'temp_ban':
         return `Temporary Ban ${playerName}`;
-      case "perma_ban":
+      case 'perma_ban':
         return `Permanently Ban ${playerName}`;
-      case "message_player":
+      case 'message_player':
         return `Message ${playerName}`;
       default:
-        return "";
+        return '';
     }
   }
 
@@ -127,7 +127,7 @@ class ReasonDialog extends React.Component {
       durationNumber,
       durationMultiplier,
     } = this.state;
-    const textHistory = new TextHistory("punishments");
+    const textHistory = new TextHistory('punishments');
     const actionType = open.actionType;
     const playerName = open.player;
     return (
@@ -148,7 +148,7 @@ class ReasonDialog extends React.Component {
                 multiline
                 minRows={4}
                 maxRows={10}
-                label={actionType === "message_player" ? "Message" : "Reason"}
+                label={actionType === 'message_player' ? 'Message' : 'Reason'}
                 variant="outlined"
                 margin="dense"
                 helperText="The message that will be displayed to the player. A message is mandatory"
@@ -156,7 +156,7 @@ class ReasonDialog extends React.Component {
             )}
           />
 
-          {open.actionType !== "message_player" ? (
+          {open.actionType !== 'message_player' ? (
             <TextField
               multiline
               minRows={4}
@@ -170,9 +170,9 @@ class ReasonDialog extends React.Component {
               helperText="A comment that will NOT be displayed to the player"
             />
           ) : (
-            ""
+            ''
           )}
-          {open.actionType === "temp_ban" ? (
+          {open.actionType === 'temp_ban' ? (
             <Duration
               durationNumber={durationNumber}
               onNumberChange={(number) =>
@@ -184,7 +184,7 @@ class ReasonDialog extends React.Component {
               }
             />
           ) : (
-            ""
+            ''
           )}
           <FormControlLabel
             control={
@@ -200,7 +200,7 @@ class ReasonDialog extends React.Component {
         <DialogActions>
           <Button
             onClick={() => {
-              this.setState({ reason: "" }, handleClose);
+              this.setState({ reason: '' }, handleClose);
             }}
             color="primary"
           >
@@ -219,7 +219,7 @@ class ReasonDialog extends React.Component {
                 durationMultiplier * durationNumber,
                 open.steam_id_64
               );
-              this.setState({ reason: "", comment: "" });
+              this.setState({ reason: '', comment: '' });
             }}
             color="primary"
             disabled={!reason}
@@ -252,19 +252,19 @@ const PlayerActions = ({
     setOpen(false);
   };
   const remap_penalties = {
-    perma_ban: "PERMABAN",
-    punish: "PUNISH",
-    kick: "KICK",
-    temp_ban: "TEMPBAN",
+    perma_ban: 'PERMABAN',
+    punish: 'PUNISH',
+    kick: 'KICK',
+    temp_ban: 'TEMPBAN',
   };
 
   const actions = [
-    ["punish", "PUNISH"],
-    ["kick", "KICK"],
-    ["temp_ban", "TEMP BAN"],
-    ["switch_player_now", "SWITCH"],
-    ["switch_player_on_death", "SWITCH ON DEATH"],
-    ["perma_ban", "PERMA BAN"],
+    ['punish', 'PUNISH'],
+    ['kick', 'KICK'],
+    ['temp_ban', 'TEMP BAN'],
+    ['switch_player_now', 'SWITCH'],
+    ['switch_player_on_death', 'SWITCH ON DEATH'],
+    ['perma_ban', 'PERMA BAN'],
   ];
   const show = Math.min(displayCount, actions.length);
 
@@ -276,30 +276,30 @@ const PlayerActions = ({
         aria-label="small outlined button group"
       >
         <Tooltip title="Message Player">
-          <Button onClick={() => handleAction("message_player")}>
+          <Button onClick={() => handleAction('message_player')}>
             <MessageIcon />
           </Button>
         </Tooltip>
         {show > 1 ? (
           <Tooltip title="Watch Player">
             <Button
-              color={isWatched ? "primary" : "inherit"}
-              variant={isWatched ? "contained" : "outlined"}
+              color={isWatched ? 'primary' : 'inherit'}
+              variant={isWatched ? 'contained' : 'outlined'}
               size="small"
               onClick={() =>
-                handleAction(isWatched ? "unwatch_player" : "watch_player")
+                handleAction(isWatched ? 'unwatch_player' : 'watch_player')
               }
             >
               <VisibilityIcon fontSize="small" />
             </Button>
           </Tooltip>
         ) : (
-          ""
+          ''
         )}
         {_.range(show).map((idx) => (
           <Button
             key={actions[idx][0]}
-            disabled={disable && !actions[idx][0].startsWith("switch")}
+            disabled={disable && !actions[idx][0].startsWith('switch')}
             onClick={() => handleAction(actions[idx][0])}
           >
             <Badge
@@ -321,7 +321,7 @@ const PlayerActions = ({
             </Button>
           </Tooltip>
         ) : (
-          ""
+          ''
         )}
 
         {show < actions.length ? (
@@ -334,7 +334,7 @@ const PlayerActions = ({
             <ArrowDropDownIcon />
           </Button>
         ) : (
-          ""
+          ''
         )}
       </ButtonGroup>
       {show < actions.length ? (
@@ -348,16 +348,16 @@ const PlayerActions = ({
           {show <= 1 ? (
             <MenuItem
               onClick={() =>
-                handleAction(isWatched ? "unwatch_player" : "watch_player")
+                handleAction(isWatched ? 'unwatch_player' : 'watch_player')
               }
             >
               <VisibilityIcon
-                color={isWatched ? "primary" : "inherit"}
+                color={isWatched ? 'primary' : 'inherit'}
                 fontSize="small"
               />
             </MenuItem>
           ) : (
-            ""
+            ''
           )}
           {_.range(show, actions.length).map((idx) => {
             const count = penaltyCount.get(remap_penalties[actions[idx][0]], 0);
@@ -373,14 +373,14 @@ const PlayerActions = ({
                 {count > 0 ? (
                   <Chip size="small" color="primary" label={count} />
                 ) : (
-                  ""
+                  ''
                 )}
               </MenuItem>
             );
           })}
         </Menu>
       ) : (
-        ""
+        ''
       )}
     </React.Fragment>
   );

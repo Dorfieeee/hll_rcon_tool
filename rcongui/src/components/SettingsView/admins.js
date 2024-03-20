@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Grid,
   TextField,
@@ -11,9 +11,9 @@ import {
   InputLabel,
   Select,
   MenuItem,
-} from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import AddIcon from "@mui/icons-material/Add";
+} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
 
 const AdminRole = ({ role, setRole, roles }) => (
   <FormControl>
@@ -38,7 +38,7 @@ const AddAdminItem = ({
 }) => (
   <ListItem>
     <Grid container>
-      <Grid item xs={4} >
+      <Grid item xs={4}>
         <TextField
           InputLabelProps={{
             shrink: true,
@@ -48,7 +48,7 @@ const AddAdminItem = ({
           onChange={(e) => setName(e.target.value)}
         />
       </Grid>
-      <Grid item xs={4} >
+      <Grid item xs={4}>
         <TextField
           InputLabelProps={{
             shrink: true,
@@ -58,13 +58,8 @@ const AddAdminItem = ({
           onChange={(e) => setSteamID64(e.target.value)}
         />
       </Grid>
-      <Grid item xs={4} >
-        <AdminRole
-          
-          role={role}
-          setRole={setRole}
-          roles={roles}
-        />
+      <Grid item xs={4}>
+        <AdminRole role={role} setRole={setRole} roles={roles} />
       </Grid>
     </Grid>
     <ListItemSecondaryAction>
@@ -73,33 +68,28 @@ const AddAdminItem = ({
         aria-label="delete"
         onClick={() =>
           onAdd(name, steamID64, role).then(() => {
-            setName("");
-            setSteamID64("");
-            setRole("");
+            setName('');
+            setSteamID64('');
+            setRole('');
           })
         }
-        size="large">
+        size="large"
+      >
         <AddIcon />
       </IconButton>
     </ListItemSecondaryAction>
   </ListItem>
 );
 
-const AdminsEditableList = ({
-  peopleList,
-  roles,
-  onDelete,
-  onAdd,
-}) => {
-  const [name, setName] = React.useState("");
-  const [steamID64, setSteamID64] = React.useState("");
-  const [role, setRole] = React.useState("");
+const AdminsEditableList = ({ peopleList, roles, onDelete, onAdd }) => {
+  const [name, setName] = React.useState('');
+  const [steamID64, setSteamID64] = React.useState('');
+  const [role, setRole] = React.useState('');
 
   return (
     <React.Fragment>
       <List dense>
         <AddAdminItem
-          
           name={name}
           setName={setName}
           steamID64={steamID64}
@@ -112,7 +102,7 @@ const AdminsEditableList = ({
         {peopleList.map((obj) => (
           <ListItem key={obj.steam_id_64}>
             <ListItemText
-              primary={"[" + obj.role + "] " + obj.name}
+              primary={'[' + obj.role + '] ' + obj.name}
               secondary={obj.steam_id_64}
             />
             <ListItemSecondaryAction>
@@ -120,14 +110,14 @@ const AdminsEditableList = ({
                 edge="end"
                 aria-label="delete"
                 onClick={() => onDelete(obj.name, obj.steam_id_64, obj.role)}
-                size="large">
+                size="large"
+              >
                 <DeleteIcon />
               </IconButton>
             </ListItemSecondaryAction>
           </ListItem>
         ))}
         <AddAdminItem
-          
           name={name}
           setName={setName}
           steamID64={steamID64}

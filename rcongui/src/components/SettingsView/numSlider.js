@@ -1,5 +1,5 @@
-import React from "react";
-import { Slider, Typography } from "@mui/material";
+import React from 'react';
+import { Slider, Typography } from '@mui/material';
 
 const NumSlider = ({
   text,
@@ -31,7 +31,7 @@ const NumSlider = ({
       min={min}
       max={max}
       disabled={disabled}
-      valueLabelDisplay={showValue ? "on" : "auto"}
+      valueLabelDisplay={showValue ? 'on' : 'auto'}
     />
   </div>
 );

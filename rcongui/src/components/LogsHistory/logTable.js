@@ -1,32 +1,35 @@
-import React from "react";
-import Link from "@mui/material/Link";
-import moment from "moment";
-import { Grid } from "@mui/material";
+import React from 'react';
+import Link from '@mui/material/Link';
+import moment from 'moment';
+import { Grid } from '@mui/material';
 
-import MUIDataTable from "mui-datatables";
+import MUIDataTable from 'mui-datatables';
 
 export default function LogsTable({ logs, downloadCSV }) {
   const [myRowPerPage, setRowPerPage] = React.useState(
-    window.localStorage.getItem("logs_row_per_page") || 50
+    window.localStorage.getItem('logs_row_per_page') || 50
   );
   const saveRowsPerPage = (rowPerPage) => {
-    window.localStorage.setItem("logs_row_per_page", rowPerPage);
+    window.localStorage.setItem('logs_row_per_page', rowPerPage);
     setRowPerPage(rowPerPage);
   };
   const columns = [
     {
-      name: "event_time",
-      label: "Time",
+      name: 'event_time',
+      label: 'Time',
       options: {
         customBodyRenderLite: (dataIndex) =>
-          moment.unix(logs[dataIndex].event_time).local().format("ddd Do MMM HH:mm:ss"),
+          moment
+            .unix(logs[dataIndex].event_time)
+            .local()
+            .format('ddd Do MMM HH:mm:ss'),
       },
     },
-    { name: "type", label: "Type" },
-    { name: "content", label: "Content" },
+    { name: 'type', label: 'Type' },
+    { name: 'content', label: 'Content' },
     {
-      name: "player1_id",
-      label: "Name 1",
+      name: 'player1_id',
+      label: 'Name 1',
       options: {
         customBodyRenderLite: (dataIndex) => {
           let id = logs[dataIndex].player1_id;
@@ -42,8 +45,8 @@ export default function LogsTable({ logs, downloadCSV }) {
       },
     },
     {
-      name: "player2_id",
-      label: "Name 2",
+      name: 'player2_id',
+      label: 'Name 2',
       options: {
         customBodyRenderLite: (dataIndex) => {
           let id = logs[dataIndex].player2_id;
@@ -58,13 +61,13 @@ export default function LogsTable({ logs, downloadCSV }) {
         },
       },
     },
-    { name: "server", label: "Server" },
+    { name: 'server', label: 'Server' },
   ];
 
   const options = {
     filter: false,
     rowsPerPage: myRowPerPage,
-    selectableRows: "none",
+    selectableRows: 'none',
     rowsPerPageOptions: [10, 25, 50, 100, 250, 500, 1000],
     onChangeRowsPerPage: saveRowsPerPage,
     onDownload: () => {
@@ -77,7 +80,7 @@ export default function LogsTable({ logs, downloadCSV }) {
     <Grid container justifyContent="center">
       <Grid item>
         <MUIDataTable
-          title={"Game logs"}
+          title={'Game logs'}
           data={logs}
           columns={columns}
           options={options}

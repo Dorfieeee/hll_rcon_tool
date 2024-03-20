@@ -1,19 +1,19 @@
-import { Button, Grid, TextField } from "@mui/material";
-import React from "react";
+import { Button, Grid, TextField } from '@mui/material';
+import React from 'react';
 import {
   get,
   handle_http_errors,
   postData,
   showResponse,
-} from "../../utils/fetchUtils";
+} from '../../utils/fetchUtils';
 
 const ServerName = () => {
-  const [name, setName] = React.useState("");
+  const [name, setName] = React.useState('');
   const isFirstRender = React.useRef(true);
 
   React.useEffect(() => {
-    get("get_name")
-      .then((res) => showResponse(res, "get_name", false))
+    get('get_name')
+      .then((res) => showResponse(res, 'get_name', false))
       .then((res) => setName(res.result));
   }, []);
 
@@ -21,7 +21,7 @@ const ServerName = () => {
     postData(`${process.env.REACT_APP_API_URL}set_name`, {
       name: name,
     })
-      .then((res) => showResponse(res, "set_name", true))
+      .then((res) => showResponse(res, 'set_name', true))
       .catch(handle_http_errors);
   };
 

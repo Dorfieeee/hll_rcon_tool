@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 import withStyles from '@mui/styles/withStyles';
-import MuiDialogTitle from "@mui/material/DialogTitle";
-import MuiDialogContent from "@mui/material/DialogContent";
-import MuiDialogActions from "@mui/material/DialogActions";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
-import Typography from "@mui/material/Typography";
+import MuiDialogTitle from '@mui/material/DialogTitle';
+import MuiDialogContent from '@mui/material/DialogContent';
+import MuiDialogActions from '@mui/material/DialogActions';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import Typography from '@mui/material/Typography';
 
 const styles = (theme) => ({
   root: {
@@ -13,7 +13,7 @@ const styles = (theme) => ({
     padding: theme.spacing(2),
   },
   closeButton: {
-    position: "absolute",
+    position: 'absolute',
     right: theme.spacing(1),
     top: theme.spacing(1),
     color: theme.palette.grey[500],

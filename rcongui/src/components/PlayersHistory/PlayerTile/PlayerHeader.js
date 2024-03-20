@@ -6,28 +6,28 @@ import {
   ListItemAvatar,
   ListItemText,
   Typography,
-} from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
-import React from "react";
-import { List, Map } from "immutable";
-import Tooltip from "@mui/material/Tooltip";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
-import AnnouncementIcon from "@mui/icons-material/Announcement";
-import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { getName } from "country-list";
-import makePlayerProfileUrl from "../../../utils/makePlayerProfileUrl";
+} from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
+import React from 'react';
+import { List, Map } from 'immutable';
+import Tooltip from '@mui/material/Tooltip';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
+import AnnouncementIcon from '@mui/icons-material/Announcement';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { getName } from 'country-list';
+import makePlayerProfileUrl from '../../../utils/makePlayerProfileUrl';
 
 const getCountry = (country) => {
-  if (country === "" || country === null) {
-    return "";
+  if (country === '' || country === null) {
+    return '';
   }
   return (
     <img
       alt={country}
-      title={country ? getName(country) : ""}
-      style={{ height: "12px" }}
+      title={country ? getName(country) : ''}
+      style={{ height: '12px' }}
       src={`https://catamphetamine.gitlab.io/country-flag-icons/3x2/${country}.svg`}
     />
   );
@@ -35,23 +35,23 @@ const getCountry = (country) => {
 
 export const PlayerHeader = ({ player }) => {
   const [showAll, setShowAll] = React.useState(false);
-  const hasMultipleName = player.get("names") && player.get("names").size > 1;
+  const hasMultipleName = player.get('names') && player.get('names').size > 1;
 
-  const playerNames = player.get("names", null)
-    ? player.get("names")
+  const playerNames = player.get('names', null)
+    ? player.get('names')
     : new List();
   const firstName = playerNames.get(0, null) ? playerNames.get(0) : new Map();
-  const firstNameLetter = firstName.get("name", "?")[0];
-  const namesByMatch = player.get("names_by_match", null)
-    ? player.get("names_by_match")
+  const firstNameLetter = firstName.get('name', '?')[0];
+  const namesByMatch = player.get('names_by_match', null)
+    ? player.get('names_by_match')
     : new List();
-  const steamProfile = player.get("steaminfo")
-    ? player.get("steaminfo").get("profile")
+  const steamProfile = player.get('steaminfo')
+    ? player.get('steaminfo').get('profile')
     : new Map();
-  const avatarUrl = steamProfile ? steamProfile.get("avatar", null) : null;
-  const country = player.get("steaminfo")
-    ? player.get("steaminfo").get("country", "")
-    : "";
+  const avatarUrl = steamProfile ? steamProfile.get('avatar', null) : null;
+  const country = player.get('steaminfo')
+    ? player.get('steaminfo').get('country', '')
+    : '';
 
   return (
     <ListItem alignItems="flex-start">
@@ -60,8 +60,8 @@ export const PlayerHeader = ({ player }) => {
           target="_blank"
           color="inherit"
           href={makePlayerProfileUrl(
-            player.get("steam_id_64"),
-            firstName.get("name")
+            player.get('steam_id_64'),
+            firstName.get('name')
           )}
         >
           <Avatar src={avatarUrl}>{firstNameLetter}</Avatar>
@@ -81,9 +81,9 @@ export const PlayerHeader = ({ player }) => {
                     <KeyboardArrowUpIcon fontSize="inherit" />
                   </IconButton>
                 ) : (
-                  ""
+                  ''
                 )}
-                {playerNames.map((n) => n.get("name")).join(" | ")}
+                {playerNames.map((n) => n.get('name')).join(' | ')}
               </Typography>
             ) : (
               <Typography variant="body1">
@@ -96,9 +96,9 @@ export const PlayerHeader = ({ player }) => {
                     <KeyboardArrowDownIcon fontSize="inherit" />
                   </IconButton>
                 ) : (
-                  ""
+                  ''
                 )}
-                {namesByMatch.get(0, "")} {getCountry(country)}
+                {namesByMatch.get(0, '')} {getCountry(country)}
               </Typography>
             )}
           </React.Fragment>
@@ -107,9 +107,9 @@ export const PlayerHeader = ({ player }) => {
           <Link
             color="inherit"
             component={RouterLink}
-            to={`/player/${player.get("steam_id_64")}`}
+            to={`/player/${player.get('steam_id_64')}`}
           >
-            {player.get("steam_id_64")}
+            {player.get('steam_id_64')}
           </Link>
         }
       />
@@ -119,19 +119,19 @@ export const PlayerHeader = ({ player }) => {
             <FileCopyIcon
               fontSize="small"
               size="small"
-              style={{ cursor: "pointer" }}
+              style={{ cursor: 'pointer' }}
               onClick={() => {
                 if (navigator.clipboard === undefined) {
-                  alert("This feature only works if your rcon uses HTTPS");
+                  alert('This feature only works if your rcon uses HTTPS');
                   return;
                 }
-                var text = player.get("steam_id_64");
+                var text = player.get('steam_id_64');
                 navigator.clipboard.writeText(text).then(
                   function () {
-                    console.log("Async: Copying to clipboard was successful!");
+                    console.log('Async: Copying to clipboard was successful!');
                   },
                   function (err) {
-                    console.error("Async: Could not copy text: ", err);
+                    console.error('Async: Could not copy text: ', err);
                   }
                 );
               }}
@@ -143,19 +143,19 @@ export const PlayerHeader = ({ player }) => {
             <AnnouncementIcon
               fontSize="small"
               size="small"
-              style={{ cursor: "pointer" }}
+              style={{ cursor: 'pointer' }}
               onClick={() => {
                 var text = `Name: ${player
-                  .get("names")
+                  .get('names')
                   .first()
-                  .get("name")}\nAliases: ${player
-                  .get("names", new List())
-                  .map((n) => n.get("name"))
-                  .join(" | ")}\nSteamID: ${player.get(
-                  "steam_id_64"
+                  .get('name')}\nAliases: ${player
+                  .get('names', new List())
+                  .map((n) => n.get('name'))
+                  .join(' | ')}\nSteamID: ${player.get(
+                  'steam_id_64'
                 )}\nSteam URL: ${makePlayerProfileUrl(
-                  player.get("steam_id_64"),
-                  player.get("names").first().get("name")
+                  player.get('steam_id_64'),
+                  player.get('names').first().get('name')
                 )}\nType of issue:\nDescription:\nEvidence:`;
                 if (navigator.clipboard === undefined) {
                   alert(`This feature only works if your rcon uses HTTPS.`);
@@ -166,11 +166,11 @@ export const PlayerHeader = ({ player }) => {
                   navigator.clipboard.writeText(text).then(
                     function () {
                       console.log(
-                        "Async: Copying to clipboard was successful!"
+                        'Async: Copying to clipboard was successful!'
                       );
                     },
                     function (err) {
-                      console.error("Async: Could not copy text: ", err);
+                      console.error('Async: Could not copy text: ', err);
                     }
                   );
                 }

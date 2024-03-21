@@ -1,7 +1,7 @@
 import {
   Button,
   FormControl,
-  Grid,
+  Unstable_Grid2 as Grid,
   InputLabel,
   NativeSelect,
   TextField,
@@ -71,7 +71,7 @@ const VoteMapConfig = () => {
       alignContent="center"
       alignItems="center"
     >
-      <Grid item xs={12}>
+      <Grid xs={12}>
         <Padlock
           label="Next Map Vote Enabled"
           checked={config.get('enabled', false)}
@@ -79,7 +79,7 @@ const VoteMapConfig = () => {
         />
       </Grid>
       <Grid container spacing={1} alignItems="center">
-        <Grid item xs={12}>
+        <Grid xs={12}>
           <TextField
             fullWidth
             multiline
@@ -93,7 +93,7 @@ const VoteMapConfig = () => {
             }
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid xs={12}>
           <TextField
             fullWidth
             multiline
@@ -107,7 +107,7 @@ const VoteMapConfig = () => {
             }
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid xs={12}>
           <TextField
             fullWidth
             multiline
@@ -119,13 +119,13 @@ const VoteMapConfig = () => {
             onChange={(e) => setConfig(config.set('help_text', e.target.value))}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid xs={12}>
           <Button variant="outlined" onClick={() => saveConfig(config)}>
             Save texts
           </Button>
         </Grid>
       </Grid>
-      <Grid item>
+      <Grid>
         <TextField
           type="number"
           inputProps={{ min: 0, max: 90 }}
@@ -137,14 +137,14 @@ const VoteMapConfig = () => {
           }
         />
       </Grid>
-      <Grid item>
+      <Grid>
         <Padlock
           label="Allow user to opt-out of vote map reminders by typing !votemap never"
           checked={config.get('allow_opt_out', false)}
           handleChange={(v) => saveConfig({ allow_opt_out: v })}
         />
       </Grid>
-      <Grid item>
+      <Grid>
         <TextField
           type="number"
           inputProps={{ min: 2, max: 10 }}
@@ -154,7 +154,7 @@ const VoteMapConfig = () => {
           onChange={(e) => saveConfig({ number_of_options: e.target.value })}
         />
       </Grid>
-      <Grid item>
+      <Grid>
         <TextField
           type="number"
           inputProps={{ min: 0, max: 1, step: 0.05 }}
@@ -164,7 +164,7 @@ const VoteMapConfig = () => {
           onChange={(e) => saveConfig({ ratio_of_offensives: e.target.value })}
         />
       </Grid>
-      <Grid item>
+      <Grid>
         {' '}
         <TextField
           type="number"
@@ -179,7 +179,7 @@ const VoteMapConfig = () => {
           }
         />
       </Grid>
-      <Grid item>
+      <Grid>
         <Padlock
           label="Consider offensive map being the same as warfare when excluding:"
           checked={config.get('consider_offensive_same_map', false)}
@@ -187,7 +187,7 @@ const VoteMapConfig = () => {
         />
       </Grid>
 
-      <Grid item>
+      <Grid>
         <Padlock
           label="Allow consecutive offensive map"
           checked={config.get('allow_consecutive_offensives', false)}
@@ -195,7 +195,7 @@ const VoteMapConfig = () => {
         />
       </Grid>
 
-      <Grid item>
+      <Grid>
         <Padlock
           label="Allow consecutive offensive where a team would play defense twice in a row. E.g off_ger followed by off_us"
           checked={config.get(
@@ -210,7 +210,7 @@ const VoteMapConfig = () => {
         />
       </Grid>
 
-      <Grid item>
+      <Grid>
         <FormControl>
           <InputLabel>Default map method (when no votes)</InputLabel>
           <NativeSelect
@@ -232,25 +232,25 @@ const VoteMapConfig = () => {
           </NativeSelect>
         </FormControl>
       </Grid>
-      <Grid item>
+      <Grid>
         <Padlock
           label="Allow default map to be an offensive"
           checked={config.get('allow_default_to_offensive', false)}
           handleChange={(v) => saveConfig({ allow_default_to_offensive: v })}
         />
       </Grid>
-      <Grid item xs={12}>
         <Grid
+          xs={12}
           container
           justifyContent="flex-start"
           alignContent="stretch"
           alignItems="stretch"
           orientation="column"
         >
-          <Grid item xs={12}>
+          <Grid xs={12}>
             <Typography variant="h6">Current vote status</Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid xs={12} sm={4}>
             <Typography variant="body1">Votes:</Typography>
             <pre>
               {status
@@ -259,13 +259,13 @@ const VoteMapConfig = () => {
                 .map((o) => `${o[0]}: ${o[1]}\n`)}
             </pre>
           </Grid>
-          <Grid item xs={6} sm={4}>
+          <Grid xs={6} sm={4}>
             <Typography variant="body1">Map selection:</Typography>
             <pre>
               {status.get('selection', new List()).map((v) => `${v}\n`)}
             </pre>
           </Grid>
-          <Grid item xs={6} sm={4}>
+          <Grid xs={6} sm={4}>
             <Typography variant="body1">Results:</Typography>
             <pre>
               {status
@@ -288,7 +288,6 @@ const VoteMapConfig = () => {
             </Button>
           </Grid>
         </Grid>
-      </Grid>
     </Grid>
   );
 };

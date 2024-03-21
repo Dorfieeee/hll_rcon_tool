@@ -6,13 +6,11 @@ const hll = createTheme({
       light: '#484848',
       main: '#212121',
       dark: '#000000',
-      contrastText: '#fff',
     },
     secondary: {
       light: '#ffac42',
       main: '#f47b00',
       dark: '#ba4c00',
-      contrastText: '#fff',
     },
     background: {
       default: '#343434',

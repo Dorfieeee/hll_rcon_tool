@@ -14,10 +14,11 @@ const MenuSelection = (props) => {
   return (
     <Stack>
       <Button
-        style={{ textTransform: 'capitalize' }}
+        sx={{ textTransform: 'uppercase' }}
         id={`${props.name}-button`}
         onClick={props.handleClick}
-        color="inherit"
+        color='primary'
+        variant='link'
       >
         {props.name}
       </Button>
@@ -79,7 +80,7 @@ const menuConfigs = [
     name: 'Settings',
     routes: [
       {
-        name: 'Settings',
+        name: 'Dashboard',
         path: '/settings/settings',
       },
       {
@@ -217,7 +218,7 @@ const Header = () => {
   };
 
   return (
-    <AppBar position="static" elevation={0}>
+    <AppBar color='primary' position="static" sx={{ height: "4rem" }} enableColorOnDark>
       <Toolbar>
         <ServerStatus />
         <Stack direction={'row'} sx={{ flexGrow: 1 }}>

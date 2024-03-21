@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, TextField } from '@mui/material';
+import { Unstable_Grid2 as Grid, TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import SplitButton from '../splitButton';
 import TextHistory from '../textHistory';
@@ -24,12 +24,11 @@ const ServerMessage = ({
   return (
     <Grid
       container
-      xs={12}
       alignItems="center"
       alignContent="center"
       justifyContent="center"
     >
-      <Grid item xs={12}>
+      <Grid xs={12}>
         <Autocomplete
           freeSolo
           options={sharedMessages.concat(textHistory.getTexts())}
@@ -49,10 +48,10 @@ const ServerMessage = ({
           )}
         />
       </Grid>
-      <Grid item>
+      <Grid>
         <ForwardCheckBox bool={forward} onChange={onForwardChange} />
       </Grid>
-      <Grid item>
+      <Grid>
         <SplitButton
           options={[
             `Set ${type}`,

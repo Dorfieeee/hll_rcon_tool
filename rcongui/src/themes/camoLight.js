@@ -6,13 +6,11 @@ const CamoLight = createTheme({
       light: '#629749',
       main: '#33691e',
       dark: '#003d00',
-      contrastText: '#000',
     },
     secondary: {
       light: '#6a4f4b',
       main: '#3e2723',
       dark: '#1b0000',
-      contrastText: '#000',
     },
     background: {
       default: '#ffffe5',

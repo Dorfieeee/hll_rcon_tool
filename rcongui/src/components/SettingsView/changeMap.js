@@ -1,26 +1,26 @@
 import React from 'react';
-import { Grid, Button, Menu, MenuItem } from '@mui/material';
+import { Grid, Button, Menu, MenuItem, Container } from '@mui/material';
+import { Box } from '@mui/system';
 
 const ChangeMap = ({ availableMaps, changeMap }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = (event) => {
+  const handleOnBtnClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleOnMenuClose = () => {
     setAnchorEl(null);
   };
 
   return (
-    <Grid container xs={12}>
-      <Grid item xs={12}>
+    <Box>
         <Button
           variant="outlined"
           color="primary"
           aria-controls="simple-menu"
           aria-haspopup="true"
-          onClick={handleClick}
+          onClick={handleOnBtnClick}
         >
           Change Map Now
         </Button>
@@ -29,21 +29,20 @@ const ChangeMap = ({ availableMaps, changeMap }) => {
           anchorEl={anchorEl}
           keepMounted
           open={Boolean(anchorEl)}
-          onClose={handleClose}
+          onClose={handleOnMenuClose}
         >
-          {availableMaps.map((m) => (
+          {availableMaps.map((mapName) => (
             <MenuItem
-              key={m}
+              key={mapName}
               onClick={() => {
-                changeMap(m).then(handleClose);
+                changeMap(mapName).then(handleOnMenuClose);
               }}
             >
-              {m}
+              {mapName}
             </MenuItem>
           ))}
         </Menu>
-      </Grid>
-    </Grid>
+    </Box>
   );
 };
 

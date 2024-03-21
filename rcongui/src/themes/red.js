@@ -6,13 +6,11 @@ const RedTheme = createTheme({
       light: '#ff7961',
       main: '#f44336',
       dark: '#ba000d',
-      contrastText: '#fff',
     },
     secondary: {
       light: '#708690',
       main: '#445963',
       dark: '#1b3039',
-      contrastText: '#000',
     },
   },
 });

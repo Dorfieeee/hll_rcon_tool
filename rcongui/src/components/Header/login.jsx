@@ -129,12 +129,13 @@ class LoginBox extends React.Component {
     return (
       <React.Fragment>
         <Button
-          color="inherit"
+          color='primary'
+          variant='link'
           onClick={() =>
-            isLoggedIn === true ? this.logout() : this.setState({ open: true })
+            isLoggedIn ? this.logout() : this.setState({ open: true })
           }
         >
-          {isLoggedIn === true ? 'Logout' : 'Login'}
+          {isLoggedIn ? 'Logout' : 'Login'}
         </Button>
         <LoginModal
           open={open}

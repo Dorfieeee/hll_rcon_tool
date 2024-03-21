@@ -7,13 +7,11 @@ const GreyBlueDarkTheme = createTheme({
       light: '#8eacbb',
       main: '#607d8b',
       dark: '#34515e',
-      contrastText: '#fff',
     },
     secondary: {
       light: '#c3fdff',
       main: '#90caf9',
       dark: '#5d99c6',
-      contrastText: '#fff',
     },
     background: {
       default: '#303030',

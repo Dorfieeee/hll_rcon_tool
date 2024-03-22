@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Grid, TextField, Typography, Tooltip, Unstable_Grid2 as Grid2 } from '@mui/material';
+import { Button, Grid, TextField, Typography, Tooltip, Unstable_Grid2 as Grid2, Stack, Paper } from '@mui/material';
 import { range } from 'lodash/util';
 import {
   get,
@@ -21,6 +21,7 @@ import VoteMapConfig from './voteMapConfig';
 import HelpIcon from '@mui/icons-material/Help';
 import MapRotation from '../MapManager';
 import MapRotationSettings from '../MapManager/settings';
+import { Box } from '@mui/system';
 
 const ProfanityFiler = ({
   words,
@@ -29,8 +30,7 @@ const ProfanityFiler = ({
   forward,
   onFowardChange,
 }) => (
-  <Grid container>
-    <Grid >
+  <Paper>
       <WordList
         words={words}
         onWordsChange={onWordsChange}
@@ -42,8 +42,7 @@ const ProfanityFiler = ({
       <Button variant="outlined" color="secondary" onClick={onSave}>
         Save
       </Button>
-    </Grid>
-  </Grid>
+  </Paper>
 );
 
 function makeBool(text) {
@@ -323,8 +322,8 @@ class HLLSettings extends React.Component {
     } = this.state;
 
     return (
-      <Grid2 container component={'section'} direction={'column'} columnSpacing={1} rowSpacing={1} {...this.props}>
-        <Grid2 >
+      <Grid2 container component={'section'} rowSpacing={2} columnSpacing={4} {...this.props}>
+        <Grid2 xs={12}>
           <Typography variant='h2'>HLL Game Server settings</Typography>
           <Typography variant='caption'>{`( 1min autorefresh )`}</Typography>
           <AutoRefreshLine
@@ -333,31 +332,33 @@ class HLLSettings extends React.Component {
             statusRefreshIntervalMs={500}
           />
         </Grid2>
-        <Grid2 >
+        <Grid2 xs={12}>
           <ChangeMap
             availableMaps={availableMaps}
             changeMap={this.changeMap}
           />
         </Grid2>
-        <Grid2 sm={6} >
-          <ServerMessage
-            autocompleteKey="welcome"
-            type="Welcome message"
-            forward={forwardWelcome}
-            onForwardChange={() => this.toggle('forwardWelcome')}
-            value={welcomeMessage}
-            setValue={(val) => this.setState({ welcomeMessage: val })}
-            onSave={(val) =>
-              this.setState({ welcomeMessage: val }, () =>
-                sendAction('set_welcome_message', {
-                  msg: val,
-                  forward: forwardWelcome,
-                })
-              )
-            }
-          />
+        <Grid2 xs={12} sm={6} >
+          <Box>
+            <ServerMessage
+              autocompleteKey="welcome"
+              type="Welcome message"
+              forward={forwardWelcome}
+              onForwardChange={() => this.toggle('forwardWelcome')}
+              value={welcomeMessage}
+              setValue={(val) => this.setState({ welcomeMessage: val })}
+              onSave={(val) =>
+                this.setState({ welcomeMessage: val }, () =>
+                  sendAction('set_welcome_message', {
+                    msg: val,
+                    forward: forwardWelcome,
+                  })
+                )
+              }
+            />
+          </Box>
         </Grid2>
-        <Grid2 sm={6} >
+        <Grid2 xs={12} sm={6} >
           <ServerMessage
             autocompleteKey="broadcast"
             type="Broadcast message"
@@ -380,7 +381,7 @@ class HLLSettings extends React.Component {
             }
           />
         </Grid2>
-        <Grid2  md={6}>
+        <Grid2 xs={12} md={6}>
           <CollapseCard title="Manage VIPs" onExpand={this.loadVips}>
             <VipUpload />
             <p>Changes are applied immediately</p>
@@ -405,7 +406,7 @@ class HLLSettings extends React.Component {
             />
           </CollapseCard>
         </Grid2>
-        <Grid2  md={6}>
+        <Grid2 xs={12} md={6}>
           <CollapseCard
             title="Manage Console admins"
             onExpand={this.loadAdmins}
@@ -429,22 +430,22 @@ class HLLSettings extends React.Component {
             />
           </CollapseCard>
         </Grid2>
-        <Grid2 container  direction={'column'}  >
-          <Grid2>
+        <Grid2 container xs={12} direction={'column'}  >
+          <Grid2 xs={12}>
             <Padlock
               checked={lockedSliders}
               handleChange={() => this.toggle('lockedSliders')}
               label="Locked sliders"
             />
           </Grid2>
-          <Grid2>
+          <Grid2 xs={12}>
             <Padlock
               checked={sildersShowValues}
               handleChange={() => this.toggle('sildersShowValues')}
               label="Show all values"
             />
           </Grid2>
-          <Grid2>
+          <Grid2 xs={12}>
             <Padlock
               checked={forwardSettings}
               handleChange={() => this.toggle('forwardSettings')}
@@ -452,7 +453,7 @@ class HLLSettings extends React.Component {
             />
           </Grid2>
         </Grid2>
-        <Grid2  md={6}>
+        <Grid2 xs={12} md={6}>
           <NumSlider
             disabled={lockedSliders}
             showValue={sildersShowValues}
@@ -473,7 +474,7 @@ class HLLSettings extends React.Component {
             }
           />
         </Grid2>
-        <Grid2  md={6}>
+        <Grid2 xs={12} md={6}>
           <NumSlider
             disabled={lockedSliders}
             showValue={sildersShowValues}
@@ -493,7 +494,7 @@ class HLLSettings extends React.Component {
             }
           />
         </Grid2>
-        <Grid2  md={6}>
+        <Grid2 xs={12} md={6}>
           <NumSlider
             disabled={lockedSliders}
             showValue={sildersShowValues}
@@ -517,7 +518,7 @@ class HLLSettings extends React.Component {
             }
           />
         </Grid2>
-        <Grid2  md={6}>
+        <Grid2 xs={12} md={6}>
           <NumSlider
             disabled={lockedSliders}
             showValue={sildersShowValues}
@@ -539,7 +540,7 @@ class HLLSettings extends React.Component {
             }
           />
         </Grid2>
-        <Grid2  md={6}>
+        <Grid2 xs={12} md={6}>
           <NumSlider
             disabled={lockedSliders}
             showValue={sildersShowValues}
@@ -560,7 +561,7 @@ class HLLSettings extends React.Component {
             }
           />
         </Grid2>
-        <Grid2  md={6}>
+        <Grid2 xs={12} md={6}>
           <NumSlider
             disabled={lockedSliders}
             showValue={sildersShowValues}
@@ -581,7 +582,7 @@ class HLLSettings extends React.Component {
           />
         </Grid2>
 
-        <Grid2  md={6}>
+        <Grid2 xs={12} md={6}>
           <Padlock
             label="Auto balance enabled"
             checked={autobalanceEnabled}
@@ -593,7 +594,7 @@ class HLLSettings extends React.Component {
             }
           />
         </Grid2>
-        <Grid2  md={6}>
+        <Grid2 xs={12} md={6}>
           <Padlock
             label="Vote kicks allowed"
             checked={votekickEnabled}
@@ -605,19 +606,20 @@ class HLLSettings extends React.Component {
             }
           />
         </Grid2>
-        <Grid2 container direction={'column'} spacing={1} >
-            <Grid2 >
-              <TextField
-                fullWidth
-                label="Vote kick threshold"
-                value={votekickThreshold}
-                onChange={(e) =>
-                  this.setState({ votekickThreshold: e.target.value })
-                }
-                helperText="Use the following format, Error: First entry must be for 0 Players (you can add as many pairs as you want): player count,votekick threshold... example: 0,1,10,5,25,12,50,20"
-              />
-            </Grid2>
-            <Grid2 xs={6}>
+        <Grid2 xs={12} container >
+          <Grid2 xs={6}>
+            <TextField
+              fullWidth
+              label="Vote kick threshold"
+              value={votekickThreshold}
+              onChange={(e) =>
+                this.setState({ votekickThreshold: e.target.value })
+              }
+              helperText="Use the following format, Error: First entry must be for 0 Players (you can add as many pairs as you want): player count,votekick threshold... example: 0,1,10,5,25,12,50,20"
+            />
+          </Grid2>
+          <Grid2 xs={6}>
+            <Stack direction={'column'} spacing={2}>
               <Button
                 fullWidth
                 variant="outlined"
@@ -627,8 +629,6 @@ class HLLSettings extends React.Component {
               >
                 SAVE
               </Button>
-            </Grid2>
-            <Grid2 xs={6}>
               <Button
                 fullWidth
                 variant="outlined"
@@ -638,10 +638,11 @@ class HLLSettings extends React.Component {
               >
                 RESET
               </Button>
-            </Grid2>
+            </Stack>
+          </Grid2>
         </Grid2>
 
-        <Grid2>
+        <Grid2 xs={12}>
           <Typography variant="h5" gutterBottom>
             Vote Map config{' '}
             <Tooltip title="When enabled this feature will managed you map rotation automatically. To display the voting options to the players you must set one of the 'votemap_' variables in your automatic broadcasts">
@@ -649,10 +650,10 @@ class HLLSettings extends React.Component {
             </Tooltip>
           </Typography>
         </Grid2>
-        <Grid2 >
+        <Grid2 xs={12}>
           <VoteMapConfig />
         </Grid2>
-        <Grid2 >
+        <Grid2 xs={12}>
           <Typography variant="h5">Map rotation</Typography>
 
           <MapRotation />
@@ -660,7 +661,7 @@ class HLLSettings extends React.Component {
 
           <MapRotationSettings />
         </Grid2>
-        <Grid2 >
+        <Grid2 xs={12}>
           <ProfanityFiler
             words={profanities}
             onWordsChange={(words) => this.setState({ profanities: words })}

@@ -7,7 +7,7 @@ import {
   postData,
   showResponse,
 } from '../../utils/fetchUtils';
-import { Button, CircularProgress, Grid, Typography } from '@mui/material';
+import { Button, CircularProgress, Unstable_Grid2 as Grid2, Typography } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 
@@ -96,54 +96,52 @@ const MapRotation = () => {
   );
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
+    <Grid2 container xs={12}>
+      <Grid2 xs={12}>
         <Typography variant="caption">Drag and drop to reorder</Typography>
-      </Grid>
-      <Grid item xs={12}>
+      </Grid2>
+      <Grid2 xs={12}>
         <Button variant="text" onClick={loadAllData}>
           <Typography variant="caption">Refresh</Typography>{' '}
         </Button>
-      </Grid>
-      <Grid item xs={12}>
+      </Grid2>
+      <Grid2 xs={12}>
         <DraggableList
           items={rotation}
           onDragEnd={onDragEnd}
           onRemove={onRemoveItem}
         />
-      </Grid>
-      <Grid item xs={12}>
-        <Grid container spacing={1} alignItems="stretch">
-          <Grid item xs={10}>
-            <Autocomplete
-              multiple
-              disableCloseOnSelect
-              options={maps}
-              onChange={(e, v) => setMapsToAdd(v)}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="outlined"
-                  label="Select maps to add"
-                />
-              )}
-            />
-          </Grid>
-          <Grid item xs={2}>
-            <Button
-              fullWidth
-              style={{ height: '100%' }}
-              variant="outlined"
-              onClick={() => {
-                setRotation(rotation.concat(mapsToAdd));
-              }}
-            >
-              Add
-            </Button>
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item xs={12}>
+      </Grid2>
+      <Grid2 container xs={12}>
+        <Grid2 xs={10}>
+          <Autocomplete
+            multiple
+            disableCloseOnSelect
+            options={maps}
+            onChange={(e, v) => setMapsToAdd(v)}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                label="Select maps to add"
+              />
+            )}
+          />
+        </Grid2>
+        <Grid2 xs={2}>
+          <Button
+            fullWidth
+            style={{ height: '100%' }}
+            variant="outlined"
+            onClick={() => {
+              setRotation(rotation.concat(mapsToAdd));
+            }}
+          >
+            Add
+          </Button>
+        </Grid2>
+      </Grid2>
+      <Grid2 xs={12}>
         <Button
           color="primary"
           variant="outlined"
@@ -159,8 +157,8 @@ const MapRotation = () => {
             'Save rotation'
           )}
         </Button>
-      </Grid>
-    </Grid>
+      </Grid2>
+    </Grid2>
   );
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Unstable_Grid2 as Grid2 } from '@mui/material';
+import { Box, Unstable_Grid2 as Grid2, Stack } from '@mui/material';
 import { Route, Switch } from 'react-router-dom/cjs/react-router-dom.min';
 import HLLSettings from '../SettingsView/hllSettings';
 import RconSettings from '../RconSettings/rconSettings';
@@ -26,10 +26,10 @@ const Settings = () => {
   return (
     <Switch>
       <Route path="/settings/settings">
-          <Grid2 container rowSpacing={3} component={'section'}>
-              <HLLSettings lg={6} />
-              <RconSettings lg={6} />
-          </Grid2>
+          <Stack direction={'row'} spacing={{ xs: 2, lg: 4 }}>
+              <HLLSettings />
+              <RconSettings />
+          </Stack>
       </Route>
       {generateSettingRoutes(settingRoutes)}
     </Switch>

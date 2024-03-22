@@ -102,7 +102,7 @@ const VipUpload = () => {
     getResult() && setIntervalLimited(getResult, 2000, 500);
 
   return (
-    <Grid container spacing={1}>
+    <Grid xs={12} container>
       <Grid item xs={6}>
         <Button
           fullWidth

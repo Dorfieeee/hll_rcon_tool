@@ -12,7 +12,7 @@ const AutoSettings = ({
   onEditorMount,
   theme,
 }) => (
-  <Grid container>
+  <Grid xs={12} container>
     <Grid xs={12}>
       <Editor
         height="90vh"
@@ -27,7 +27,7 @@ const AutoSettings = ({
         theme={theme}
       />
     </Grid>
-    <Grid>
+    <Grid xs={12}>
       <Typography variant="caption" align="left" color="textSecondary">
         For more info on how to use Auto Settings see{' '}
         <a href="https://youtu.be/2IKZwHj9PJw" target="_blank" rel="noreferrer">

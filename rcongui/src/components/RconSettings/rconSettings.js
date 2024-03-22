@@ -77,7 +77,7 @@ const Hook = ({
   const [myRoles, setMyRoles] = React.useState(roles);
 
   return (
-    <Grid2 container spacing={1}>
+    <Grid2 xs={12} container>
       <Grid2 xs={4}>
         <TextField
           label="webhook url"
@@ -467,42 +467,42 @@ class RconSettings extends React.Component {
     const { theme, ...props } = this.props;
 
     return (
-      <Grid2 container component={'section'} direction={'column'} spacing={3} {...props}>
-        <Grid2 >
+      <Grid2 container component={'section'} rowSpacing={2} columnSpacing={4} {...props}>
+        <Grid2 xs={12}>
           <Typography variant='h2'>Advanced RCON settings</Typography>
         </Grid2>
-        <Grid2 >
+        <Grid2 xs={12}>
           <Typography variant="h3">Automated broadcast cycle</Typography>
         </Grid2>
-        <Grid2  container>
-            <Grid2>
-              <Padlock
-                handleChange={(v) =>
-                  this.saveBroadcastsSettings({
-                    enabled: v,
-                    randomize: randomize,
-                    messages: broadcastMessages,
-                  })
-                }
-                checked={enabled}
-                label="Auto broadcast enabled"
-              />
-            </Grid2>
-            <Grid2>
-              <Padlock
-                handleChange={(v) =>
-                  this.saveBroadcastsSettings({
-                    enabled: enabled,
-                    randomize: v,
-                    messages: broadcastMessages,
-                  })
-                }
-                checked={randomize}
-                label="Randomized messages"
-              />
-            </Grid2>
+        <Grid2 xs={12} container>
+          <Grid2 xs={12}>
+            <Padlock
+              handleChange={(v) =>
+                this.saveBroadcastsSettings({
+                  enabled: v,
+                  randomize: randomize,
+                  messages: broadcastMessages,
+                })
+              }
+              checked={enabled}
+              label="Auto broadcast enabled"
+            />
+          </Grid2>
+          <Grid2 xs={12}>
+            <Padlock
+              handleChange={(v) =>
+                this.saveBroadcastsSettings({
+                  enabled: enabled,
+                  randomize: v,
+                  messages: broadcastMessages,
+                })
+              }
+              checked={randomize}
+              label="Randomized messages"
+            />
+          </Grid2>
         </Grid2>
-        <Grid2 >
+        <Grid2 xs={12}>
           <TextField
             fullWidth
             label="Auto broadcast messages"
@@ -526,7 +526,7 @@ class RconSettings extends React.Component {
             winning_maps_short, winning_maps_all, scrolling_votemap, online_mods, ingame_mods)"
           />
         </Grid2>
-        <Grid2 >
+        <Grid2 xs={12}>
           <Button
             fullWidth
             onClick={this.saveBroadCastMessages}
@@ -535,26 +535,25 @@ class RconSettings extends React.Component {
             Save auto broadcast messages
           </Button>
         </Grid2>
-        <Grid2 >
+        <Grid2 xs={12}>
           <Typography variant="h6">
             Manage your personal text history
           </Typography>
         </Grid2>
         <Grid2
           container
-          spacing={1}
           alignContent="center"
-          
+          xs={12}
           alignItems="center"
         >
-          <Grid2 >
+          <Grid2 xs={12}>
             <TextHistoryManager />
           </Grid2>
         </Grid2>
-        <Grid2 >
+        <Grid2 xs={12}>
           <Typography variant="h6">Manage shared standard messages</Typography>
         </Grid2>
-        <Grid2 >
+        <Grid2 xs={12}>
           <SelectNameSpace
             value={standardMessagesType}
             handleChange={(v) =>
@@ -566,7 +565,7 @@ class RconSettings extends React.Component {
             values={['punishments', 'welcome', 'broadcast']}
           />
         </Grid2>
-        <Grid2 >
+        <Grid2 xs={12}>
           <TextField
             fullWidth
             label="Shared standard messages"
@@ -585,7 +584,7 @@ class RconSettings extends React.Component {
             helperText="Set one message per line. If you want a line return in one of the message write: \n"
           />
         </Grid2>
-        <Grid2 >
+        <Grid2 xs={12}>
           <Button
             fullWidth
             onClick={this.saveStandardMessages}
@@ -594,27 +593,25 @@ class RconSettings extends React.Component {
             Save shared messages
           </Button>
         </Grid2>
-        <Grid2  >
+        <Grid2 xs={12}>
           <Typography variant="h5">Blacklist player by Steam ID</Typography>
         </Grid2>
-        <Grid2  >
+        <Grid2 xs={12}>
           <Blacklist />
         </Grid2>
-        <Grid2  >
+        <Grid2 xs={12}>
           <Typography variant="h5">Add player to watchlist</Typography>
         </Grid2>
-        <Grid2 >
+        <Grid2 xs={12}>
           <ManualWatchList />
         </Grid2>
-        <Grid2  >
+        <Grid2 xs={12}>
           <Typography variant="h5">Manage services</Typography>
         </Grid2>
-        <Grid2 container  >
-          <Grid2 md={8} >
-            <ServicesList />
-          </Grid2>
+        <Grid2 container xs={12}>
+          <ServicesList />
         </Grid2>
-        <Grid2  >
+        <Grid2 xs={12}>
           <Typography variant="h5">
             Auto votekick toggle{' '}
             <Tooltip title="When enabled this feature manages the votekicks ingame by turning it off if the conditions you set below are met, and turning it back on if they are NOT met">
@@ -626,11 +623,10 @@ class RconSettings extends React.Component {
         <Grid2
           container
           alignContent="center"
-          
+          xs={12}
           alignItems="center"
-          spacing={1}
         >
-          <Grid2 >
+          <Grid2 xs={12}>
             <TextField
               type="number"
               label="# ingame moderator"
@@ -679,7 +675,7 @@ class RconSettings extends React.Component {
               helperText="number of moderator with the rcon openned"
             />
           </Grid2>
-          <Grid2>
+          <Grid2 xs={12}>
             <Padlock
               label="Auto votekick toggle enabled"
               checked={autovotekickEnabled}
@@ -694,12 +690,12 @@ class RconSettings extends React.Component {
             />
           </Grid2>
         </Grid2>
-        <Grid2  >
+        <Grid2 xs={12}>
           <Typography variant="h5">Camera notification config</Typography>
         </Grid2>
         <Grid2
           alignContent="center"
-          
+          xs={12}
           alignItems="center"
         >
           <Padlock
@@ -721,10 +717,10 @@ class RconSettings extends React.Component {
           container
           direction={'column'}
           alignContent="center"
-          
+          xs={12}
           alignItems="center"
         >
-          <Grid2 >
+          <Grid2 xs={12}>
             <Typography variant="h5">
               Real VIP slots{' '}
               <Tooltip
@@ -747,7 +743,7 @@ class RconSettings extends React.Component {
           container
           direction={'column'}
           alignContent="center"
-          
+          xs={12}
           alignItems="center"
         >
           <Grid2 >
@@ -767,10 +763,10 @@ class RconSettings extends React.Component {
           container
           direction={'column'}
           alignContent="center"
-          
+          xs={12}
           alignItems="center"
         >
-          <Grid2 >
+          <Grid2 xs={12}>
             <Typography variant="h5" gutterBottom>
               Auto settings
             </Typography>
@@ -789,9 +785,9 @@ class RconSettings extends React.Component {
           theme={theme.editor ? theme.editor : 'vs'}
         />
         <Grid2
-          
+          xs={12}
           alignContent="center"
-          
+
           alignItems="center"
         >
           <Button
@@ -803,9 +799,9 @@ class RconSettings extends React.Component {
           </Button>
         </Grid2>
         <Grid2
-          
+          xs={12}
           alignContent="center"
-          
+
           alignItems="center"
         >
           <Button

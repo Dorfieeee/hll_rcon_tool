@@ -51,7 +51,7 @@ const Footer = () => {
   const appInfo = `UI Version: ${process.env.REACT_APP_VERSION} API Version: ${apiVersion} - Brought to you by Dr.WeeD, `;
 
   return (
-    <Grid container>
+    <Grid container component={'footer'}>
       <Grid item xs={12}>
         <Typography
           color="textSecondary"

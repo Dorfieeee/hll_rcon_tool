@@ -1,5 +1,5 @@
 import React from 'react';
-import { Unstable_Grid2 as Grid } from '@mui/material';
+import { Unstable_Grid2 as Grid2 } from '@mui/material';
 import ListItemText from '@mui/material/ListItemText';
 import 'react-toastify/dist/ReactToastify.css';
 import { fromJS, List as IList } from 'immutable';
@@ -20,21 +20,21 @@ const StatusToColor = {
 };
 
 const Process = ({ name, description, upTime, status, isOn, onToggle }) => (
-  <Grid container justifyContent="space-around" spacing={1}>
-    <Grid container xs={6}>
-        <Grid xs={12}>
+  <Grid2 container xs={12} justifyContent="space-around">
+    <Grid2 container xs={6}>
+        <Grid2 xs={12}>
           <Typography variant="h6">{name}</Typography>
           <ListItemText primary="" secondary={description} />
-        </Grid>
-    </Grid>
-    <Grid xs={4}>
+        </Grid2>
+    </Grid2>
+    <Grid2 xs={4}>
       <Chip label={status} color={StatusToColor[status]} />
       <ListItemText primary="" secondary={upTime} />
-    </Grid>
-    <Grid xs={2}>
+    </Grid2>
+    <Grid2 xs={2}>
       <Switch checked={isOn} onChange={onToggle} name="Start/Stop" />
-    </Grid>
-  </Grid>
+    </Grid2>
+  </Grid2>
 );
 
 class ServicesList extends React.Component {
@@ -95,7 +95,7 @@ class ServicesList extends React.Component {
     const { services } = this.state;
 
     return (
-      <Grid container spacing={1}>
+      <Grid2 container xs={12}>
         {services.map((s) => (
           <Process
             key={s.get('name')}
@@ -111,7 +111,7 @@ class ServicesList extends React.Component {
             }
           />
         ))}
-      </Grid>
+      </Grid2>
     );
   }
 }

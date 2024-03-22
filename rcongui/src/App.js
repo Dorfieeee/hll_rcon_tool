@@ -60,7 +60,7 @@ const DefaultApp = () => {
       <ToastContainer />
       <HashRouter>
         <Header />
-        <Container maxWidth={'xl'} sx={{ py: 3 }}>
+        <Container component={'main'} maxWidth={'xl'} sx={{ py: 3 }}>
           <Switch>
             {generateRoutes(publicRoutes)}
             {!process.env.REACT_APP_PUBLIC_BUILD

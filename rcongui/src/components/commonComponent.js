@@ -3,7 +3,7 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
-  Grid,
+  Unstable_Grid2 as Grid2,
   Popover,
   Tooltip,
 } from '@mui/material';
@@ -63,8 +63,8 @@ export const ManualPlayerInput = ({
   actionName,
   tooltipText,
 }) => (
-  <Grid container spacing={1} justifyContent="space-between">
-    <Grid item xs={6} md={3}>
+  <Grid2 container justifyContent="space-between">
+    <Grid2 xs={6} md={3}>
       <TextField
         id="steam-id"
         label="Steam ID"
@@ -74,8 +74,8 @@ export const ManualPlayerInput = ({
         fullWidth
         onChange={(e) => setSteamId(e.target.value)}
       />
-    </Grid>
-    <Grid item xs={6} md={3}>
+    </Grid2>
+    <Grid2 xs={6} md={3}>
       <TextField
         id="name"
         label="Player name"
@@ -84,8 +84,8 @@ export const ManualPlayerInput = ({
         fullWidth
         onChange={(e) => setName(e.target.value)}
       />
-    </Grid>
-    <Grid item xs={12} md={4}>
+    </Grid2>
+    <Grid2  xs={12} md={4}>
       <Autocomplete
         freeSolo
         fullWidth
@@ -97,8 +97,8 @@ export const ManualPlayerInput = ({
           <TextField {...params} label="Reason" helperText="Required" />
         )}
       />
-    </Grid>
-    <Grid item xs={12} md={2}>
+    </Grid2>
+    <Grid2  xs={12} md={2}>
       <Tooltip fullWidth title={tooltipText} arrow>
         <Button
           color="secondary"
@@ -112,8 +112,8 @@ export const ManualPlayerInput = ({
           {actionName}
         </Button>
       </Tooltip>
-    </Grid>
-  </Grid>
+    </Grid2>
+  </Grid2>
 );
 
 export const ForwardCheckBox = ({ bool, onChange }) => (

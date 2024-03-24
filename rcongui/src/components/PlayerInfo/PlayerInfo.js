@@ -11,7 +11,6 @@ import Typography from '@mui/material/Typography';
 import { ExpandMore } from '@mui/icons-material';
 import moment from 'moment';
 import MUIDataTable from 'mui-datatables';
-import { withRouter } from 'react-router';
 import './PlayerInfo.css';
 import { ChatContent } from '../ChatWidget';
 import MessageHistory from '../MessageHistory';
@@ -685,4 +684,4 @@ class PlayerInfo extends React.Component {
   }
 }
 
-export default withRouter(PlayerInfoFunc);
+export default PlayerInfoFunc;

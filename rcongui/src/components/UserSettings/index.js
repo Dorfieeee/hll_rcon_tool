@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { get, postData, showResponse } from '../../utils/fetchUtils';
 import Editor from '@monaco-editor/react';
 import { Button } from '@mui/material';
-import { withRouter } from 'react-router';
 import Grid from '@mui/material/Grid';
 import { CopyBlock, dracula } from 'react-code-blocks';
 import { toast } from 'react-toastify';
@@ -137,4 +136,4 @@ const UserSetting = ({
   );
 };
 
-export default withRouter(UserSetting);
+export default UserSetting;

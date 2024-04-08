@@ -1,0 +1,15 @@
+{
+    "result": [
+        {
+            "name": "[VLK] Valkyria CZ/SK/EN #2 | EVENT | vlkhll.cz",
+            "port": "8011",
+            "link": "https://167.86.90.79:9011/",
+            "server_number": 2
+        }
+    ],
+    "command": "server_list",
+    "arguments": null,
+    "failed": false,
+    "error": null,
+    "forwards_results": null
+}

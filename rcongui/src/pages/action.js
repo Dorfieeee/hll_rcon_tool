@@ -3,7 +3,6 @@ import { get } from '../utils/fetchUtils';
 
 const action = async ({ request }) => {
   const { intent }  = Object.fromEntries(await request.formData());
-  console.log({intent})
 
   if (intent === 'logout') {
       const response = await get('logout');

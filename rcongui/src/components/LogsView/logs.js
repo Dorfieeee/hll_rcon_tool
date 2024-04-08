@@ -10,55 +10,15 @@ import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Select from '@mui/material/Select';
 import Grid from '@mui/material/Grid';
-import { Button, IconButton, Switch } from '@mui/material';
+import { Box, IconButton, Stack, Switch, Typography } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import Paper from '@mui/material/Paper';
-import moment from 'moment';
 import AutoRefreshLine from '../autoRefreshLine';
-import ListItemText from '@mui/material/ListItemText';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
-
-// FIXME checkout https://mui.com/components/use-media-query/#migrating-from-withwidth
-const withWidth = () => (WrappedComponent) =>
-  function Logs(props) {
-    return <WrappedComponent {...props} width="xs" />;
-  };
-
-const Selector = ({
-  defaultValue,
-  defaultText,
-  values,
-  currentValue,
-  onChange,
-  kind,
-  multiple,
-}) => (
-  <FormControl>
-    <InputLabel shrink>{kind}</InputLabel>
-    <Select
-      value={currentValue}
-      onChange={(e) => onChange(e.target.value)}
-      displayEmpty
-      multiple={multiple}
-    >
-      {defaultValue !== undefined ? (
-        <MenuItem value={defaultValue}>
-          <em>{defaultText}</em>
-        </MenuItem>
-      ) : (
-        ''
-      )}
-      {values.map((a) => (
-        <MenuItem key={a} value={a}>
-          {a}
-        </MenuItem>
-      ))}
-    </Select>
-  </FormControl>
-);
+import Log from './log';
 
 class Logs extends React.Component {
   constructor(props) {
@@ -132,7 +92,7 @@ class Logs extends React.Component {
   }
 
   setActionsFilterInclusivity(e) {
-    this.setState({ inclusiveFilter: e.target.value }, this.loadLogs);
+    this.setState({ inclusiveFilter: e.target.checked }, this.loadLogs);
     localStorage.setItem('logs_action_type', JSON.stringify(e.target.value));
   }
 
@@ -161,57 +121,64 @@ class Logs extends React.Component {
     } = this.state;
 
     return (
-      <React.Fragment>
-        <Grid container justifyContent="flex-start">
-          <Grid item xs={12}>
-            <h1>
-              Logs view{' '}
-              <IconButton onClick={onFullScreen} size="large">
-                {isFullScreen ? <FullscreenExitIcon /> : <FullscreenIcon />}
-              </IconButton>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={highlightLogs}
-                    onChange={(e) => this.setHighlightLogs(e.target.checked)}
-                    color="primary"
-                  />
-                }
-                label="Highlight Logs"
-                labelPlacement="top"
-              />
-            </h1>
-            <ListItemText secondary="30s auto refresh" />
-            <AutoRefreshLine
-              intervalFunction={this.loadLogs}
-              execEveryMs={30000}
-              statusRefreshIntervalMs={500}
+      <Stack>
+        {/* HEADER */}
+        <Box sx={{ mb: 2 }}>
+          <Stack direction={'row'}>
+            <Typography variant='h2'>Logs view</Typography>
+            <IconButton onClick={onFullScreen} size="large">
+              {isFullScreen ? <FullscreenExitIcon /> : <FullscreenIcon />}
+            </IconButton>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={highlightLogs}
+                  onChange={(e) => this.setHighlightLogs(e.target.checked)}
+                  color="primary"
+                />
+              }
+              label="Highlight Logs"
+              labelPlacement="top"
             />
-          </Grid>
-        </Grid>
-        <Grid container justifyContent="space-around">
-          <Grid item xs={12} sm={12} md={12} lg={2}>
-            <Selector
-              values={limitOptions}
-              onChange={this.setLimit}
-              currentValue={limit}
-              kind="Show last N lines"
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={2}>
+            <IconButton
+              disableElevation
+              aria-label='refresh'
+              variant="outlined"
+              size='large'
+              onClick={this.loadLogs}
+            >
+              <RefreshIcon />
+            </IconButton>
+          </Stack>
+          <Typography variant='subtitle1'>30s auto refresh</Typography>
+          <AutoRefreshLine
+            intervalFunction={this.loadLogs}
+            execEveryMs={30000}
+            statusRefreshIntervalMs={500}
+          />
+        </Box>
+        {/* FILTERS & CONTROLS */}
+        <Grid container columnSpacing={1} alignItems={'center'}>
+          <Grid item xs={12} lg={3}>
             <FormControl fullWidth>
-              <InputLabel shrink>Inclusive/Exclusive</InputLabel>
+              <InputLabel id='lines-limit-label'>Lines limit</InputLabel>
               <Select
-                onChange={this.setActionsFilterInclusivity}
-                value={inclusiveFilter}
-                defaultValue={true}
+                labelId='lines-limit-label'
+                id='lines-limit-select'
+                label='Lines limit'
+                value={limit}
+                onChange={(e) => this.setLimit(e.target.value)}
+                displayEmpty
               >
-                <MenuItem value={true}>Inclusive</MenuItem>
-                <MenuItem value={false}>Exclusive</MenuItem>
+                {limitOptions.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={3}>
+          <Grid item xs={12} lg={3}>
             <Autocomplete
               id="filter-by-type"
               multiple
@@ -229,7 +196,7 @@ class Logs extends React.Component {
               )}
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={4}>
+          <Grid item xs={12} lg={4}>
             <Autocomplete
               id="filter-by-player"
               multiple
@@ -258,36 +225,17 @@ class Logs extends React.Component {
               )}
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={1}>
-            <Button
-              disableElevation
-              size="large"
-              variant="outlined"
-              onClick={this.loadLogs}
-            >
-              <RefreshIcon />
-            </Button>
+          <Grid item xs={12} lg={2}>
+            <FormControlLabel control={<Switch checked={inclusiveFilter} onChange={this.setActionsFilterInclusivity} />} label="Inclusive" labelPlacement='top' />
           </Grid>
         </Grid>
-        <Grid container justifyContent="center" alignItems="center">
-          <Grid item xs={12}>
-            <Paper>
-              {logs.map((l) => (
-                <pre key={l.raw}>
-                  {moment(new Date(l.timestamp_ms)).format(
-                    'HH:mm:ss - ddd, MMM D'
-                  ) +
-                    '\t' +
-                    l.action.padEnd(20) +
-                    l.message}
-                </pre>
-              ))}
-            </Paper>
-          </Grid>
-        </Grid>
-      </React.Fragment>
+        {/* LOGS */}
+        <Paper>
+          {logs.map((log) => <Log log={log} />)}
+        </Paper>
+      </Stack>
     );
   }
 }
 
-export default withWidth()(Logs);
+export default Logs;

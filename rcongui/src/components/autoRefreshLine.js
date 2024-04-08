@@ -1,6 +1,10 @@
 import React from 'react';
 import LinearProgress from '@mui/material/LinearProgress';
 
+// TODO
+// This component should only render the line in x seconds
+// It should be controlled by its parent component and
+// it should definitely NOT be in control of the callback!
 const AutoRefreshLine = ({
   intervalFunction,
   execEveryMs,

@@ -1,0 +1,15 @@
+{
+    "result": {
+        "name": "[VLK] Valkyria CZ/SK/EN #1 | PUBLIC | vlkhll.cz",
+        "map": "stmereeglise_warfare",
+        "nb_players": "1/100",
+        "short_name": "VLK PUBLIC SERVER",
+        "player_count": "1",
+        "server_number": 1
+    },
+    "command": "get_status",
+    "arguments": {},
+    "failed": false,
+    "error": "",
+    "forward_results": null
+}

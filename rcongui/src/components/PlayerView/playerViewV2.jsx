@@ -17,7 +17,7 @@ export const PlayerViewV2 = () => {
   const [state, dispatch] = React.useReducer(playerViewReducer, {
     open: false,
     players: [],
-    selectedPlayers: [],
+    action: null,
   });
 
   React.useEffect(() => {
@@ -100,7 +100,7 @@ export const PlayerViewV2 = () => {
           }}
         />
       </Stack>
-      <ActionFormDialog open={state.open} dispatch={dispatch} />
+      <ActionFormDialog open={state.open} onClose={() => dispatch({ type: 'close' })} action={state.action} recipients={state.selectedPlayers} />
       {/* <ActionDialog open={state.open} action={state.action} players={state.selectedPlayers} dispatchAction={dispatch} /> */}
     </React.Fragment>
   );

@@ -20,6 +20,15 @@ export default defineConfig(({command, mode}) => {
         },
       }
     },
+    preview: {
+      port: 3000,
+      proxy: {
+        '/api': {
+          target: 'http://localhost:8000',
+          changeOrigin: true,
+        },
+      }
+    },
     esbuild: {
       loader: "jsx",
       include: /src\/.*\.jsx?$/,

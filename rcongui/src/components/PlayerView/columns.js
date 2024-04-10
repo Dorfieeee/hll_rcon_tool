@@ -1,8 +1,6 @@
-import { GridActionsCellItem } from "@mui/x-data-grid";
-import { playerActionsV2 } from "./playerActionsV2";
 import { Box } from '@mui/material'
 
-export const getColumns = (dispatch, openDrawer) => [
+export const getColumns = () => [
     {
         field: 'team',
         headerName: 'Team',
@@ -33,23 +31,6 @@ export const getColumns = (dispatch, openDrawer) => [
         headerName: 'Name',
         width: 175,
     },
-    // {
-    //     field: 'actions',
-    //     type: 'actions',
-    //     width: 20,
-    //     getActions: ({ row: player }) => {
-    //         return playerActionsV2.map(action => (
-    //             <GridActionsCellItem
-    //                 label={action.name[0].toUpperCase() + action.name.substring(1)}
-    //                 showInMenu
-    //                 icon={action.icon}
-    //                 onClick={() =>
-    //                     dispatch({ ...action, players: [player] })
-    //                 }
-    //             />
-    //         ))
-    //     },
-    // },
     {
         field: 'country',
         headerName: 'Country',

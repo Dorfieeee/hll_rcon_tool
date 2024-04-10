@@ -7,12 +7,11 @@ import { PlayerViewV2 } from '../PlayerView/playerViewV2';
 
 const LiveView = () => {
   const [mdSize, setMdSize] = React.useState(6);
-  const [direction, setDirection] = React.useState('row');
   const isFullScreen = () => mdSize !== 6;
   const toggleMdSize = () => (isFullScreen() ? setMdSize(6) : setMdSize(12));
 
   return (
-    <Grid container spacing={1} direction={direction}>
+    <Grid container spacing={1}>
       <Grid item sm={12}>
         <PlayerViewV2 />
       </Grid>

@@ -8,32 +8,13 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import MessageIcon from '@mui/icons-material/Message';
 import StarIcon from '@mui/icons-material/Star';
 import { postData } from '../../utils/fetchUtils';
-
-/* 
-    These parameters represents the fields of the payload object
-    that is sent to the server with each action request.
-    Each action requires a different set of fields but they all
-    share these `defaultParams`.
-*/
-const defaultParams = [
-    {
-        name: 'steam_id_64',
-        type: 'hidden',
-        getValue: (player) => player.steam_id_64,
-    },
-    {
-        name: 'player',
-        type: 'hidden',
-        getValue: (player) => player.name,
-    }
-]
-
-const message = { name: 'message', type: 'text', label: 'Message', description: 'The message that will be displayed to the player.' }
-
-const reason = { name: 'reason', type: 'text', label: 'Reason', description: 'The message that will be displayed to the player.' }
+import { MessageFormFields } from './actionFields/MessageFormFields';
+import { PunishFormFields } from './actionFields/PunishFormFields';
+import { WatchFormFields } from './actionFields/WatchFormFields';
+import { ConfirmationOnly } from './actionFields/ConfirmationOnly';
+import { AddVipFormFields } from './actionFields/AddVipFormFields';
 
 const duration = { name: 'duration', type: 'number', label: 'Duration', description: 'The duration for this action.' }
-
 const expiration = { name: 'expiration', type: 'datetime', label: 'Expiration', description: 'The date the VIP will expire.' }
 
 // In the UI, it does not make sense to ask for a reason and message
@@ -55,10 +36,7 @@ export const playerActionsV2 = [
         name: 'message',
         description: 'Show message in top right corner of game interface.',
         type: 'do_message_player',
-        params: [
-            ...defaultParams,
-            message,
-        ],
+        component: MessageFormFields,
         icon: <MessageIcon />,
         execute: executeAction('do_message_player'),
     },
@@ -66,9 +44,7 @@ export const playerActionsV2 = [
         name: 'watch',
         description: 'Send Discord message upon player connection (using webhook config).',
         type: 'watch_player',
-        params: [
-            ...defaultParams,
-        ],
+        component: WatchFormFields,
         icon: <RemoveRedEyeIcon />,
         execute: executeAction('watch_player'),
     },
@@ -76,10 +52,7 @@ export const playerActionsV2 = [
         name: 'vip',
         description: 'Manage VIP.',
         type: 'do_add_vip',
-        params: [
-            ...defaultParams,
-            expiration,
-        ],
+        component: AddVipFormFields,
         icon: <StarIcon />,
         execute: executeAction('do_add_vip'),
     },
@@ -87,9 +60,7 @@ export const playerActionsV2 = [
         name: 'switch',
         description: 'Move player to opposite team.',
         type: 'do_switch_player_now',
-        params: [
-            ...defaultParams,
-        ],
+        component: ConfirmationOnly,
         icon: <SyncIcon />,
         execute: executeAction('do_switch_player_now'),
     },
@@ -97,9 +68,7 @@ export const playerActionsV2 = [
         name: 'switch on death',
         description: 'Move player to opposite team upon death.',
         type: 'switch_player_on_death',
-        params: [
-            ...defaultParams,
-        ],
+        component: ConfirmationOnly,
         icon: <SyncLockIcon />,
         execute: executeAction('switch_player_on_death'),
     },
@@ -107,10 +76,7 @@ export const playerActionsV2 = [
         name: 'punish',
         description: 'Kill player in-game if alive.',
         type: 'do_punish',
-        params: [
-            ...defaultParams,
-            reason,
-        ],
+        component: PunishFormFields,
         icon: <WarningIcon />,
         execute: executeAction('do_punish'),
     },
@@ -118,33 +84,27 @@ export const playerActionsV2 = [
         name: 'kick',
         description: 'Remove player from server.',
         type: 'kick',
-        params: [
-            ...defaultParams,
-            reason,
-        ],
+        component: PunishFormFields,
         icon: <SportsMartialArtsIcon />,
         execute: executeAction('kick'),
     },
-    {
-        name: 'tempBan',
-        description: 'Issue immediate temporary ban to player.',
-        type: 'temp_ban',
-        params: [
-            ...defaultParams,
-            reason,
-            duration,
-        ],
-        icon: <GavelIcon />,
-        execute: executeAction('temp_ban'),
-    },
+    // {
+    //     name: 'tempBan',
+    //     description: 'Issue immediate temporary ban to player.',
+    //     type: 'temp_ban',
+    //     params: [
+    //         ...defaultParams,
+    //         reason,
+    //         duration,
+    //     ],
+    //     icon: <GavelIcon />,
+    //     execute: executeAction('temp_ban'),
+    // },
     {
         name: 'permaBan',
         description: 'Initiate indefinite ban upon player\'s next connection.',
         type: 'perma_ban',
-        params: [
-            ...defaultParams,
-            reason,
-        ],
+        component: PunishFormFields,
         icon: <BlockIcon />,
         execute: executeAction('perma_ban'),
     },

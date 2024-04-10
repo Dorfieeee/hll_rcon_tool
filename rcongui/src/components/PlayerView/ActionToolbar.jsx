@@ -16,9 +16,9 @@ import { playerActionsV2 } from './playerActionsV2';
 
 export const ActionToolbar = ({ dispatch }) => {
   const apiRef = useGridApiContext();
+  const selectedRows = apiRef.current.getSelectedRows();
 
-  if (apiRef.current.getSelectedRows().size) {
-    const selectedRows = apiRef.current.getSelectedRows();
+  if (selectedRows.size) {
     const players = Array.of(...selectedRows.values());
 
     return (

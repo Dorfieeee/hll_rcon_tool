@@ -7,15 +7,18 @@ import SyncLockIcon from '@mui/icons-material/SyncLock';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import MessageIcon from '@mui/icons-material/Message';
 import StarIcon from '@mui/icons-material/Star';
+import FlagIcon from '@mui/icons-material/Flag';
+import AddCommentIcon from '@mui/icons-material/AddComment';
 import { postData } from '../../utils/fetchUtils';
 import { MessageFormFields } from './actionFields/MessageFormFields';
 import { PunishFormFields } from './actionFields/PunishFormFields';
 import { WatchFormFields } from './actionFields/WatchFormFields';
 import { ConfirmationOnly } from './actionFields/ConfirmationOnly';
 import { AddVipFormFields } from './actionFields/AddVipFormFields';
-
-const duration = { name: 'duration', type: 'number', label: 'Duration', description: 'The duration for this action.' }
-const expiration = { name: 'expiration', type: 'datetime', label: 'Expiration', description: 'The date the VIP will expire.' }
+import { TempBanFormFields } from './actionFields/TempBanFormFields';
+import { PermaBanFormFields } from './actionFields/PermaBanFormFields';
+import { AddFlagFormFields } from './actionFields/AddFlagFormFields';
+import { AddCommentFormFields } from './actionFields/AddCommentFormFields';
 
 // In the UI, it does not make sense to ask for a reason and message
 // at the same time as they are the same thing. However, the API
@@ -23,6 +26,9 @@ const expiration = { name: 'expiration', type: 'datetime', label: 'Expiration', 
 const executeAction = (endpoint) => async (payload) => {
     if ('reason' in payload) {
         payload.message = payload.reason
+    }
+    if ('player' in payload) {
+        payload.name = payload.player
     }
     return await postData(
         process.env.REACT_APP_API_URL + endpoint,
@@ -35,7 +41,6 @@ export const playerActionsV2 = [
     {
         name: 'message',
         description: 'Show message in top right corner of game interface.',
-        type: 'do_message_player',
         component: MessageFormFields,
         icon: <MessageIcon />,
         execute: executeAction('do_message_player'),
@@ -43,7 +48,6 @@ export const playerActionsV2 = [
     {
         name: 'watch',
         description: 'Send Discord message upon player connection (using webhook config).',
-        type: 'watch_player',
         component: WatchFormFields,
         icon: <RemoveRedEyeIcon />,
         execute: executeAction('watch_player'),
@@ -51,7 +55,6 @@ export const playerActionsV2 = [
     {
         name: 'vip',
         description: 'Manage VIP.',
-        type: 'do_add_vip',
         component: AddVipFormFields,
         icon: <StarIcon />,
         execute: executeAction('do_add_vip'),
@@ -59,7 +62,6 @@ export const playerActionsV2 = [
     {
         name: 'switch',
         description: 'Move player to opposite team.',
-        type: 'do_switch_player_now',
         component: ConfirmationOnly,
         icon: <SyncIcon />,
         execute: executeAction('do_switch_player_now'),
@@ -67,7 +69,6 @@ export const playerActionsV2 = [
     {
         name: 'switch on death',
         description: 'Move player to opposite team upon death.',
-        type: 'switch_player_on_death',
         component: ConfirmationOnly,
         icon: <SyncLockIcon />,
         execute: executeAction('switch_player_on_death'),
@@ -75,7 +76,6 @@ export const playerActionsV2 = [
     {
         name: 'punish',
         description: 'Kill player in-game if alive.',
-        type: 'do_punish',
         component: PunishFormFields,
         icon: <WarningIcon />,
         execute: executeAction('do_punish'),
@@ -83,30 +83,37 @@ export const playerActionsV2 = [
     {
         name: 'kick',
         description: 'Remove player from server.',
-        type: 'kick',
         component: PunishFormFields,
         icon: <SportsMartialArtsIcon />,
-        execute: executeAction('kick'),
+        execute: executeAction('do_kick'),
     },
-    // {
-    //     name: 'tempBan',
-    //     description: 'Issue immediate temporary ban to player.',
-    //     type: 'temp_ban',
-    //     params: [
-    //         ...defaultParams,
-    //         reason,
-    //         duration,
-    //     ],
-    //     icon: <GavelIcon />,
-    //     execute: executeAction('temp_ban'),
-    // },
+    {
+        name: 'tempBan',
+        description: 'Issue immediate temporary ban to player.',
+        component: TempBanFormFields,
+        icon: <GavelIcon />,
+        execute: executeAction('do_temp_ban'),
+    },
     {
         name: 'permaBan',
-        description: 'Initiate indefinite ban upon player\'s next connection.',
-        type: 'perma_ban',
-        component: PunishFormFields,
+        description: 'Initiate immediate indefinite ban to player.',
+        component: PermaBanFormFields,
         icon: <BlockIcon />,
-        execute: executeAction('perma_ban'),
+        execute: executeAction('do_perma_ban'),
+    },
+    {
+        name: 'flag',
+        description: 'Assign a flag to the player.',
+        component: AddFlagFormFields,
+        icon: <FlagIcon />,
+        execute: executeAction('flag_player'),
+    },
+    {
+        name: 'comment',
+        description: 'Add a comment to the player profile.',
+        component: AddCommentFormFields,
+        icon: <AddCommentIcon />,
+        execute: executeAction('post_player_comment'),
     },
 
 ]

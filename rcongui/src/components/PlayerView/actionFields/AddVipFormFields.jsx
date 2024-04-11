@@ -1,9 +1,11 @@
-import { ExpirationField } from './ExpirationField';
-import { Paper } from '@mui/material';
+import { ExpirationField } from '../../form/custom/ExpirationField';
+import { ForwardField } from '../../form/custom/ForwardField';
+import { Stack } from '@mui/material';
 
 export const AddVipFormFields = ({ control, errors }) => {
   return (
-    <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+    <Stack gap={3}>
+      <ForwardField control={control} errors={errors} />
       <ExpirationField control={control} errors={errors} />
       {/* <Box
           sx={{
@@ -99,6 +101,6 @@ export const AddVipFormFields = ({ control, errors }) => {
             </Button>
           </ButtonGroup>
         </Box> */}
-    </Paper>
+    </Stack>
   );
 };

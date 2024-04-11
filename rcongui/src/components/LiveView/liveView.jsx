@@ -12,12 +12,12 @@ const LiveView = () => {
 
   return (
     <Grid container spacing={1}>
-      <Grid item sm={12}>
+      <Grid item sm={12} md={mdSize}>
         <PlayerViewV2 />
       </Grid>
-      {/* <Grid item sm={12} md={mdSize}>
+      <Grid item sm={12} md={mdSize}>
         <LogsView />
-      </Grid> */}
+      </Grid>
     </Grid>
   );
 };

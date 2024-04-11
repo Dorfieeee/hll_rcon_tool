@@ -16,13 +16,18 @@ const initRecipients = (recipients) =>
     status: recipient.status ?? ACTION_STATUS.default,
   }));
 
-export const ActionForm = ({ submitRef, action, recipients, defaultValues }) => {
+export const ActionForm = ({
+  submitRef,
+  action,
+  recipients,
+  defaultValues,
+}) => {
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm({
-    defaultValues
+    defaultValues,
   });
 
   const [recipientStates, setRecipientStates] = React.useState(
@@ -70,6 +75,8 @@ export const ActionForm = ({ submitRef, action, recipients, defaultValues }) => 
         } else {
           idsToStatus[steam_id_64] = ACTION_STATUS.error;
         }
+      } else {
+        idsToStatus[steam_id_64] = ACTION_STATUS.error;
       }
     }
     // update UI

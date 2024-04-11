@@ -1,6 +1,6 @@
-import { ControlledTextInput } from '../../form/ControlledTextInput';
+import { ControlledTextInput } from "../core/ControlledTextInput";
 
-export const ReasonField = ({ control, errors }) => {
+export const ReasonField = ({ control, errors, ...props }) => {
   const error = errors['reason'];
   const hasError = !!error;
 
@@ -15,6 +15,7 @@ export const ReasonField = ({ control, errors }) => {
       minRows={5}
       fullWidth
       control={control}
+      {...props}
     />
   );
 };

@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  IconButton,
-  Typography,
-  Tooltip,
-  Divider,
-} from '@mui/material';
+import { IconButton, Typography, Tooltip, Divider } from '@mui/material';
 import {
   useGridApiContext,
   GridToolbarContainer,
@@ -22,7 +17,7 @@ export const ActionToolbar = ({ dispatch }) => {
     const players = Array.of(...selectedRows.values());
 
     return (
-      <GridToolbarContainer sx={{ height: '50px', px: 2 }}>
+      <GridToolbarContainer sx={{ height: '60px', px: 2, gap: 0.5 }}>
         <Typography>Apply action to all selected</Typography>
         {playerActionsV2.map((action) => (
           <React.Fragment key={action.name}>
@@ -30,7 +25,9 @@ export const ActionToolbar = ({ dispatch }) => {
             <Tooltip
               title={action.name[0].toUpperCase() + action.name.substring(1)}
             >
-              <IconButton onClick={() => dispatch({ action, selectedPlayers: players })}>
+              <IconButton
+                onClick={() => dispatch({ action, selectedPlayers: players })}
+              >
                 {action.icon}
               </IconButton>
             </Tooltip>
@@ -41,7 +38,7 @@ export const ActionToolbar = ({ dispatch }) => {
   }
 
   return (
-    <GridToolbarContainer sx={{ height: '50px', px: 2 }}>
+    <GridToolbarContainer sx={{ height: '60px', px: 2 }}>
       <Typography>Table settings</Typography>
       <Divider orientation="vertical" />
       <GridToolbarColumnsButton />

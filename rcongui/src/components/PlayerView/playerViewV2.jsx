@@ -33,8 +33,8 @@ export const PlayerViewV2 = () => {
       dispatch({ type: 'set_players', players });
     };
 
-    // getPlayers();
-    getStaticPlayers();
+    getPlayers();
+    // getStaticPlayers();
   }, []);
 
   const rows = React.useMemo(() => state.players.map(playerToRow), [state.players]);
@@ -64,14 +64,6 @@ export const PlayerViewV2 = () => {
           <Typography variant="subtitle1">{30}s auto refresh</Typography>
           <ProgressBar interval={30} />
         </Box>
-        {/* ACTIONS */}
-        <Box
-          sx={{
-            height: '4rem',
-            background: (theme) => theme.palette.background.paper,
-            mb: 2,
-          }}
-        ></Box>
         {/* PLAYERS TABLE */}
         <DataGrid
           columns={columns}

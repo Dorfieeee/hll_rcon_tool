@@ -29,11 +29,9 @@ export const PlayerViewV2 = () => {
   });
 
   const { data, loading, refresh, error } = useInterval(
-    getTeamView,
+    getStaticTeamView,
     interval * 1000
   );
-
-  console.log(error);
 
   React.useEffect(() => {
     if (!data) return;

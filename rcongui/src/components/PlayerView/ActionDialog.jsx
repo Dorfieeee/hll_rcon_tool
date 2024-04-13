@@ -18,7 +18,7 @@ import {
 import { DesktopDateTimePicker } from '@mui/x-date-pickers/DesktopDateTimePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { styled } from '@mui/styles';
+import { styled } from '@mui/system';
 import React from 'react';
 import dayjs from 'dayjs';
 

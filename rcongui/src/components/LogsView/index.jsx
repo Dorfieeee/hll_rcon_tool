@@ -25,6 +25,7 @@ import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import Log from './log';
 import ProgressBar from './progress';
+import recentLogsResult from '../../dev/test_data/get_recent_logs.json'
 
 const PLAYERS_FILTER = 'logs_player_filters';
 const ACTIONS_FILTER = 'logs_action_filters';
@@ -86,12 +87,13 @@ const LiveLogs = () => {
         }
       );
 
-      const { logs, actions, players } = (await response.json()).result;
+      const { logs, actions, players } = recentLogsResult.result;
+      // const { logs, actions, players } = (await response.json()).result;
 
       // UI delay
       await new Promise((res) => setTimeout(res, 750));
 
-      setLogs(logs ?? []);
+      setLogs(logs?.slice(0, logsLimit) ?? []);
       setActions(actions ?? []);
       setPlayers(players ?? []);
 

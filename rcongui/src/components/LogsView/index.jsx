@@ -17,6 +17,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Skeleton,
 } from '@mui/material';
 
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
@@ -228,11 +229,16 @@ const LiveLogs = () => {
         </Grid>
       </Grid>
       {/* LOGS */}
-      <Paper sx={{ p: 1, my: 1 }}>
-        {logs.map((log) => (
-          <Log log={log} />
-        ))}
-      </Paper>
+      {logs.length ? (
+        <Paper sx={{ p: 1, my: 1 }}>
+          {logs.map((log) => (
+            <Log log={log} key={log.raw} />
+          ))}
+        </Paper>
+      ) : (
+      <Skeleton variant="rectangular" sx={{ height: '100vh' }} />
+    )
+    }
     </Stack>
   );
 };

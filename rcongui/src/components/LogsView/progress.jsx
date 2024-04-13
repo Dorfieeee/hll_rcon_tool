@@ -13,13 +13,11 @@ export default function ProgressBar({ interval, loading }) {
         clearInterval(timerRef.current)
         setProgress(0);
         timerRef.current = null
+        return;
     }
 
     timerRef.current = setInterval(() => {
       setProgress((oldProgress) => {
-        if (oldProgress === 100) {
-          return 0;
-        }
 
         return Math.min(
           oldProgress + (updateInterval / (interval * 1000)) * 100,

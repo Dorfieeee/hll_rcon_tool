@@ -46,26 +46,26 @@ const actionToEmoji = {
   'VOTE EXPIRED': '🙋',
   'VOTE PASSED': '🙋',
   'VOTE STARTED': '🙋',
+  'UNKNOWN': '❓',
 };
 
 const Action = styled('span')((props) => ({
   '&::before': {
-    content: `"${actionToEmoji[props.type]}"`,
+    content: `"${actionToEmoji[props.type] ?? actionToEmoji['UNKNOWN']}"`,
     display: 'inline-block',
     paddingRight: '4px',
   },
 }));
 
+// TODO
+// THIS RENDERS VERY VERY SLOW!
 const Log = ({ log }) => {
+    const timestamp = moment(new Date(log.timestamp_ms)).format('HH:mm:ss, MMM DD');
+    const actionName = log.action.padEnd(16)
+
     return (
-        <Line component={'pre'} key={log.raw}>
-        {` > `}
-        {`\t`}
-        {moment(new Date(log.timestamp_ms)).format('HH:mm:ss | MMM DD |')}
-        {`\t`}
-        <Action type={log.action}>{log.action.padEnd(16)}</Action>
-        {`\t`}
-        {log.message}
+      <Line component={'pre'}>
+        <Action type={log.action}>{actionName}</Action>{`\t`}{timestamp}{`\t`}{`\t`}{log.message}
       </Line>
     )
 }

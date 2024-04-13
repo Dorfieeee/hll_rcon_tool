@@ -34,6 +34,7 @@ import { PlayerActions, ReasonDialog } from '../PlayerView/playerActions';
 import { toast } from 'react-toastify';
 import { FlagDialog } from '../PlayersHistory';
 import Padlock from '../SettingsView/padlock';
+import teamViewResult from '../../dev/test_data/get_team_view.json'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -459,9 +460,7 @@ const GameView = () => {
       .then((response) => showResponse(response, 'get_team_view'))
       .then((data) => {
         setIsLoading(false);
-        if (data.result) {
-          setTeamView(fromJS(data.result));
-        }
+        setTeamView(fromJS(teamViewResult.result));
       })
       .catch(handle_http_errors);
   };

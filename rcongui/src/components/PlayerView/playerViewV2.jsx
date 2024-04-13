@@ -12,6 +12,14 @@ import { getColumns } from './columns';
 import { extractPlayers } from './extractPlayers';
 import { playerToRow } from './playerToRow';
 import { ActionFormDialog } from './ActionFormDialog';
+import { useInterval } from '../../hooks/useInterval';
+
+const interval = 30;
+const getTeamView = () => get('get_team_view');
+const getStaticTeamView = () =>
+  new Promise((res) =>
+    setTimeout(() => res(new Response(JSON.stringify(teamViewResult))), 1000)
+  );
 
 export const PlayerViewV2 = () => {
   const [state, dispatch] = React.useReducer(playerViewReducer, {
@@ -20,24 +28,23 @@ export const PlayerViewV2 = () => {
     action: null,
   });
 
+  const { data, loading, refresh, error } = useInterval(
+    getTeamView,
+    interval * 1000
+  );
+
+  console.log(error);
+
   React.useEffect(() => {
-    const getPlayers = async () => {
-      const result = await get('get_team_view');
-      const data = await result.json();
-      const players = extractPlayers(data.result);
-      dispatch({ type: 'set_players', players });
-    };
+    if (!data) return;
+    const players = extractPlayers(data.result);
+    dispatch({ type: 'set_players', players });
+  }, [data]);
 
-    const getStaticPlayers = () => {
-      const players = extractPlayers(teamViewResult.result);
-      dispatch({ type: 'set_players', players });
-    };
-
-    getPlayers();
-    // getStaticPlayers();
-  }, []);
-
-  const rows = React.useMemo(() => state.players.map(playerToRow), [state.players]);
+  const rows = React.useMemo(
+    () => state.players.map(playerToRow),
+    [state.players]
+  );
 
   const columns = React.useMemo(() => getColumns(dispatch), [dispatch]);
 
@@ -56,13 +63,14 @@ export const PlayerViewV2 = () => {
                 aria-label="refresh"
                 variant="outlined"
                 size="large"
+                onClick={refresh}
               >
                 <RefreshIcon />
               </IconButton>
             </Box>
           </Stack>
           <Typography variant="subtitle1">{30}s auto refresh</Typography>
-          <ProgressBar interval={30} />
+          <ProgressBar interval={30} loading={loading} />
         </Box>
         {/* PLAYERS TABLE */}
         <DataGrid
@@ -92,7 +100,12 @@ export const PlayerViewV2 = () => {
           }}
         />
       </Stack>
-      <ActionFormDialog open={state.open} onClose={() => dispatch({ type: 'close' })} action={state.action} recipients={state.selectedPlayers} />
+      <ActionFormDialog
+        open={state.open}
+        onClose={() => dispatch({ type: 'close' })}
+        action={state.action}
+        recipients={state.selectedPlayers}
+      />
       {/* <ActionDialog open={state.open} action={state.action} players={state.selectedPlayers} dispatchAction={dispatch} /> */}
     </React.Fragment>
   );

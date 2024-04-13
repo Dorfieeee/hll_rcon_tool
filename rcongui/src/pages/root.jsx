@@ -18,7 +18,14 @@ import { Form, Outlet } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ContrastIcon from '@mui/icons-material/Contrast';
 import Navigation from '../components/Navigation';
-import { Avatar, ListItemIcon, Menu, MenuItem, Stack, Tooltip } from '@mui/material';
+import {
+  Avatar,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+  Stack,
+  Tooltip,
+} from '@mui/material';
 import { Logout, PersonAdd, Settings } from '@mui/icons-material';
 import { useTheme } from '@mui/styles';
 
@@ -89,7 +96,9 @@ const ThemeMenu = ({ theme: activeTheme, setTheme }) => {
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
         >
-          <Avatar sx={{ width: 32, height: 32 }}><ContrastIcon /></Avatar>
+          <Avatar sx={{ width: 32, height: 32 }}>
+            <ContrastIcon />
+          </Avatar>
         </IconButton>
       </Tooltip>
       <Menu
@@ -98,7 +107,7 @@ const ThemeMenu = ({ theme: activeTheme, setTheme }) => {
         open={open}
         onClose={handleClose}
         slotProps={{
-          paper:{
+          paper: {
             elevation: 0,
             sx: {
               overflow: 'visible',
@@ -123,23 +132,30 @@ const ThemeMenu = ({ theme: activeTheme, setTheme }) => {
                 zIndex: 0,
               },
             },
-          }
+          },
         }}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        {Object.keys(themes).map(themeName => (
-          <MenuItem onClick={() => {
-            setTheme(themeName);
-          }} sx={{ background: (theme) => {
-            if (activeTheme === themeName) {
-              return theme.palette.secondary.dark
-            }
-          }, color: (theme) => {
-            if (activeTheme === themeName) {
-              return theme.palette.primary.contrastText
-            }
-          } }}>
+        {Object.keys(themes).map((themeName) => (
+          <MenuItem
+            key={themeName}
+            onClick={() => {
+              setTheme(themeName);
+            }}
+            sx={{
+              background: (theme) => {
+                if (activeTheme === themeName) {
+                  return theme.palette.secondary.dark;
+                }
+              },
+              color: (theme) => {
+                if (activeTheme === themeName) {
+                  return theme.palette.primary.contrastText;
+                }
+              },
+            }}
+          >
             <Typography>{themeName}</Typography>
           </MenuItem>
         ))}
@@ -149,10 +165,12 @@ const ThemeMenu = ({ theme: activeTheme, setTheme }) => {
 };
 
 export default function Root() {
-  const [theme, setThemeState] = React.useState(localStorage.getItem('crconTheme'));
+  const [theme, setThemeState] = React.useState(
+    localStorage.getItem('crconTheme')
+  );
   const defaultTheme = themes[theme] ?? themes.Light;
 
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -161,7 +179,7 @@ export default function Root() {
   const setTheme = (theme) => {
     setThemeState(theme);
     localStorage.setItem('crconTheme', theme);
-  }
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -249,7 +267,7 @@ export default function Root() {
           }}
         >
           <Toolbar />
-          <Container maxWidth sx={{ mt: 2, mb: 4 }}>
+          <Container maxWidth={'xl'} sx={{ mt: 2, mb: 4 }}>
             <Outlet />
           </Container>
         </Box>

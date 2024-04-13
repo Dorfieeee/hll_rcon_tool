@@ -57,7 +57,6 @@ export const PlayerViewV2 = () => {
             </Typography>
             <Box>
               <IconButton
-                disableElevation
                 aria-label="refresh"
                 variant="outlined"
                 size="large"

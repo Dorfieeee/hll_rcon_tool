@@ -63,8 +63,6 @@ const Action = styled('span', {
   },
 }));
 
-// TODO
-// THIS RENDERS VERY VERY SLOW!
 const Log = ({ log }) => {
   const timestamp = moment(new Date(log.timestamp_ms)).format(
     'HH:mm:ss, MMM DD'

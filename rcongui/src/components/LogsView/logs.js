@@ -141,7 +141,6 @@ class Logs extends React.Component {
               labelPlacement="top"
             />
             <IconButton
-              disableElevation
               aria-label='refresh'
               variant="outlined"
               size='large'

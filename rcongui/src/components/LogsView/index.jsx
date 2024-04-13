@@ -145,7 +145,6 @@ const LiveLogs = () => {
           /> */}
           <Box>
             <IconButton
-              disableElevation
               aria-label="refresh"
               variant="outlined"
               size="large"

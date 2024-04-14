@@ -3,9 +3,8 @@ import { Box, IconButton, Stack, Typography } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import ProgressBar from '../LogsView/progress';
 import teamViewResult from '../../dev/test_data/get_team_view.json';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, useGridApiRef } from '@mui/x-data-grid';
 import { get } from '../../utils/fetchUtils';
-import { ActionDialog } from './ActionDialog';
 import { ActionToolbar } from './ActionToolbar';
 import { playerViewReducer } from './playerViewReducer';
 import { getColumns } from './columns';
@@ -28,6 +27,8 @@ export const PlayerViewV2 = () => {
     action: null,
   });
 
+  const apiRef = useGridApiRef();
+
   const { data, loading, refresh, error } = useInterval(
     getStaticTeamView,
     interval * 1000
@@ -39,12 +40,47 @@ export const PlayerViewV2 = () => {
     dispatch({ type: 'set_players', players });
   }, [data]);
 
+  React.useEffect(() => {
+    return apiRef.current.subscribeEvent('cellClick', (params) => {
+      if (params.field !== 'role') return;
+      const squadPlayers = data.result?.[params.row.team]?.squads[params.row.unit_name]?.players
+      const selectOrUnselect = !apiRef.current.isRowSelected(params.id)
+      squadPlayers?.forEach(player => apiRef.current.selectRow(player.steam_id_64, selectOrUnselect))
+    });
+  }, [apiRef, data]);
+
   const rows = React.useMemo(
     () => state.players.map(playerToRow),
     [state.players]
   );
 
   const columns = React.useMemo(() => getColumns(dispatch), [dispatch]);
+
+  const tableProps = React.useMemo(
+    () => ({
+      getRowId: (row) => row.steam_id_64,
+      checkboxSelection: true,
+      autoHeight: true,
+      initialState: {
+        sorting: {
+          sortModel: [{ field: 'current_playtime_seconds', sort: 'desc' }],
+        },
+        density: 'compact',
+      },
+      columnVisibilityModel: {
+        unit_name: false,
+        team: false,
+      },
+      disableRowSelectionOnClick: true,
+      slots: {
+        toolbar: ActionToolbar,
+      },
+      slotProps: {
+        toolbar: { dispatch: dispatch },
+      },
+    }),
+    [dispatch]
+  );
 
   return (
     <React.Fragment>
@@ -73,6 +109,7 @@ export const PlayerViewV2 = () => {
         <DataGrid
           columns={columns}
           rows={rows}
+          apiRef={apiRef}
           // onRowDoubleClick={(params) => {
           //   setPlayerDetail(params.row);
           //   setOpenDrawer((prev) => !prev);
@@ -80,21 +117,7 @@ export const PlayerViewV2 = () => {
           // onRowClick={(params) => {
           //   setPlayerDetail(params.row);
           // }}
-          getRowId={(row) => row.steam_id_64}
-          checkboxSelection
-          autoHeight
-          initialState={{
-            sorting: {
-              sortModel: [{ field: 'current_playtime_seconds', sort: 'desc' }],
-            },
-          }}
-          disableRowSelectionOnClick
-          slots={{
-            toolbar: ActionToolbar,
-          }}
-          slotProps={{
-            toolbar: { dispatch: dispatch },
-          }}
+          {...tableProps}
         />
       </Stack>
       <ActionFormDialog

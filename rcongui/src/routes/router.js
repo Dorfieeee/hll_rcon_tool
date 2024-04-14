@@ -3,7 +3,7 @@ import Root from "../pages/root";
 import ErrorPage from "../pages/error";
 import Dashboard from "../components/Dashboard";
 import { LiveView } from "../components/LiveView";
-import TeamView from "../components/GameView";
+import TeamView from "../components/GameViewV2";
 import Login from "../pages/login/login";
 import loginAction from "../pages/login/action";
 import rootAction from "../pages/action";

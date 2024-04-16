@@ -1,8 +1,8 @@
 import { createBrowserRouter, redirect } from "react-router-dom";
 import Root from "../pages/root";
 import ErrorPage from "../pages/error";
-import Dashboard from "../components/Dashboard";
-import { LiveView } from "../components/LiveView";
+import IndexPage from "../pages/index"
+import LiveView from "../pages/live-view";
 import TeamView from "../components/GameViewV2";
 import Login from "../pages/login/login";
 import loginAction from "../pages/login/action";
@@ -54,7 +54,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '',
-                element: <Dashboard />,
+                element: <IndexPage />,
             },
             {
                 path: 'live-view',

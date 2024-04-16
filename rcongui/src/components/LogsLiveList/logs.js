@@ -18,7 +18,7 @@ import Paper from '@mui/material/Paper';
 import AutoRefreshLine from '../autoRefreshLine';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
-import Log from './log';
+import Log from './Log';
 
 class Logs extends React.Component {
   constructor(props) {

@@ -6,7 +6,7 @@
                 "dog": {
                     "players": [
                         {
-                            "name": "[VLK] Spifly",
+                            "name": "IM NOT A WEEB SHUTUPSHUTUPSHUTUP",
                             "steam_id_64": "76561198004399730",
                             "country": null,
                             "steam_bans": {
@@ -77,7 +77,7 @@
                                 },
                                 "blacklist": null,
                                 "flags": [],
-                                "watchlist": null,
+                                "watchlist": { "is_watched": true },
                                 "steaminfo": {
                                     "id": 49,
                                     "created": "2022-08-14T17:20:05.889",
@@ -123,7 +123,7 @@
                                     }
                                 ]
                             },
-                            "is_vip": false,
+                            "is_vip": true,
                             "unit_id": 3,
                             "unit_name": "dog",
                             "loadout": "standard issue",
@@ -198,15 +198,7 @@
                                         "last_seen": "2023-02-04T19:06:48.083"
                                     }
                                 ],
-                                "sessions": [
-                                    {
-                                        "id": 56627,
-                                        "steam_id_64": "76561198012664514",
-                                        "start": "2024-04-05T17:27:18",
-                                        "end": null,
-                                        "created": "2024-04-05T17:28:00.065"
-                                    }
-                                ],
+                                "sessions": [],
                                 "sessions_count": 260,
                                 "total_playtime_seconds": 1154919,
                                 "current_playtime_seconds": 2541,
@@ -3144,7 +3136,7 @@
                                     "id": 4,
                                     "modified": null,
                                     "steam_id_64": "76561198178339671",
-                                    "is_watched": false,
+                                    "is_watched": true,
                                     "reason": "I am watching you!",
                                     "by": "Dorfieeee",
                                     "count": 0

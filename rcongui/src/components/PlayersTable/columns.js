@@ -1,6 +1,8 @@
 import { Avatar, Badge, Box } from '@mui/material';
 import { styled } from '@mui/system';
 
+// TODO
+// What is the type prop for?
 const RoleAvatar = styled(Avatar, {
   shouldForwardProp: (prop) => prop !== 'type',
 })(({ theme, type }) => ({
@@ -11,7 +13,7 @@ const RoleAvatar = styled(Avatar, {
   background: theme.palette.info.dark,
 }));
 
-export const getColumns = () => [
+export const columns = [
   {
     field: 'team',
     headerName: 'Team',

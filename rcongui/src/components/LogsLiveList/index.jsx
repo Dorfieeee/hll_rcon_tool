@@ -23,8 +23,8 @@ import {
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import Log from './log';
-import ProgressBar from './progress';
+import Log from './Log';
+import ProgressBar from '../ProgressBar';
 import recentLogsResult from '../../dev/test_data/get_recent_logs.json'
 
 const PLAYERS_FILTER = 'logs_player_filters';

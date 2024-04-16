@@ -8,12 +8,14 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { ActionForm } from './ActionForm';
+import { useActionDialog } from '../../hooks/useActionDialog';
 
-export const ActionFormDialog = ({ open, onClose, action, recipients }) => {
+export const ActionDialog = () => {
+  const { open, setOpen, action, recipients } = useActionDialog();
   const submitRef = React.useRef();
 
   const handleClose = () => {
-    onClose();
+    setOpen(false);
   };
 
   const handleConfirm = () => {

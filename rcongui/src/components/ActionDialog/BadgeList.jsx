@@ -5,7 +5,7 @@ const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
 
-export const BadgesList = ({ recipients }) => {
+export const BadgeList = ({ recipients }) => {
   return (
     <Paper
       sx={{
@@ -20,7 +20,7 @@ export const BadgesList = ({ recipients }) => {
       component="ul"
     >
       {/* TODO */}
-      {/* Move this up the component tree??? */}
+      {/* Move this up to the parent component??? */}
       {recipients.map(({ recipient, status }) => {
         let removedClanName = recipient.name.replace(/^\[([^\]]*)\]/, ''); // remove `[clantags]`
         let shortedName = removedClanName.substring(0, 6);

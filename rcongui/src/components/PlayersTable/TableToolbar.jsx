@@ -7,11 +7,13 @@ import {
   GridToolbarFilterButton,
   GridToolbarDensitySelector,
 } from '@mui/x-data-grid';
-import { playerActionsV2 } from './playerActionsV2';
+import { playerGameActions } from '../../features/playerActions';
+import { useActionDialog } from '../../hooks/useActionDialog';
 
-export const ActionToolbar = ({ dispatch }) => {
+export const TableToolbar = () => {
   const apiRef = useGridApiContext();
   const selectedRows = apiRef.current.getSelectedRows();
+  const { setOpen, setAction, setRecipients } = useActionDialog();
 
   if (selectedRows.size) {
     const players = Array.of(...selectedRows.values());
@@ -19,14 +21,18 @@ export const ActionToolbar = ({ dispatch }) => {
     return (
       <GridToolbarContainer sx={{ height: '60px', px: 2, gap: 0.5 }}>
         <Typography>Apply action to all selected</Typography>
-        {playerActionsV2.map((action) => (
+        {playerGameActions.map((action) => (
           <React.Fragment key={action.name}>
             <Divider orientation="vertical" />
             <Tooltip
               title={action.name[0].toUpperCase() + action.name.substring(1)}
             >
               <IconButton
-                onClick={() => dispatch({ action, selectedPlayers: players })}
+                onClick={() => {
+                  setAction(action);
+                  setRecipients(players);
+                  setOpen(true);
+                }}
               >
                 {action.icon}
               </IconButton>

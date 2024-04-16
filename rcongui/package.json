@@ -2,6 +2,16 @@
   "name": "rcongui",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "vite",
+    "dev": "vite dev",
+    "build": "vite build",
+    "serve": "vite preview",
+    "preview": "vite build && vite preview",
+    "test": "jest",
+    "format:write": "prettier src/ --write",
+    "lint": "eslint src/"
+  },
   "dependencies": {
     "@babel/plugin-transform-class-properties": "^7.24.1",
     "@babel/plugin-transform-nullish-coalescing-operator": "^7.24.1",
@@ -52,15 +62,6 @@
     "eslint-plugin-react": "^7.34.1",
     "prettier": "^3.2.5",
     "vite": "^4.5.2"
-  },
-  "scripts": {
-    "start": "vite",
-    "dev": "vite dev",
-    "build": "vite build",
-    "serve": "vite preview",
-    "test": "jest",
-    "format:write": "prettier src/ --write",
-    "lint": "eslint src/"
   },
   "browserslist": {
     "production": [

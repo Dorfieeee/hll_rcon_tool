@@ -1,7 +1,7 @@
 import React from 'react';
-import { Paper, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { BadgesList } from './BadgeList';
+import { BadgeList } from './BadgeList';
 
 const ACTION_STATUS = {
   default: 'default',
@@ -99,7 +99,7 @@ export const ActionForm = ({
 
   return (
     <React.Fragment>
-      <BadgesList recipients={recipientStates} />
+      <BadgeList recipients={recipientStates} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <ActionFields control={control} errors={errors} />
         <Button

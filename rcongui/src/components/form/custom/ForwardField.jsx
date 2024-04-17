@@ -11,7 +11,6 @@ export const ForwardField = ({ control, errors, ...props }) => {
       errors={errors}
       name={'forward'}
       label={'Apply to all servers'}
-      error={hasError}
       {...props}
     />
   );

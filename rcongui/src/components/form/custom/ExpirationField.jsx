@@ -6,16 +6,20 @@ export const ExpirationField = ({ control, errors, ...props }) => {
   const error = errors['expiration'];
   const hasError = !!error;
 
+  if (hasError && error.type === 'moreThanNow') {
+    error.message = 'Must be older then current time.';
+  }
+
   return (
     <ControlledDesktopDateTimePicker
       defaultValue={props.defaultValue ?? dayjs()}
       control={control}
       errors={errors}
       name={'expiration'}
-      rules={{ required: 'Expiration date is required.', valueAsDate: true, validate: {
+      rules={{ required: 'Expiration date is required.', moreThanNow: 'Date must be more then now.', valueAsDate: true, validate: {
         moreThanNow: (value) => dayjs().isBefore(value),
       } }}
-      error={hasError}
+      error={error}
       disablePast
       slotProps={{
         textField: {

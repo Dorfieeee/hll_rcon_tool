@@ -51,7 +51,7 @@ export const watchAction = {
     description: 'Send Discord message upon player connection (using webhook config).',
     component: WatchFormFields,
     icon: <RemoveRedEyeIcon />,
-    execute: executeAction('watch_player'),
+    execute: executeAction('do_watch_player'),
 };
 
 export const vipAction = {
@@ -75,7 +75,7 @@ export const switchOnDeathAction = {
     description: 'Move player to opposite team upon death.',
     component: ConfirmationOnly,
     icon: <SyncLockIcon />,
-    execute: executeAction('switch_player_on_death'),
+    execute: executeAction('do_switch_player_on_death'),
 };
 
 export const punishAction = {

@@ -3,16 +3,12 @@ import {
   Box,
   IconButton,
   Typography,
-  List,
-  ListItem,
-  ListItemText,
   Drawer,
   Toolbar,
   Divider,
   Avatar,
   Tabs,
   Tab,
-  Paper,
   Stack,
   Badge,
   Accordion,
@@ -37,7 +33,11 @@ import NoAccountsIcon from '@mui/icons-material/NoAccounts';
 import GavelIcon from '@mui/icons-material/Gavel';
 import { green, red } from '@mui/material/colors';
 import { useActionDialog } from '../../hooks/useActionDialog';
-import { playerGameActions, playerProfileActions } from '../../features/playerActions';
+import {
+  playerGameActions,
+  playerProfileActions,
+} from '../../features/playerActions';
+import { usePlayerSidebar } from '../../hooks/usePlayerSidebar';
 
 const OnlineStatusBadge = styled(Badge, {
   shouldForwardProp: (props) => props !== 'isOnline',
@@ -98,22 +98,28 @@ const ProfileHeader = styled(Stack)(({ theme }) => ({
   position: 'relative',
 }));
 
-export const PlayerDetailDrawer = ({ open, setOpen, player }) => {
+export const PlayerDetailDrawer = () => {
   const [value, setValue] = React.useState('1');
 
-  const { setOpen: setActionDialogOpen, setAction, setRecipients } = useActionDialog();
+  const {
+    setOpen: setActionDialogOpen,
+    setAction,
+    setRecipients,
+  } = useActionDialog();
+
+  const { open, setOpen, player } = usePlayerSidebar();
 
   const handleActionClick = (recipients) => (action) => {
     setAction(action);
     setRecipients(recipients);
     setActionDialogOpen(true);
-  }
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const isOnline = player?.profile.sessions?.[0]?.end === null;
+  const isOnline = player?.profile.sessions?.[0]?.end === null ?? false;
   const actionList = isOnline ? playerGameActions : playerProfileActions;
 
   return (
@@ -224,9 +230,7 @@ export const PlayerDetailDrawer = ({ open, setOpen, player }) => {
                 <dt>First Seen</dt>
                 <dd>
                   {player.profile.created
-                    ? dayjs(player.profile.created).format(
-                        'MMM DD, YYYY'
-                      )
+                    ? dayjs(player.profile.created).format('MMM DD, YYYY')
                     : 'N/A'}
                 </dd>
                 <dt>Last Seen</dt>
@@ -268,13 +272,13 @@ export const PlayerDetailDrawer = ({ open, setOpen, player }) => {
                 </Typography>
                 <dl>
                   <dt>Punish</dt>
-                  <dd>{player.profile.penalty_count['PUNISH']}</dd>
+                  <dd>{player.profile?.penalty_count['PUNISH'] ?? 0}</dd>
                   <dt>Kick</dt>
-                  <dd>{player.profile.penalty_count['KICK']}</dd>
+                  <dd>{player.profile?.penalty_count['KICK'] ?? 0}</dd>
                   <dt>Temporary ban</dt>
-                  <dd>{player.profile.penalty_count['TEMPBAN']}</dd>
+                  <dd>{player.profile?.penalty_count['TEMPBAN'] ?? 0}</dd>
                   <dt>Permanent ban</dt>
-                  <dd>{player.profile.penalty_count['PERMABAN']}</dd>
+                  <dd>{player.profile?.penalty_count['PERMABAN'] ?? 0}</dd>
                 </dl>
               </Box>
               <Box component={'section'}>

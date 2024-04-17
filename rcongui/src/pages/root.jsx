@@ -10,6 +10,8 @@ import { ActionDialogProvider } from '../providers/ActionDialogProvider';
 import { useStorageState } from '../hooks/useStorageState';
 import AppBar from '../components/AppBar';
 import { ActionDialog } from '../components/ActionDialog';
+import { PlayerSidebarProvider } from '../providers/PlayerSidebarProvider';
+import { PlayerDetailDrawer } from '../components/PlayerProfileDrawer';
 
 const AppWrapper = styled('div')(() => ({ display: 'flex' }));
 
@@ -36,22 +38,25 @@ export default function Root() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <ActionDialogProvider>
-        <AppWrapper>
-          <CssBaseline />
-          <AppBar
-            sidebarOpen={sidebarOpen}
-            toggleSidebar={toggleSidebar}
-            theme={theme}
-            setTheme={setTheme}
-          />
-          <SidebarNavigation open={sidebarOpen} toggleSidebar={toggleSidebar} />
-          <Main>
-            <Toolbar /> {/* To offset from the top  */}
-            <Container maxWidth={'xl'} sx={{ mt: 2, mb: 4 }}>
-              <Outlet />
-            </Container>
-          </Main>
-        </AppWrapper>
+        <PlayerSidebarProvider>
+          <AppWrapper>
+            <CssBaseline />
+            <AppBar
+              sidebarOpen={sidebarOpen}
+              toggleSidebar={toggleSidebar}
+              theme={theme}
+              setTheme={setTheme}
+            />
+            <SidebarNavigation open={sidebarOpen} toggleSidebar={toggleSidebar} />
+            <Main>
+              <Toolbar /> {/* To offset from the top  */}
+              <Container maxWidth={'xl'} sx={{ mt: 2, mb: 4 }}>
+                <Outlet />
+              </Container>
+            </Main>
+          </AppWrapper>
+          <PlayerDetailDrawer />
+        </PlayerSidebarProvider>
         <ActionDialog />
       </ActionDialogProvider>
     </ThemeProvider>

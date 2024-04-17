@@ -20,8 +20,6 @@ import {
   Skeleton,
 } from '@mui/material';
 
-import FullscreenIcon from '@mui/icons-material/Fullscreen';
-import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import Log from './Log';
 import ProgressBar from '../ProgressBar';
@@ -87,8 +85,15 @@ const LiveLogs = () => {
         }
       );
 
-      const { logs, actions, players } = recentLogsResult.result;
-      // const { logs, actions, players } = (await response.json()).result;
+      let result;
+
+      if (!import.meta.env.DEV) {
+        result = (await response.json()).result;
+      } else {
+        result = recentLogsResult.result;
+      }
+
+      const { logs, actions, players } = result;
 
       // UI delay
       await new Promise((res) => setTimeout(res, 750));
@@ -132,17 +137,6 @@ const LiveLogs = () => {
           <Typography variant="h2" sx={{ flexGrow: 1 }}>
             Logs live
           </Typography>
-          {/* <FormControlLabel
-            control={
-              <Switch
-                checked={highlighted}
-                onChange={(event) => setHighlighted(event.target.checked)}
-                color="primary"
-              />
-            }
-            label="Highlight Logs"
-            labelPlacement="top"
-          /> */}
           <Box>
             <IconButton
               aria-label="refresh"

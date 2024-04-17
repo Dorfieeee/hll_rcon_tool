@@ -70,7 +70,7 @@ async function handle_http_errors(error) {
 async function get(path) {
   const response = await fetch(`${process.env.REACT_APP_API_URL}${path}`, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, *cors, same-origin
+    mode:  import.meta.env.DEV ? 'no-cors' : 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
     credentials: 'include', // include, *same-origin, omit
     redirect: 'follow', // manual, *follow, error
@@ -84,7 +84,7 @@ async function postData(url = '', data = {}) {
   // Default options are marked with *
   const response = await fetch(url, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, *cors, same-origin
+    mode: import.meta.env.DEV ? 'no-cors' : 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
     credentials: 'include', // include, *same-origin, omit
     headers: {

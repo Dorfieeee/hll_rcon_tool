@@ -6,6 +6,7 @@
     "start": "vite",
     "dev": "vite dev",
     "build": "vite build",
+    "demo": "NODE_ENV=development vite build && vite preview --host",
     "serve": "vite preview",
     "preview": "vite build && vite preview",
     "test": "jest",

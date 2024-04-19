@@ -65,7 +65,7 @@ export default function Login() {
               <Typography component="h1" variant="h5">
                 Sign in
               </Typography>
-              <Box sx={{ py: 2, height: '64px', width: '100%' }}>
+              <Box sx={{ py: 2, minHeight: '80px', width: '100%' }}>
                 {authError && !loading && (
                   <Alert severity="error">
                     {authError.message}

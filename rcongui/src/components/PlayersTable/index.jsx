@@ -64,7 +64,7 @@ const PlayersTable = ({ data }) => {
   );
 
   return (
-    <DataGrid columns={columns} rows={rows} apiRef={apiRef} {...tableProps} />
+    <DataGrid columns={columns} rows={rows} apiRef={apiRef} columnBufferPx={350} disableVirtualization={false} {...tableProps} />
   );
 };
 

@@ -1,16 +1,16 @@
 import { Typography } from '@mui/material';
-import { styled } from '@mui/system';
+import { styled, width } from '@mui/system';
 import moment from 'moment';
 
-const Line = styled(Typography)(({ theme }) => ({
+export const Line = styled(Typography)(({ theme }) => ({
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   tabSize: 2,
   fontFamily: 'monospace',
-  fontSize: '14px',
+  fontSize: '0.8em',
   margin: 0,
-  '&:hover': {
+  '&:hover, &:focus': {
     background: theme.palette.action.hover,
     textOverflow: 'none',
     whiteSpace: 'pre-wrap',
@@ -55,11 +55,13 @@ const actionToEmoji = {
 
 const Action = styled('span', {
   shouldForwardProp: (props) => props !== 'type',
-})(({ type }) => ({
+})(({ theme, type }) => ({
+  width: '16em',
+  display: 'inline-block',
   '&::before': {
     content: `"${actionToEmoji[type] ?? actionToEmoji['UNKNOWN']}"`,
     display: 'inline-block',
-    paddingRight: '4px',
+    paddingRight: theme.spacing(1),
   },
 }));
 
@@ -67,13 +69,12 @@ const Log = ({ log }) => {
   const timestamp = moment(new Date(log.timestamp_ms)).format(
     'HH:mm:ss, MMM DD'
   );
-  const actionName = log.action.padEnd(16);
 
   return (
-    <Line component={'pre'}>
-      <Action type={log.action}></Action>
-      {`\t`}
+    <Line component={'pre'} tabIndex={-1}>
       {timestamp}
+      {`\t`}
+      <Action type={log.action}>{log.action}</Action>
       {`\t`}
       {log.message}
     </Line>

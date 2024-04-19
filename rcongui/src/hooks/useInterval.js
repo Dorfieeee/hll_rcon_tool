@@ -4,7 +4,7 @@ export const useInterval = (callback, ms) => {
     const [error, setError] = React.useState();
     const [data, setData] = React.useState();
     const [loading, setLoading] = React.useState(false);
-    const intervalRef = React.useRef(null);
+    const intervalRef = React.useRef(null)
 
     const load = React.useCallback(async () => {
         setLoading(true);
@@ -19,19 +19,19 @@ export const useInterval = (callback, ms) => {
         setLoading(false);
     }, [callback])
 
-    const execute = React.useCallback(async () => {
+    const refresh = async () => {
         clearInterval(intervalRef.current);
-        intervalRef.current = null;
         await load();
         intervalRef.current = setInterval(load, ms);
-    }, [load, ms])
-
+    }
+    
     React.useEffect(() => {
-        execute();
+        load();
+        intervalRef.current = setInterval(load, ms);
         return () => {
             clearInterval(intervalRef.current);
         }
     }, [load, ms])
 
-    return { data, loading, error, refresh: execute }
+    return { data, loading, error, refresh }
 }

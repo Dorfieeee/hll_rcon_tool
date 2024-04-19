@@ -21,9 +21,10 @@ import {
 } from '@mui/material';
 
 import RefreshIcon from '@mui/icons-material/Refresh';
-import Log from './Log';
+import Log, { Line } from './Log';
 import ProgressBar from '../ProgressBar';
-import recentLogsResult from '../../dev/test_data/get_recent_logs.json'
+import recentLogsResult from '../../dev/test_data/get_recent_logs.json';
+import { useInterval } from '../../hooks/useInterval';
 
 const PLAYERS_FILTER = 'logs_player_filters';
 const ACTIONS_FILTER = 'logs_action_filters';
@@ -38,19 +39,16 @@ const limitOptions = [
 const interval = 30;
 const delay = 3;
 
+const getLogs = (filters) =>
+  postData(`${process.env.REACT_APP_API_URL}get_recent_logs`, filters);
+
 // TODO
 // Separate logs loading and filtering
 // Let the app refresh the logs every x seconds
 // and handle the filters in the browser
 // There is a new request each time any filter value changes
 const LiveLogs = () => {
-  const [logs, setLogs] = React.useState([]);
-  const [actions, setActions] = React.useState([]);
-  const [players, setPlayers] = React.useState([]);
-  const [loading, setLoading] = React.useState(false);
-
-  const intervalRef = React.useRef(null);
-  const delayRef = React.useRef(null);
+  const [focused, setFocused] = React.useState(-1);
 
   // Using custom hook that synchronizes the components state
   // and the browser's local storage
@@ -63,71 +61,47 @@ const LiveLogs = () => {
   const [logsLimit, setLogsLimit] = useStorageState(LOGS_LIMIT, 500);
   const [highlighted, setHighlighted] = useStorageState(HIGHLIGHT_LOGS, false);
 
-  const loadLogs = async () => {
-    // if anything else apart from the `setInterval` calls this function
-    // eg. refresh button, filters change, ...
-    // it is necessary to stop the running interval
-    clearInterval(intervalRef.current);
-    intervalRef.current = null;
-    // Clear timeout for the delay
-    clearTimeout(delayRef.current);
-    delayRef.current = null;
+  const fetchLogs = React.useCallback(
+    () =>
+      getLogs({
+        end: logsLimit,
+        filter_action: actionsFilter,
+        filter_player: playersFilter,
+        inclusive_filter: inclusiveFilter,
+      }),
+    [playersFilter, actionsFilter, inclusiveFilter, logsLimit]
+  );
 
-    setLoading(true);
-    try {
-      const response = await postData(
-        `${process.env.REACT_APP_API_URL}get_recent_logs`,
-        {
-          end: logsLimit,
-          filter_action: actionsFilter,
-          filter_player: playersFilter,
-          inclusive_filter: inclusiveFilter,
-        }
-      );
+  const { data, loading, refresh } = useInterval(fetchLogs, interval * 1000);
 
-      let result;
+  React.useEffect(refresh, [
+    playersFilter,
+    actionsFilter,
+    inclusiveFilter,
+    logsLimit,
+  ]);
 
-      if (!import.meta.env.DEV) {
-        result = (await response.json()).result;
-      } else {
-        result = recentLogsResult.result;
-      }
-
-      const { logs, actions, players } = result;
-
-      // UI delay
-      await new Promise((res) => setTimeout(res, 750));
-
-      setLogs(logs?.slice(0, logsLimit) ?? []);
-      setActions(actions ?? []);
-      setPlayers(players ?? []);
-
-      // now the data have been loaded and new interval can be set
-      intervalRef.current = setInterval(loadLogs, interval * 1000);
-
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      handle_http_errors(error);
+  const logsResult = React.useMemo(() => {
+    let result;
+    if (!import.meta.env.DEV) {
+      result = data?.result;
+    } else {
+      result = recentLogsResult?.result;
     }
-  };
 
-  // This runs once the component loads and each time one of the
-  // states variables in the dependency array changes
-  // The timeout is also cleared inside the `loadLogs` so
-  // it does not run twice on the initial render
-  React.useEffect(() => {
-    clearTimeout(delayRef.current);
-    delayRef.current = setTimeout(loadLogs, delay * 1000);
+    if (!result) return {};
 
-    return () => {
-      clearInterval(intervalRef.current);
-      clearTimeout(delayRef.current);
+    const { logs, actions, players } = result;
+
+    return {
+      players,
+      actions,
+      logs,
     };
-  }, [playersFilter, actionsFilter, inclusiveFilter, logsLimit]);
+  }, [data]);
 
-  // Run only and only once
-  React.useEffect(loadLogs, []);
+
+  const { players = [], actions = [], logs = [] } = logsResult;
 
   return (
     <Stack>
@@ -142,7 +116,7 @@ const LiveLogs = () => {
               aria-label="refresh"
               variant="outlined"
               size="large"
-              onClick={loadLogs}
+              onClick={refresh}
             >
               <RefreshIcon />
             </IconButton>
@@ -226,14 +200,25 @@ const LiveLogs = () => {
       {/* LOGS */}
       {logs.length ? (
         <Paper sx={{ p: 1, my: 1 }}>
-          {logs.map((log) => (
+          <Line
+            sx={{
+              display: 'inline-flex',
+              borderBottom: '1px solid inherit',
+              width: '100%',
+            }}
+            tabIndex={0}
+          >
+            <Box sx={{ flexBasis: '9.5em' }}>Time</Box>
+            <Box sx={{ flexBasis: '16.5em' }}>Action</Box>
+            <Box sx={{ flexGrow: 1 }}>Content</Box>
+          </Line>
+          {logs.map((log, index) => (
             <Log log={log} key={log.raw} />
           ))}
         </Paper>
       ) : (
-      <Skeleton variant="rectangular" sx={{ height: '100vh' }} />
-    )
-    }
+        <Skeleton variant="rectangular" sx={{ height: '100vh' }} />
+      )}
     </Stack>
   );
 };

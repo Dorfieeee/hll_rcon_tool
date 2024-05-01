@@ -100,29 +100,12 @@ const LiveLogs = () => {
     };
   }, [data]);
 
-
   const { players = [], actions = [], logs = [] } = logsResult;
 
   return (
     <Stack>
       {/* HEADER */}
       <Box sx={{ mb: 2 }}>
-        <Stack direction={'row'}>
-          <Typography variant="h2" sx={{ flexGrow: 1 }}>
-            Logs live
-          </Typography>
-          <Box>
-            <IconButton
-              aria-label="refresh"
-              variant="outlined"
-              size="large"
-              onClick={refresh}
-            >
-              <RefreshIcon />
-            </IconButton>
-          </Box>
-        </Stack>
-        <Typography variant="subtitle1">{interval}s auto refresh</Typography>
         <ProgressBar interval={interval} loading={loading} />
       </Box>
       {/* FILTERS & CONTROLS */}

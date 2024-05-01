@@ -44,7 +44,7 @@ export default function Login() {
       <Stack direction={'row'} sx={{ minHeight: '100vh' }}>
         <Box
           component={'img'}
-          src="/login-bg.png"
+          src="/hll15.jpg"
           alt=""
           sx={{ width: '60%', objectFit: 'cover' }}
         />

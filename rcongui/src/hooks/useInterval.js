@@ -3,7 +3,7 @@ import React from "react"
 export const useInterval = (callback, ms) => {
     const [error, setError] = React.useState();
     const [data, setData] = React.useState();
-    const [loading, setLoading] = React.useState(false);
+    const [loading, setLoading] = React.useState(true);
     const intervalRef = React.useRef(null)
 
     const load = React.useCallback(async () => {

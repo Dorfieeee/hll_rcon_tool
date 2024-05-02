@@ -1,0 +1,77 @@
+{
+    "result": {
+        "fail_count": 0,
+        "allies": {
+            "squads": {},
+            "commander": {
+                "name": "[VLK] Dorfieee",
+                "steam_id_64": "76561198178339671",
+                "country": null,
+                "steam_bans": null,
+                "profile": {
+                    "id": 1,
+                    "steam_id_64": "76561198178339671",
+                    "created": "2024-05-02T13:27:50.935",
+                    "names": [
+                        {
+                            "id": 1,
+                            "name": "[VLK] Dorfieee",
+                            "steam_id_64": "76561198178339671",
+                            "created": "2024-05-02T13:27:50.942",
+                            "last_seen": "2024-05-02T13:27:48"
+                        }
+                    ],
+                    "sessions": [
+                        {
+                            "id": 1,
+                            "steam_id_64": "76561198178339671",
+                            "start": "2024-05-02T13:27:48",
+                            "end": null,
+                            "created": "2024-05-02T13:27:51.318"
+                        }
+                    ],
+                    "sessions_count": 1,
+                    "total_playtime_seconds": 318,
+                    "current_playtime_seconds": 318,
+                    "received_actions": [],
+                    "penalty_count": {
+                        "KICK": 0,
+                        "PUNISH": 0,
+                        "TEMPBAN": 0,
+                        "PERMABAN": 0
+                    },
+                    "blacklist": null,
+                    "flags": [],
+                    "watchlist": null,
+                    "steaminfo": null,
+                    "vips": []
+                },
+                "is_vip": false,
+                "unit_id": -1,
+                "unit_name": "commmand",
+                "loadout": "standard issue",
+                "team": "allies",
+                "role": "armycommander",
+                "kills": 0,
+                "deaths": 0,
+                "combat": 0,
+                "offense": 0,
+                "defense": 0,
+                "support": 0,
+                "level": 152
+            },
+            "combat": 0,
+            "offense": 0,
+            "defense": 0,
+            "support": 0,
+            "kills": 0,
+            "deaths": 0,
+            "count": 1
+        }
+    },
+    "command": "get_team_view",
+    "arguments": {},
+    "failed": false,
+    "error": "",
+    "forward_results": null
+}

@@ -104,10 +104,6 @@ const LiveLogs = () => {
 
   return (
     <Stack>
-      {/* HEADER */}
-      <Box sx={{ mb: 2 }}>
-        <ProgressBar interval={interval} loading={loading} />
-      </Box>
       {/* FILTERS & CONTROLS */}
       <Grid container columnSpacing={1} alignItems={'center'}>
         <Grid xs={12} lg={3}>

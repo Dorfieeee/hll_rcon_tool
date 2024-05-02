@@ -13,6 +13,46 @@ import Footer from '../../components/Footer';
 import { Alert, Stack } from '@mui/material';
 import { Form, useSubmit, useActionData } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
+import { styled } from '@mui/system';
+
+const Wrapper = styled(Box)(({ theme }) => ({
+  position: 'relative',
+  minHeight: '100vh',
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  [theme.breakpoints.up('md')]: {
+    flexDirection: 'row',
+  },
+}));
+
+const HeroImageWrapper = styled(Box)(({ theme }) => ({
+  flexBasis: '33vh',
+  height: '100%',
+  [theme.breakpoints.up('md')]: {
+    flexBasis: '60%',
+  },
+}));
+
+const HeroImage = styled('img')(({ theme }) => ({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  objectFit: 'cover',
+  width: '100%',
+  height: '33%',
+  [theme.breakpoints.up('md')]: {
+    height: '100%',
+    width: '60%',
+  },
+}));
+
+const MainWrapper = styled(Stack)(({ theme }) => ({
+  flexBasis: '67vh',
+  [theme.breakpoints.up('md')]: {
+    flexBasis: '40%',
+  },
+}));
 
 export default function Login() {
   const [loading, setLoading] = React.useState(false);
@@ -40,23 +80,23 @@ export default function Login() {
   };
 
   return (
-    <ThemeProvider theme={themes.Light}>
-      <Stack direction={'row'} sx={{ minHeight: '100vh' }}>
-        <Box
-          component={'img'}
-          src="/hll15.jpg"
-          alt=""
-          sx={{ width: '60%', objectFit: 'cover' }}
-        />
-        <Stack sx={{}}>
-          <Container component="main" maxWidth="xs">
+    <ThemeProvider theme={themes.Dark}>
+      <HeroImage src="/hll15.jpg" alt="" />
+      <Wrapper>
+        <HeroImageWrapper></HeroImageWrapper>
+        <MainWrapper>
+          <Container
+            component="main"
+            maxWidth="xs"
+            sx={{ flexGrow: 1, display: 'flex' }}
+          >
             <CssBaseline />
             <Box
               sx={{
-                marginTop: 8,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
               <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -65,13 +105,11 @@ export default function Login() {
               <Typography component="h1" variant="h5">
                 Sign in
               </Typography>
-              <Box sx={{ py: 2, minHeight: '80px', width: '100%' }}>
-                {authError && !loading && (
-                  <Alert severity="error">
-                    {authError.message}
-                  </Alert>
-                )}
-              </Box>
+              {authError && !loading && (
+                <Box sx={{ py: 2, width: '100%' }}>
+                  <Alert severity="error">{authError.message}</Alert>
+                </Box>
+              )}
               <Form method="POST" onSubmit={handleSubmit(onSubmit)}>
                 <Controller
                   control={control}
@@ -128,11 +166,11 @@ export default function Login() {
               </Form>
             </Box>
           </Container>
-          <Stack justifyContent={'end'} sx={{ flexGrow: 1, p: 3 }}>
+          <Stack justifyContent={'end'} sx={{ p: 3 }}>
             <Footer />
           </Stack>
-        </Stack>
-      </Stack>
+        </MainWrapper>
+      </Wrapper>
     </ThemeProvider>
   );
 }

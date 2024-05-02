@@ -4,7 +4,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 
 const updateInterval = 300;
 
-export default function ProgressBar({ interval, loading }) {
+export default function ProgressBar({ interval, loading, ...props }) {
   const [progress, setProgress] = React.useState(0);
   const timerRef = React.useRef(null);
 
@@ -32,7 +32,7 @@ export default function ProgressBar({ interval, loading }) {
   }, [loading]);
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%' }} {...props}>
       <LinearProgress variant={loading ? 'indeterminate' : 'determinate'} color={loading ? 'secondary' : 'primary'} value={progress} />
     </Box>
   );

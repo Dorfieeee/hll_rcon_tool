@@ -1,0 +1,17 @@
+{
+    "result": {
+        "num_allied_players": 0,
+        "num_axis_players": 0,
+        "allied_score": 2,
+        "axis_score": 2,
+        "time_remaining": "P0DT01H15M16S",
+        "raw_time_remaining": "1:15:16",
+        "current_map": "stmereeglise_warfare",
+        "next_map": "omahabeach_warfare"
+    },
+    "command": "get_gamestate",
+    "arguments": {},
+    "failed": false,
+    "error": "",
+    "forward_results": null
+}

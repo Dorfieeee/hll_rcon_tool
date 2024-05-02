@@ -18,7 +18,7 @@ export const extractPlayers = (game) => {
       players.push(...squadPlayers);
     }
 
-    if ('commander' in team && 'name' in team.commander) {
+    if ('commander' in team && team.commander) {
       players.push(team.commander);
     }
   }
@@ -29,7 +29,7 @@ export const extractPlayers = (game) => {
 export const extractTeamState = (team) => {
   const levels = [];
   const out = {};
-  out['armycommander'] = 'commander' in team && 'name' in team.commander ? 1 : 0;
+  out['armycommander'] = 'commander' in team && team.commander ? 1 : 0;
   out['armor'] = 0;
   out['infantry'] = 0;
   out['recon'] = 0;

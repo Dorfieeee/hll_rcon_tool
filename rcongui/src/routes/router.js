@@ -3,7 +3,6 @@ import Root from "../pages/root";
 import ErrorPage from "../pages/error";
 import IndexPage from "../pages/index"
 import LiveView from "../pages/live-view";
-import TeamView from "../components/GameViewV2";
 import Login from "../pages/login/login";
 import loginAction from "../pages/login/action";
 import rootAction from "../pages/action";
@@ -43,6 +42,7 @@ import PlayersHistory from "../components/PlayersHistory";
 import LogsHistory from "../components/LogsHistory";
 import AuditLog from "../components/AuditLog"
 import PlayerInfo from "../components/PlayerInfo";
+import TeamView from "../pages/team-view";
 
 const router = createBrowserRouter([
     {

@@ -14,41 +14,44 @@ const RoleAvatar = styled(Avatar, {
 }));
 
 export const columns = [
-  {
-    field: 'team',
-    headerName: 'Team',
-    width: 50,
-    renderCell: (params) => {
-      const [allies, axis] = ['1001546200681566330', '1001525586839208006'];
-      const src = (team) =>
-        `https://cdn.discordapp.com/emojis/${team === 'axis' ? axis : allies}.webp?size=128&quality=lossless`;
+  // {
+  //   field: 'team',
+  //   headerName: 'Team',
+  //   width: 50,
+  //   renderCell: (params) => {
+  //     const [allies, axis] = ['1001546200681566330', '1001525586839208006'];
+  //     const src = (team) =>
+  //       `https://cdn.discordapp.com/emojis/${team === 'axis' ? axis : allies}.webp?size=128&quality=lossless`;
 
-      return (
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '100%',
-            width: '100%',
-          }}
-        >
-          <img
-            src={src(params.value)}
-            alt={params.value}
-            width={20}
-            height={'auto'}
-          />
-        </Box>
-      );
-    },
-  },
+  //     return (
+  //       <Box
+  //         sx={{
+  //           display: 'flex',
+  //           alignItems: 'center',
+  //           justifyContent: 'center',
+  //           height: '100%',
+  //           width: '100%',
+  //         }}
+  //       >
+  //         <img
+  //           src={src(params.value)}
+  //           alt={params.value}
+  //           width={20}
+  //           height={'auto'}
+  //         />
+  //       </Box>
+  //     );
+  //   },
+  // },
   {
-    field: 'role',
-    headerName: 'Role',
+    field: 'assignment',
+    headerName: 'Assignment',
     width: 50,
+    valueGetter: (value, row) => {
+      return `${row.team}-${row.unit_name}-${row.role}`;
+    },
     renderCell: (params) => {
-      let src = `/icons/roles/${params.value}.png`;
+      let src = `/icons/roles/${params.row.role}.png`;
       return (
         <Box
           sx={{
@@ -106,11 +109,6 @@ export const columns = [
         </Box>
       );
     },
-  },
-  {
-    field: 'unit_name',
-    headerName: 'Squad',
-    width: 50,
   },
   {
     field: 'level',

@@ -34,7 +34,7 @@ if (import.meta.env.DEV) {
 }
 
 const LiveView = () => {
-  const { data: teamData, loading } = useInterval(getTeamView, interval * 1000);
+  const { data: teamData } = useInterval(getTeamView, interval * 1000);
   const { data: gameState } = useInterval(getGameState, interval * 1000);
 
   const gameStateProp = React.useMemo(() => {

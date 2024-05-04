@@ -22,7 +22,9 @@ const Main = styled('main')(({ theme }) => ({
       : theme.palette.grey[900],
   flexGrow: 1,
   height: '100vh',
-  overflow: 'auto',
+  overflowY: 'auto',
+  overflowX: 'clip',
+  position: 'relative',
 }));
 
 export default function Root() {

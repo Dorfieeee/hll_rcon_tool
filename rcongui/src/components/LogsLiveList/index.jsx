@@ -48,8 +48,6 @@ const getLogs = (filters) =>
 // and handle the filters in the browser
 // There is a new request each time any filter value changes
 const LiveLogs = () => {
-  const [focused, setFocused] = React.useState(-1);
-
   // Using custom hook that synchronizes the components state
   // and the browser's local storage
   const [playersFilter, setPlayersFilter] = useStorageState(PLAYERS_FILTER, []);
@@ -106,7 +104,7 @@ const LiveLogs = () => {
     <Stack>
       {/* FILTERS & CONTROLS */}
       <Grid container columnSpacing={1} alignItems={'center'}>
-        <Grid xs={12} lg={3}>
+        <Grid xs={12} lg={2}>
           <FormControl fullWidth>
             <InputLabel id="lines-limit-label">Lines limit</InputLabel>
             <Select
@@ -143,7 +141,7 @@ const LiveLogs = () => {
             )}
           />
         </Grid>
-        <Grid xs={12} lg={4}>
+        <Grid xs={12} lg={3}>
           <Autocomplete
             id="filter-by-player"
             multiple
@@ -175,10 +173,22 @@ const LiveLogs = () => {
             labelPlacement="top"
           />
         </Grid>
+        <Grid xs={12} lg={2}>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={highlighted}
+                onChange={(event) => setHighlighted(event.target.checked)}
+              />
+            }
+            label="Highlight"
+            labelPlacement="top"
+          />
+        </Grid>
       </Grid>
       {/* LOGS */}
       {logs.length ? (
-        <Paper sx={{ p: 1, my: 1 }}>
+        <Paper sx={{ p: 1, my: 1 }} className={highlighted && 'highlighted'}>
           <Line
             sx={{
               display: 'inline-flex',

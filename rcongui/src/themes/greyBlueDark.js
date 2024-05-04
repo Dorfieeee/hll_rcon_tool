@@ -3,6 +3,7 @@ import { createTheme } from '@mui/material';
 const GreyBlueDarkTheme = createTheme({
   editor: 'vs-dark',
   palette: {
+    mode: 'dark',
     primary: {
       light: '#8eacbb',
       main: '#607d8b',

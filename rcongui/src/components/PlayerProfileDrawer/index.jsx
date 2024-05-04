@@ -133,7 +133,6 @@ export const PlayerDetailDrawer = () => {
       {player && (
         <ProfileWrapper
           component={'article'}
-          // sx={{ width: '20rem', height: '100%', marginTop: 1, px: 1, py: 2 }}
         >
           <ProfileHeader rowGap={1}>
             <OnlineStatusBadge
@@ -191,8 +190,8 @@ export const PlayerDetailDrawer = () => {
             {player.is_vip && <StarIcon />}
             {player.profile.watchlist &&
               player.profile.watchlist.is_watched && <VisibilityIcon />}
-            <NoAccountsIcon />
-            <GavelIcon />
+            {/* <NoAccountsIcon />
+            <GavelIcon /> */}
           </Stack>
           <Divider />
           <TabContext value={value}>

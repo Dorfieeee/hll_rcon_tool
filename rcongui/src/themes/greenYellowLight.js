@@ -2,6 +2,7 @@ import { createTheme } from '@mui/material';
 
 const GreenYellowLightTheme = createTheme({
   palette: {
+    mode: 'light',
     primary: {
       light: '#5edfca',
       main: '#17ad99',

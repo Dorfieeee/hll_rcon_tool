@@ -2,6 +2,7 @@ import { createTheme } from '@mui/material';
 
 const GreenYellowDarkTheme = createTheme({
   palette: {
+    mode: 'dark',
     primary: {
       light: '#5edfca',
       main: '#17ad99',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Link, Typography } from '@mui/material';
+import { Grid, Link, Skeleton, Typography } from '@mui/material';
 import {
   get as apiGet,
   handle_http_errors,
@@ -7,11 +7,13 @@ import {
 } from '../../utils/fetchUtils';
 
 const Footer = () => {
+  const [loading, setLoading] = React.useState(true);
   const [repoData, setRepoData] = React.useState([]);
   const [apiVersion, setApiVersion] = React.useState('N/A');
 
   React.useEffect(() => {
     async function onLoad() {
+      setLoading(true);
       try {
         const gitResponse = await fetch(
           'https://api.github.com/repos/MarechJ/hll_rcon_tool/contributors'
@@ -33,25 +35,26 @@ const Footer = () => {
       } catch (error) {
         handle_http_errors(error);
       }
+      setLoading(false);
     }
 
     onLoad();
   }, []);
 
-  const renderContributors = () => {
-    return repoData
-      .filter((d) => d.type === 'User')
-      .map((d) => (
-        <Link key={d.login} target="_blank" href={d.html_url}>
-          {`${d.login} (${d.contributions})`},{' '}
-        </Link>
-      ));
-  };
+  const contributors = repoData
+    .filter((d) => d.type === 'User')
+    .map((d) => (
+      <Link key={d.login} target="_blank" href={d.html_url}>
+        {`${d.login} (${d.contributions})`},{' '}
+      </Link>
+    ));
 
   const appInfo = `UI Version: ${process.env.REACT_APP_VERSION} API Version: ${apiVersion} - Brought to you by Dr.WeeD, `;
 
-  return (
-    <Grid container component={'footer'}>
+  return loading ? (
+    <Skeleton height={'10rem'} width={'100%'} />
+  ) : (
+    <Grid container component={'footer'} sx={{ minHeight: '10rem' }}>
       <Grid item xs={12}>
         <Typography
           color="textSecondary"
@@ -60,7 +63,7 @@ const Footer = () => {
           gutterBottom
         >
           {appInfo}
-          {renderContributors()}
+          {contributors}
         </Typography>
       </Grid>
       {!process.env.REACT_APP_PUBLIC_BUILD ? (

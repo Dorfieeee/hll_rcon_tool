@@ -2,6 +2,7 @@ import { createTheme } from '@mui/material';
 
 const CamoDarkTheme = createTheme({
   palette: {
+    mode: 'dark',
     primary: {
       light: '#629749',
       main: '#33691e',

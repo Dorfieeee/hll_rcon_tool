@@ -8,6 +8,7 @@ import PlayersTable from '../../components/PlayersTable';
 import { columns } from './columns';
 import ProgressBar from '../../components/ProgressBar';
 import { color, styled } from '@mui/system';
+import { get } from '../../utils/fetchUtils';
 
 const interval = 30;
 const TEAM_AXIS = 'axis';
@@ -81,6 +82,8 @@ const TeamView = () => {
     const players = extractPlayers(data.result);
     return players.filter(onlyAllies).map(playerToRow);
   }, [data]);
+
+  console.log({ data, axisRows, alliesRows })
 
   return (
     <Grid container columnSpacing={1}>

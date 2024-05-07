@@ -38,7 +38,7 @@ import moment from 'moment';
 
 const TIME_FORMAT = 'HH:mm:ss, MMM DD';
 
-const getBorderColor = (team, theme) => {
+const getTeamColor = (team) => {
   switch (team) {
     case 'Allies':
       return blue['600'];
@@ -87,10 +87,18 @@ const getLogSeverity = (log) => {
     case 'ADMIN BANNED':
       return 'warning';
     case 'ADMIN MISC':
-    case 'CAMERA ':
+    case 'CAMERA':
     case 'VOTE COMPLETED':
     case 'MESSAGE':
       return 'info';
+    case 'CHAT':
+    case 'CHAT[Allies]':
+    case 'CHAT[Allies][Team]':
+    case 'CHAT[Allies][Unit]':
+    case 'CHAT[Axis]':
+    case 'CHAT[Axis][Team]':
+    case 'CHAT[Axis][Unit]':
+      return 'chat';
     default:
       return 'normal';
   }
@@ -105,12 +113,15 @@ const getLineBgColor = (severity, theme) => {
   }
 };
 
-const getLineTextColor = (severity, theme) => {
+const getLineTextColor = (severity, theme, team) => {
   const mode = theme.palette.mode;
   switch (severity) {
     case 'info':
     case 'warning':
       return theme.palette.getContrastText(theme.palette[severity][mode]);
+    case 'chat':
+      const teamColor = getTeamColor(team);
+      return mode === 'light' ? darken(teamColor, 0.2) : lighten(teamColor, 0.5);
     default:
       return mode === 'light'
         ? darken(theme.palette.background.paper, 0.2)
@@ -122,7 +133,7 @@ export const Line = styled(Typography, {
   shouldForwardProp: (prop) => prop !== 'team' && prop !== 'severity',
 })(({ theme, team, severity }) => ({
   borderLeftWidth: '4px',
-  borderLeftColor: getBorderColor(team),
+  borderLeftColor: getTeamColor(team),
   borderLeftStyle: 'solid',
   paddingLeft: theme.spacing(0.5),
   textOverflow: 'ellipsis',
@@ -138,7 +149,7 @@ export const Line = styled(Typography, {
     whiteSpace: 'pre-wrap',
   },
   '.highlighted &': {
-    color: getLineTextColor(severity, theme),
+    color: getLineTextColor(severity, theme, team),
     background: getLineBgColor(severity, theme),
     fontWeight: severity !== 'normal' && 'bold',
   }

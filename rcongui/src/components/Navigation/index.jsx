@@ -104,111 +104,111 @@ const Navigation = () => {
       <NavigationLink to={'/settings/rcon'} text={'RCON'} icon={DnsIcon} />
       <Group groupName={'Automods'} icon={SmartToyIcon}>
         <NavigationLink
-          to={'/settings/automods/seeding'}
+          to={'/features/automods/seeding'}
           text={'Seeding'}
           icon={SpaIcon}
         />
         <NavigationLink
-          to={'/settings/automods/no-leader'}
+          to={'/features/automods/no-leader'}
           text={'No Leader'}
           icon={PersonOffIcon}
         />
         <NavigationLink
-          to={'/settings/automods/no-solotank'}
+          to={'/features/automods/no-solotank'}
           text={'No Solotank'}
           icon={NoTransferIcon}
         />
         <NavigationLink
-          to={'/settings/automods/player-level'}
+          to={'/features/automods/player-level'}
           text={'Player level'}
           icon={NoStrollerIcon}
         />
       </Group>
       <Group groupName={'Webhooks'} icon={WebhookIcon}>
         <NavigationLink
-          to={'/settings/webhooks/admin-ping'}
+          to={'/features/webhooks/admin-ping'}
           text={'Admin Ping'}
           icon={PrivacyTipIcon}
         />
         <NavigationLink
-          to={'/settings/webhooks/audit'}
+          to={'/features/webhooks/audit'}
           text={'Audit'}
           icon={SimCardAlertIcon}
         />
         <NavigationLink
-          to={'/settings/webhooks/ingame-camera'}
+          to={'/features/webhooks/ingame-camera'}
           text={'Camera'}
           icon={VideocamIcon}
         />
         <NavigationLink
-          to={'/settings/webhooks/ingame-chat'}
+          to={'/features/webhooks/ingame-chat'}
           text={'Chat'}
           icon={ChatIcon}
         />
         <NavigationLink
-          to={'/settings/webhooks/kills'}
+          to={'/features/webhooks/kills'}
           text={'Kills'}
           icon={RestaurantIcon}
         />
         <NavigationLink
-          to={'/settings/webhooks/logs'}
+          to={'/features/webhooks/logs'}
           text={'Logs'}
           icon={TextSnippetIcon}
         />
         <NavigationLink
-          to={'/settings/webhooks/watchlist'}
+          to={'/features/webhooks/watchlist'}
           text={'Watchlist'}
           icon={RemoveRedEyeIcon}
         />{' '}
       </Group>
       <Group groupName={'Miscelanous'} icon={MiscellaneousServicesIcon}>
         <NavigationLink
-          to={'/settings/miscelanous/chat-commands'}
+          to={'/features/miscelanous/chat-commands'}
           text={'Chat Commands'}
           icon={RateReviewIcon}
         />
         <NavigationLink
-          to={'/settings/miscelanous/expired-vip'}
+          to={'/features/miscelanous/expired-vip'}
           text={'Expired VIP'}
           icon={TimerOffIcon}
         />
         <NavigationLink
-          to={'/settings/miscelanous/gtx-name-change'}
+          to={'/features/miscelanous/gtx-name-change'}
           text={'GTX Name Change'}
           icon={DriveFileRenameOutlineIcon}
         />
         <NavigationLink
-          to={'/settings/miscelanous/name-kicks'}
+          to={'/features/miscelanous/name-kicks'}
           text={'Name Kicks'}
           icon={SportsMartialArtsIcon}
         />
         <NavigationLink
-          to={'/settings/miscelanous/rcon-connection'}
+          to={'/features/miscelanous/rcon-connection'}
           text={'RCON Connection'}
           icon={CableIcon}
         />
         <NavigationLink
-          to={'/settings/miscelanous/rcon-server'}
+          to={'/features/miscelanous/rcon-server'}
           text={'RCON Server'}
           icon={DnsIcon}
         />
         <NavigationLink
-          to={'/settings/miscelanous/scorebot'}
+          to={'/features/miscelanous/scorebot'}
           text={'Scorebot'}
           icon={ScoreboardIcon}
         />
         <NavigationLink
-          to={'/settings/miscelanous/steam-api'}
+          to={'/features/miscelanous/steam-api'}
           text={'Steam API'}
           icon={RemoveRedEyeIcon}
         />
         <NavigationLink
-          to={'/settings/miscelanous/tk-ban-connect'}
+          to={'/features/miscelanous/tk-ban-connect'}
           text={'TK Ban Connect'}
           icon={GavelIcon}
         />
         <NavigationLink
-          to={'/settings/miscelanous/vac-bans'}
+          to={'/features/miscelanous/vac-bans'}
           text={'VAC Bans'}
           icon={AccountBalanceIcon}
         />

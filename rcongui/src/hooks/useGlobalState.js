@@ -1,5 +1,9 @@
 import React from 'react';
 
+const ONLINE = 'online'
+const OFFLINE = 'offline'
+const IDLE = 'idle'
+
 const GlobalContext = React.createContext();
 
 export const useGlobalState = () => {
@@ -14,10 +18,20 @@ export const useGlobalState = () => {
 // Consider using React Reducer if the functionality grows
 export const GlobalStateProvider = ({ children }) => {
   const [state, setState] = React.useState({
-    server: {},
+    server: {
+      status: OFFLINE,
+      crconConnected: false,
+      name: '',
+      number: 1,
+    },
     user: '',
     permissions: [],
   });
+
+  // TODO
+  // Get server status
+  // Get user
+  // Get user's permissions
 
   const setServer = (server) => {
     setState((prevState) => ({

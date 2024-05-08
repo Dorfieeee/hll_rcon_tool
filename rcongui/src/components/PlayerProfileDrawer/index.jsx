@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   IconButton,
@@ -38,6 +38,10 @@ import {
   playerProfileActions,
 } from '../../features/playerActions';
 import { usePlayerSidebar } from '../../hooks/usePlayerSidebar';
+import { CountryFlag } from '../CountryFlag';
+import { useGlobalState } from '../../hooks/useGlobalState';
+import { get } from '../../utils/fetchUtils';
+import { useInterval } from '../../hooks/useInterval';
 
 const OnlineStatusBadge = styled(Badge, {
   shouldForwardProp: (props) => props !== 'isOnline',
@@ -98,8 +102,160 @@ const ProfileHeader = styled(Stack)(({ theme }) => ({
   position: 'relative',
 }));
 
+const Message = styled(Box)(({ theme }) => ({
+  background:
+    theme.palette.mode === 'dark'
+      ? theme.palette.primary.dark
+      : theme.palette.primary.light,
+  color: theme.palette.primary.contrastText,
+  paddingTop: theme.spacing(1),
+  paddingBottom: theme.spacing(1),
+  paddingRight: theme.spacing(1.5),
+  paddingLeft: theme.spacing(1.5),
+  borderRadius: theme.shape.borderRadius,
+  borderBottomRightRadius: 0,
+}));
+
+const BasicProfileDetails = ({
+  firstSeen,
+  lastSeen,
+  country,
+  vip,
+  sessionCount,
+  flags,
+  totalPlaytime,
+}) => {
+  return (
+    <dl>
+      <dt>Country</dt>
+      <dd>
+        {country && country !== 'private' ? (
+          <>
+            <CountryFlag country={country} />
+            <span style={{ marginLeft: 4 }}>{country}</span>
+          </>
+        ) : (
+          'Unknown'
+        )}
+      </dd>
+      <dt>First Seen</dt>
+      <dd>{firstSeen ? dayjs(firstSeen).format('MMM DD, YYYY') : 'N/A'}</dd>
+      <dt>Last Seen</dt>
+      <dd>{lastSeen ? dayjs(lastSeen).format('MMM DD, YYYY') : 'N/A'}</dd>
+      <dt>VIP</dt>
+      <dd>{vip ? 'Yes' : 'No'}</dd>
+      {vip && (
+        <>
+          <dt>VIP Expires</dt>
+          <dd>{dayjs(vip.expiration).fromNow()}</dd>
+          <dd>{dayjs(vip.expiration).format('mm:HH MM DD, YYYY')}</dd>
+        </>
+      )}
+      <dt>Visits</dt>
+      <dd>{sessionCount}</dd>
+      <dt>Playtime in hours</dt>
+      <dd>{Math.round(totalPlaytime / 3600)}</dd>
+      {flags.length > 0 && (
+        <>
+          <dt>Flags</dt>
+          {flags.map((flag) => (
+            <span>{flag.flag}</span>
+          ))}
+        </>
+      )}
+    </dl>
+  );
+};
+
+const Penalties = ({ punish, kick, tempBan, parmaBan }) => (
+  <dl>
+    <dt>Punish</dt>
+    <dd>{punish ?? 0}</dd>
+    <dt>Kick</dt>
+    <dd>{kick ?? 0}</dd>
+    <dt>Temporary ban</dt>
+    <dd>{tempBan ?? 0}</dd>
+    <dt>Permanent ban</dt>
+    <dd>{parmaBan ?? 0}</dd>
+  </dl>
+);
+
+const ReceivedActions = ({ actions }) => {
+  const [expanded, setExpanded] = React.useState(false);
+  const displayCount = expanded ? actions.length : 2;
+
+  return (
+    <>
+      {actions.slice(0, displayCount).map((action, i) => (
+        <Accordion square={true} key={action.action_type + i}>
+          <AccordionSummary
+            expandIcon={<ArrowDropDownIcon />}
+            aria-controls={`panel${i}-content`}
+            id={`panel${i}-header`}
+          >
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <Typography variant="subtitle2">{action.action_type}</Typography>
+              <Typography component={'span'} sx={{ fontSize: '0.7rem' }}>
+                {action.by} | {dayjs(action.time).format('HH:MM DD.MM.YY')}
+              </Typography>
+            </Box>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>{action.reason}</Typography>
+            {action.comment && <Typography>{action.comment}</Typography>}
+          </AccordionDetails>
+        </Accordion>
+      ))}
+      <Accordion defaultExpanded>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel-action-content"
+          id="panel-action-header"
+        >
+          Show all
+        </AccordionSummary>
+        <AccordionDetails>
+          {`This player received ${actions.length} actions in total.`}
+        </AccordionDetails>
+        <AccordionActions>
+          <Button onClick={() => setExpanded((prevState) => !prevState)}>
+            {expanded ? 'Hide' : 'Show'}
+          </Button>
+        </AccordionActions>
+      </Accordion>
+    </>
+  );
+};
+
+const Messages = ({ messages }) => {
+  return (
+    <>
+      {messages && messages.length ? (
+        <Stack spacing={1.5}>
+          {messages.map((message, index) => (
+            <Message key={message.time}>
+              <Typography component={'span'} sx={{ fontSize: '0.7rem' }}>
+                {message.by} | {dayjs(message.time).format('HH:MM DD.MM.YY')}
+              </Typography>
+              <Typography>{message.reason}</Typography>
+            </Message>
+          ))}
+        </Stack>
+      ) : (
+        <Box>
+          <Typography variant="subtitle" component={'span'}>
+            No messages
+          </Typography>
+        </Box>
+      )}
+    </>
+  );
+};
+
 export const PlayerDetailDrawer = () => {
-  const [value, setValue] = React.useState('1');
+  const [openedTab, setOpenedTab] = React.useState('1');
+
+  const { state: globalState } = useGlobalState();
 
   const {
     setOpen: setActionDialogOpen,
@@ -109,18 +265,77 @@ export const PlayerDetailDrawer = () => {
 
   const { open, setOpen, player } = usePlayerSidebar();
 
+  const [comments, setComments] = React.useState([]);
+  const [bans, setBans] = React.useState([]);
+
+  // TODO
+  // Move up to the sidebar provider
+  useEffect(() => {
+    const fetchComments = async () => {
+      const response = await get(
+        'get_player_comment?steam_id_64=' + player.steam_id_64
+      );
+      const json = await response.json();
+      const comments = json.result;
+      if (comments && typeof comments === 'object' && comments.length > 0) {
+        setComments(comments);
+      }
+    };
+
+    open && player && fetchComments();
+  }, [player, open]);
+
+  useEffect(() => {
+    const fetchBans = async () => {
+      const response = await get(
+        'get_ban?steam_id_64=' + player.steam_id_64
+      );
+      const json = await response.json();
+      const bans = json.result;
+      if (bans && typeof bans === 'object' && bans.length > 0) {
+        setBans(bans);
+      }
+    };
+
+    open && player && fetchBans();
+  }, [player, open]);
+
+  let receivedActions = player?.profile?.received_actions;
+
+  if (receivedActions && comments.length > 0) {
+    const ACTION_COMMENT_CREATION_GAP = 200;
+    receivedActions = receivedActions.map((action) => {
+      const commentMatch = comments.find((comment) => {
+        const commentCreated = new Date(comment.creation_time);
+        const actionCreated = new Date(action.time);
+        const createdDifference = Math.abs(commentCreated - actionCreated);
+        return createdDifference < ACTION_COMMENT_CREATION_GAP;
+      });
+      return { ...action, comment: commentMatch };
+    });
+  }
+
   const handleActionClick = (recipients) => (action) => {
     setAction(action);
     setRecipients(recipients);
     setActionDialogOpen(true);
   };
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const handleTabChange = (event, newValue) => {
+    setOpenedTab(newValue);
   };
-
-  const isOnline = player?.profile.sessions?.[0]?.end === null ?? false;
+  // TODO
+  // Move this also to the sidebar provider?
+  const isOnline = player?.profile?.sessions?.[0]?.end === null ?? false;
+  const isWatched = player?.profile?.watchlist && player?.profile?.watchlist?.is_watched;
+  const isBlacklisted = player?.profile?.blacklist && player?.profile?.blacklist?.is_blacklisted;
+  const isBanned = bans.length > 0;
   const actionList = isOnline ? playerGameActions : playerProfileActions;
+  const playerVip =
+    player?.profile.vips.length > 0 &&
+    player.profile.vips.find(
+      (vip) => vip.server_number === globalState.server.number
+    );
 
   return (
     <ResponsiveDrawer
@@ -131,9 +346,7 @@ export const PlayerDetailDrawer = () => {
     >
       <Toolbar />
       {player && (
-        <ProfileWrapper
-          component={'article'}
-        >
+        <ProfileWrapper component={'article'}>
           <ProfileHeader rowGap={1}>
             <OnlineStatusBadge
               overlap="circular"
@@ -187,148 +400,68 @@ export const PlayerDetailDrawer = () => {
             spacing={2}
             sx={{ p: 1 }}
           >
-            {player.is_vip && <StarIcon />}
-            {player.profile.watchlist &&
-              player.profile.watchlist.is_watched && <VisibilityIcon />}
-            {/* <NoAccountsIcon />
-            <GavelIcon /> */}
+            {playerVip && <StarIcon />}
+            {isWatched && <VisibilityIcon />}
+            {isBlacklisted && <NoAccountsIcon />}
+            {isBanned && <GavelIcon />}
           </Stack>
           <Divider />
-          <TabContext value={value}>
+          <TabContext value={openedTab}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs
-                value={value}
-                onChange={handleChange}
+                value={openedTab}
+                onChange={handleTabChange}
                 variant="scrollable"
                 scrollButtons="auto"
                 aria-label="Player details"
               >
                 <Tab label="Profile" value="1" />
                 <Tab label="Admin" value="2" />
-                <Tab label="Comments" value="3" />
+                <Tab label="Messages" value="3" />
               </Tabs>
             </Box>
             <TabPanel value="1">
-              <dl>
-                <dt>Country</dt>
-                <dd>
-                  {player.country && player.country !== 'private' ? (
-                    <>
-                      <img
-                        src={`https://flagcdn.com/w20/${player.country.toLowerCase()}.png`}
-                        width={20}
-                        height={10}
-                        alt={player.country}
-                      />
-                      <span style={{ marginLeft: 4 }}>{player.country}</span>
-                    </>
-                  ) : (
-                    'Unknown'
-                  )}
-                </dd>
-                <dt>First Seen</dt>
-                <dd>
-                  {player.profile.created
-                    ? dayjs(player.profile.created).format('MMM DD, YYYY')
-                    : 'N/A'}
-                </dd>
-                <dt>Last Seen</dt>
-                <dd>
-                  {player.profile.names[0]
-                    ? dayjs(player.profile.names[0].last_seen).format(
-                        'MMM DD, YYYY'
-                      )
-                    : 'N/A'}
-                </dd>
-                <dt>VIP</dt>
-                <dd>{player.is_vip ? 'Yes' : 'No'}</dd>
-                {player.is_vip && (
-                  <>
-                    <dt>VIP Expires</dt>
-                    <dd>TODO - based on viewed server</dd>
-                  </>
-                )}
-                <dt>Visits</dt>
-                <dd>{player.profile.sessions_count}</dd>
-                <dt>Playtime in hours</dt>
-                <dd>
-                  {Math.round(player.profile.total_playtime_seconds / 3600)}
-                </dd>
-                {player.profile.flags.length > 0 && (
-                  <>
-                    <dt>Flags</dt>
-                    {player.profile.flags.map((flag) => (
-                      <span>{flag.flag}</span>
-                    ))}
-                  </>
-                )}
-              </dl>
+              <BasicProfileDetails
+                country={player.country}
+                firstSeen={player?.profile.created}
+                lastSeen={player?.profile.names?.[0]?.last_seen}
+                sessionCount={player?.profile.sessions_count}
+                flags={player?.profile.flags}
+                totalPlaytime={player?.profile.total_playtime_seconds}
+                vip={playerVip}
+              />
             </TabPanel>
             <TabPanel value="2">
               <Box component={'section'}>
                 <Typography variant="h6" component={'h2'}>
                   Penalties
                 </Typography>
-                <dl>
-                  <dt>Punish</dt>
-                  <dd>{player.profile?.penalty_count['PUNISH'] ?? 0}</dd>
-                  <dt>Kick</dt>
-                  <dd>{player.profile?.penalty_count['KICK'] ?? 0}</dd>
-                  <dt>Temporary ban</dt>
-                  <dd>{player.profile?.penalty_count['TEMPBAN'] ?? 0}</dd>
-                  <dt>Permanent ban</dt>
-                  <dd>{player.profile?.penalty_count['PERMABAN'] ?? 0}</dd>
-                </dl>
+                <Penalties
+                  punish={player?.profile?.penalty_count['PUNISH']}
+                  kick={player?.profile?.penalty_count['KICK']}
+                  tempBan={player?.profile?.penalty_count['TEMPBAN']}
+                  parmaBan={player?.profile?.penalty_count['PERMABAN']}
+                />
               </Box>
               <Box component={'section'}>
                 <Typography variant="h6" component={'h2'}>
                   Received actions
                 </Typography>
-                {player.profile.received_actions
-                  .slice(0, 2)
-                  .map((action, i) => (
-                    <Accordion square={true} key={action.action_type + i}>
-                      <AccordionSummary
-                        expandIcon={<ArrowDropDownIcon />}
-                        aria-controls={`panel${i}-content`}
-                        id={`panel${i}-header`}
-                      >
-                        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                          <Typography variant="subtitle2">
-                            {action.action_type}
-                          </Typography>
-                          <Typography
-                            component={'span'}
-                            sx={{ fontSize: '0.7rem' }}
-                          >
-                            {action.by} |{' '}
-                            {dayjs(action.time).format('HH:MM DD.MM.YY')}
-                          </Typography>
-                        </Box>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        <Typography>{action.reason}</Typography>
-                      </AccordionDetails>
-                    </Accordion>
-                  ))}
-                <Accordion defaultExpanded>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel-action-content"
-                    id="panel-action-header"
-                  >
-                    Show all
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    {`This player received ${player.profile.received_actions.length} actions in total.`}
-                  </AccordionDetails>
-                  <AccordionActions>
-                    <Button>Expand</Button>
-                  </AccordionActions>
-                </Accordion>
+                <ReceivedActions actions={receivedActions} />
               </Box>
             </TabPanel>
-            <TabPanel value="3">Comments</TabPanel>
+            <TabPanel value="3">
+              <Box component={'section'}>
+                <Typography variant="h6" component={'h2'}>
+                  Messages
+                </Typography>
+                <Messages
+                  messages={player?.profile?.received_actions.filter(
+                    (action) => action.action_type === 'MESSAGE'
+                  )}
+                />
+              </Box>
+            </TabPanel>
           </TabContext>
         </ProfileWrapper>
       )}

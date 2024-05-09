@@ -1,6 +1,5 @@
 import { Grid, ImageList, ImageListItem } from '@mui/material';
 import React from 'react';
-import 'emoji-mart/css/emoji-mart.css';
 import { ActionButton } from './PlayerTile/ActionButton';
 import { PlayerHeader } from './PlayerTile/PlayerHeader';
 import { PlayerFlags } from './PlayerTile/PlayerFlags';

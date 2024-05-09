@@ -134,6 +134,26 @@ export const clearAccountAction = {
     execute: executeAction('unban'),
 };
 
+// TODO
+// Remove flag action
+// That must be a form with a LIST of flags to be removed
+
+// TODO
+// Remove VIP
+
+// TODO
+// Remove Watchlist
+
+// TODO
+// Remove Blacklist
+
+// TODO
+// A function that takes in either Player object or params as `hasVIP`
+// and returns a list of relevant actions
+// That will be used for a single recepient actions
+// Or make it so that it makes sure all recepients are eligible for 
+// that action
+
 export const playerProfileActions = [
     watchAction,
     vipAction,

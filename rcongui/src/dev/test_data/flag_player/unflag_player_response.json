@@ -1,0 +1,13 @@
+{
+    "result": {
+        "id": 1,
+        "flag": "😅",
+        "comment": "Test",
+        "modified": "2024-05-09T11:24:16.662"
+    },
+    "command": "flag_player",
+    "arguments": {
+        "flag_id": 1
+    },
+    "failed": false
+}

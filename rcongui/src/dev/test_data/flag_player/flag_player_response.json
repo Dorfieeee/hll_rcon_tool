@@ -1,0 +1,15 @@
+{
+    "result": {
+        "id": 1,
+        "flag": "😅",
+        "comment": "Test",
+        "modified": "2024-05-09T11:24:16.662"
+    },
+    "command": "flag_player",
+    "arguments": {
+        "steam_id_64": "76561198098807919",
+        "flag": "😅",
+        "comment": "Test"
+    },
+    "failed": false
+}

@@ -27,6 +27,7 @@ export function ControlledCheckbox({
               value={field.value} // input value
               name={field.name} // send down the input name
               inputRef={field.ref} // send input ref, so we can focus on input when error appear
+              disabled={field.disabled}
               {...props}
             />
           }

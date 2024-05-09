@@ -20,15 +20,14 @@ export const ActionForm = ({
   submitRef,
   action,
   recipients,
-  defaultValues,
+  defaultValues, // not yet used
 }) => {
   const {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm({
-    defaultValues,
-  });
+    setValue,
+  } = useForm();
 
   const [recipientStates, setRecipientStates] = React.useState(
     initRecipients(recipients)
@@ -101,7 +100,7 @@ export const ActionForm = ({
     <React.Fragment>
       <BadgeList recipients={recipientStates} />
       <form onSubmit={handleSubmit(onSubmit)}>
-        <ActionFields control={control} errors={errors} />
+        <ActionFields control={control} errors={errors} setValue={setValue} />
         <Button
           ref={submitRef}
           type="submit"

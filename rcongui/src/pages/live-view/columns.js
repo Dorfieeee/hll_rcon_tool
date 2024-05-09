@@ -1,4 +1,4 @@
-import { Avatar, Badge, Box } from '@mui/material';
+import { Avatar, Badge, Box, Stack, Tooltip, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 
 // TODO
@@ -146,6 +146,26 @@ export const columns = [
     headerName: 'VIP',
     type: 'boolean',
     width: 50,
+  },
+  {
+    field: 'flags',
+    headerName: 'Flags',
+    width: 75,
+    renderCell: (params) => {
+      const flags = params.value;
+      if (!flags || flags.length === 0) return null;
+      const flagsCount = 2;
+      return (
+        <Stack spacing={0.25} direction={'row'} alignItems={'center'}>
+          {flags.slice(0, flagsCount).map(({ flag, comment: note, modified }) => (
+            <Tooltip title={note} key={modified}>
+              <Box>{flag}</Box>
+            </Tooltip>
+          ))}
+          {flags.length - flagsCount > 0 ? <Typography>{`+${flags.length - flagsCount}`}</Typography> : null}
+        </Stack>
+      )
+    },
   },
   {
     field: 'current_playtime_seconds',

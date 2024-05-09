@@ -158,9 +158,18 @@ const BasicProfileDetails = ({
       {flags.length > 0 && (
         <>
           <dt>Flags</dt>
-          {flags.map((flag) => (
-            <span>{flag.flag}</span>
-          ))}
+          <dd>
+            <dl>
+            {flags.map(({ flag, comment: note, modified }, index) => (
+              <React.Fragment key={flag + index}>
+                {index ? <Divider /> : null}
+                <dt>{flag}</dt>
+                <dd>Created: {modified ? dayjs(modified).format('HH:MM DD.MM.YY') : ''}</dd>
+                {note ? <dd>Note: {note}</dd> : null}
+              </React.Fragment>
+            ))}
+            </dl>
+          </dd>
         </>
       )}
     </dl>

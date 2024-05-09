@@ -22,8 +22,8 @@ import { omitBy } from 'lodash/object';
 import SearchBar from './searchBar';
 import { fromJS, List, Map } from 'immutable';
 import FlagIcon from '@mui/icons-material/Flag';
-import 'emoji-mart/css/emoji-mart.css';
-import { Picker } from 'emoji-mart';
+import emojiData from '@emoji-mart/data'
+import Picker from '@emoji-mart/react'
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -96,7 +96,8 @@ class FlagDialog extends React.Component {
           >
             <Grid item xs={12}>
               <Picker
-                onSelect={(emoji) => this.setState({ flag: emoji.native })}
+                onEmojiSelect={(emoji) => this.setState({ flag: emoji.native })}
+                data={emojiData}
               />
             </Grid>
           </Grid>

@@ -10,7 +10,7 @@ export const useInterval = (callback, ms) => {
         setLoading(true);
         try {
             const response = await callback();
-            if (!response.ok) throw new Error(response.status || 'Bad Request');
+            if (!response.ok) throw new Error(response);
             const data = await response.json();
             setData(data);
         } catch (error) {

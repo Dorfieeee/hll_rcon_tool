@@ -5,12 +5,16 @@ import ErrorPage from '../pages/error';
 import IndexPage from '../pages/index';
 import LiveView from '../pages/live-view';
 import Login from '../pages/login/login';
+
 import loginAction from '../pages/login/action';
 import rootAction from '../pages/action';
 import mapsAction from '../pages/settings/maps/action';
+
+import loginLoader from '../pages/login/loader';
 import rootLoader from '../pages/loader';
 import mapsLoader from '../pages/settings/maps/loader';
 import settingsLoader from '../pages/settings/loader';
+
 import HLLSettings from '../components/SettingsView/hllSettings';
 import RconSettings from '../components/RconSettings/rconSettings';
 import {
@@ -236,7 +240,9 @@ const router = createBrowserRouter([
   {
     path: 'login',
     element: <Login />,
+    errorElement: <ErrorPage />,
     action: loginAction,
+    loader: loginLoader,
   },
 ]);
 

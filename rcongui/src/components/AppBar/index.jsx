@@ -9,8 +9,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Form } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Stack } from '@mui/material';
+import { Box, Divider, Stack } from '@mui/material';
 import ThemeMenu from './ThemeMenu';
+import { useGlobalState } from '../../hooks/useGlobalState';
+import { ServerStatus } from './ServerStatus';
 
 const sidebarWidth = 280;
 
@@ -32,54 +34,54 @@ const StyledAppBar = styled(MuiAppBar, {
   }),
 }));
 
-const AppBar = ({ sidebarOpen, toggleSidebar, theme, setTheme }) => (
-  <StyledAppBar position="absolute" open={sidebarOpen}>
-    <Toolbar
-      sx={{
-        pr: '24px', // keep right padding when drawer closed
-      }}
-    >
-      <IconButton
-        edge="start"
-        color="inherit"
-        aria-label="open drawer"
-        onClick={toggleSidebar}
+const Separator = styled(Box)(() => ({
+  flexGrow: 1,
+}))
+
+const AppBar = ({ sidebarOpen, toggleSidebar, theme, setTheme }) => {
+  const { state } = useGlobalState();
+
+  return (
+    <StyledAppBar position="absolute" open={sidebarOpen}>
+      <Toolbar
         sx={{
-          marginRight: '36px',
-          ...(sidebarOpen && { display: 'none' }),
+          pr: '24px', // keep right padding when drawer closed
         }}
       >
-        <MenuIcon />
-      </IconButton>
-      <Typography
-        component="h1"
-        variant="h6"
-        color="inherit"
-        noWrap
-        sx={{ flexGrow: 1 }}
-      >
-        Dashboard
-      </Typography>
-      <Stack direction={'row'} spacing={2}>
-        <ThemeMenu theme={theme} setTheme={setTheme} />
-        <IconButton color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <NotificationsIcon />
-          </Badge>
+        <IconButton
+          edge="start"
+          color="inherit"
+          aria-label="open drawer"
+          onClick={toggleSidebar}
+          sx={{
+            marginRight: '36px',
+            ...(sidebarOpen && { display: 'none' }),
+          }}
+        >
+          <MenuIcon />
         </IconButton>
-        <Form method={'POST'}>
-          <IconButton
-            color="inherit"
-            type="submit"
-            name="intent"
-            value="logout"
-          >
-            <LogoutIcon />
+        <ServerStatus server={state.server} />
+        <Separator />
+        <Stack direction={'row'} spacing={2}>
+          <ThemeMenu theme={theme} setTheme={setTheme} />
+          <IconButton color="inherit">
+            <Badge badgeContent={4} color="secondary">
+              <NotificationsIcon />
+            </Badge>
           </IconButton>
-        </Form>
-      </Stack>
-    </Toolbar>
-  </StyledAppBar>
-);
-
+          <Form method={'POST'}>
+            <IconButton
+              color="inherit"
+              type="submit"
+              name="intent"
+              value="logout"
+            >
+              <LogoutIcon />
+            </IconButton>
+          </Form>
+        </Stack>
+      </Toolbar>
+    </StyledAppBar>
+  );
+};
 export default AppBar;

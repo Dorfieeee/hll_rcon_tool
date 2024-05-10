@@ -2,6 +2,7 @@ import React from 'react';
 import { DataGrid, useGridApiRef } from '@mui/x-data-grid';
 import { TableToolbar } from './TableToolbar';
 import { usePlayerSidebar } from '../../hooks/usePlayerSidebar';
+import { NoRowsOverlay } from './NoRowsOverlay';
 
 const PlayersTable = ({ data: teamData, rows, columns, ...props }) => {
   const { setOpen: setSidebarOpen, setPlayer } = usePlayerSidebar();
@@ -22,7 +23,9 @@ const PlayersTable = ({ data: teamData, rows, columns, ...props }) => {
       disableRowSelectionOnClick: true,
       slots: {
         toolbar: TableToolbar,
+        noRowsOverlay: NoRowsOverlay,
       },
+      sx: { '--DataGrid-overlayHeight': '300px' },
       onRowDoubleClick: (params) => {
         setPlayer(params.row);
         setSidebarOpen((prev) => !prev);
@@ -31,9 +34,11 @@ const PlayersTable = ({ data: teamData, rows, columns, ...props }) => {
         setPlayer(params.row);
       },
       onCellClick: (params) => {
-        if (params.field !== 'assignment' && params.field !== 'unit_name') return;
+        if (params.field !== 'assignment' && params.field !== 'unit_name')
+          return;
         const squadPlayers =
-          teamData.result?.[params.row.team]?.squads[params.row.unit_name]?.players;
+          teamData.result?.[params.row.team]?.squads[params.row.unit_name]
+            ?.players;
         const selectOrUnselect = !apiRef.current.isRowSelected(params.id);
         squadPlayers?.forEach((player) =>
           apiRef.current.selectRow(player.steam_id_64, selectOrUnselect)

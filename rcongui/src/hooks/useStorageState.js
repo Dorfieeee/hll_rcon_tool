@@ -15,7 +15,7 @@ const getItem = (key) => {
 
 export const useStorageState = (key, initialState) => {
   const [value, setValue] = React.useState(
-    getItem(key) || initialState
+    getItem(key) ?? initialState
   );
 
   React.useEffect(() => {

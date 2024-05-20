@@ -1,0 +1,29 @@
+{
+    "result": {
+        "votes": {
+            "[VLK] Dorfieee": "carentan_warfare"
+        },
+        "selection": [
+            "hurtgenforest_warfare_V2",
+            "carentan_warfare",
+            "foy_warfare_night",
+            "elalamein_warfare_night",
+            "driel_warfare",
+            "kursk_offensive_rus"
+        ],
+        "results": {
+            "total_votes": 1,
+            "winning_maps": [
+                [
+                    "carentan_warfare",
+                    1
+                ]
+            ]
+        }
+    },
+    "command": "set_votemap_config",
+    "arguments": null,
+    "failed": false,
+    "error": null,
+    "forwards_results": null
+}

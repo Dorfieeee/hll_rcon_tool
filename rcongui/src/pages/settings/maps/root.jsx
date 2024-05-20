@@ -36,6 +36,8 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import { VotemapConfigForm } from '../../../components/settings/VotemapConfigForm';
+import { VotemapStatus } from '../../../components/settings/VotemapStatus';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -91,7 +93,8 @@ function BasicTabs() {
         Item One
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        Item Two
+        <VotemapStatus />
+        <VotemapConfigForm />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         Simple table of maps including details as n-times played, average
@@ -337,7 +340,7 @@ export default function Root() {
             <ListItemButton
               onClick={handleSubmit({
                 action: 'map reset',
-                message: `Are you sure you want to reset ${gameState.next_map}?`,
+                message: `Are you sure you want to reset ${gameState.current_map}?`,
               })}
             >
               <ListItemIcon>

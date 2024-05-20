@@ -46,17 +46,23 @@ import {
   Typography,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { styled } from '@mui/system';
+
+const NavItem = styled(ListItemButton)(({ theme }) => ({
+  paddingTop: theme.spacing(0.35),
+  paddingBottom: theme.spacing(0.35),
+}))
 
 const NavigationLink = ({ to: path, icon: Icon, text }) => {
   return (
-    <ListItemButton component={Link} to={path}>
+    <NavItem component={Link} to={path} >
       {Icon && (
         <ListItemIcon>
           <Icon />
         </ListItemIcon>
       )}
       <ListItemText primary={text} />
-    </ListItemButton>
+    </NavItem>
   );
 };
 
@@ -69,13 +75,13 @@ const Group = ({ groupName, icon: Icon, level = 1, children }) => {
 
   return (
     <React.Fragment>
-      <ListItemButton onClick={handleClick}>
+      <NavItem onClick={handleClick}>
         <ListItemIcon>
           <Icon />
         </ListItemIcon>
         <ListItemText primary={groupName} />
         {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
+      </NavItem>
       <Collapse in={open} timeout={'auto'} unmountOnExit>
         <List
           sx={{ '& .MuiListItemButton-root': { pl: 2 + 2 * level } }}

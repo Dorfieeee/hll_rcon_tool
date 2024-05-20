@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import {
+  Alert,
   Box,
   Button,
   Collapse,
@@ -12,7 +13,12 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { Form, useLoaderData, useSubmit } from 'react-router-dom';
+import {
+  Form,
+  useActionData,
+  useLoaderData,
+  useSubmit,
+} from 'react-router-dom';
 import { useConfirmDialog } from '../../../hooks/useConfirmDialog';
 import { getMapImageUrl } from '../../../components/Scoreboard/utils';
 import dayjs from 'dayjs';
@@ -88,9 +94,9 @@ function BasicTabs() {
         Item Two
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        Simple table of maps including details as n-times played, average length...
-        Based on map_history
-        Maps with length over 90 do NOT discard but consider as server killers
+        Simple table of maps including details as n-times played, average
+        length... Based on map_history Maps with length over 90 do NOT discard
+        but consider as server killers
       </CustomTabPanel>
     </Box>
   );
@@ -99,7 +105,9 @@ function BasicTabs() {
 // TODO
 // Abstract away some logic into FormWithCofirmation ?
 
-const Section = styled((props) => <Box component={'section'} {...props} />)(() => {});
+const Section = styled((props) => <Box component={'section'} {...props} />)(
+  () => {}
+);
 
 const MapHistory = ({ maps }) => {
   return (
@@ -110,18 +118,17 @@ const MapHistory = ({ maps }) => {
       sx={{ overflowY: 'clip', width: '100%', mb: 0 }}
       variant="quilted"
     >
-      {maps.map((map) => {
-        const isCurrent = !!map.start && map.end == null;
+      {maps.map((map, i) => {
         return (
           <ImageListItem
-            key={map.start}
+            key={map.start + i}
             sx={{
               '& .MuiImageListItem-img': {
-                filter: `brightness(${isCurrent ? 0.9 : 0.3})`,
+                filter: `brightness(${map.isCurrent ? 0.9 : 0.3})`,
               },
               '&.MuiImageListItem-root': {
                 border: (theme) =>
-                  `${isCurrent && '1px solid ' + theme.palette.success.main}`,
+                  `${map.isCurrent && '1px solid ' + theme.palette.success.main}`,
               },
             }}
           >
@@ -142,15 +149,15 @@ const MapHistory = ({ maps }) => {
   );
 };
 
-const MapSelectionItem = ({ map, handleClick }) => {
+const MapSelectionItem = ({ map, onClick }) => {
   return (
-    <ListItemButton onClick={handleClick} sx={{ pl: 6 }}>
+    <ListItemButton onClick={onClick} sx={{ pl: 6 }}>
       <ListItemText primary={map} />
     </ListItemButton>
   );
 };
 
-const MapSelectionGroup = ({ name, list, handleClick }) => {
+const MapSelectionGroup = ({ name, list, onClick }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -172,8 +179,18 @@ const MapSelectionGroup = ({ name, list, handleClick }) => {
           disablePadding
           sx={{ maxHeight: 300, overflow: 'auto' }}
         >
-          {list.map((item) => (
-            <MapSelectionItem map={item} />
+          {list.map((map, i) => (
+            <Form method="post" key={map + i}>
+              <MapSelectionItem
+                map={map}
+                onClick={onClick({
+                  action: 'map change',
+                  message: `Are you sure you want to change map to ${map}?`,
+                })}
+              />
+              <input type="hidden" name="intent" value={'change_map'} />
+              <input type="hidden" name="map_name" value={map} />
+            </Form>
           ))}
         </List>
       </Collapse>
@@ -181,7 +198,7 @@ const MapSelectionGroup = ({ name, list, handleClick }) => {
   );
 };
 
-const MapSelection = ({ open, maps }) => {
+const MapSelection = ({ open, maps, onClick }) => {
   const modes = ['Warfare', 'Offensive', 'Skirmish', 'Unknown'];
 
   const mapGroups = React.useMemo(
@@ -220,6 +237,7 @@ const MapSelection = ({ open, maps }) => {
                 key={name}
                 name={name}
                 list={mapGroups[name.toLowerCase()]}
+                onClick={onClick}
               />
             )
         )}
@@ -234,6 +252,8 @@ export default function Root() {
   const { openConfirmDialog } = useConfirmDialog();
 
   const submit = useSubmit();
+
+  const actionData = useActionData();
 
   const {
     gameState,
@@ -273,12 +293,24 @@ export default function Root() {
       e.preventDefault();
     };
 
-  const lastFourMaps = mapHistory.slice(0, 4);
-  lastFourMaps.reverse();
-  const mapHistoryList = [...lastFourMaps, publicInfo.next_map];
+  const lastThreeMaps = mapHistory.slice(0, 3);
+  lastThreeMaps.reverse();
+  const mapHistoryList = [
+    ...lastThreeMaps,
+    {
+      ...publicInfo.current_map,
+      isCurrent: true,
+    },
+    publicInfo.next_map,
+  ];
 
   return (
     <Box>
+      {actionData && (
+        <Alert severity={actionData.ok ? 'info' : 'error'} onClose={() => {}}>
+          {actionData.message}
+        </Alert>
+      )}
       <Section>
         <MapHistory maps={mapHistoryList} />
       </Section>
@@ -298,7 +330,7 @@ export default function Root() {
               </ListItemIcon>
               <ListItemText primary="Next map" />
               <input type="hidden" name="intent" value={'next_map'} />
-              <input type="hidden" name="next_map" value={gameState.next_map} />
+              <input type="hidden" name="map_name" value={gameState.next_map} />
             </ListItemButton>
           </Form>
           <Form method="post">
@@ -315,26 +347,38 @@ export default function Root() {
               <input type="hidden" name="intent" value={'reset_map'} />
               <input
                 type="hidden"
-                name="current_map"
+                name="map_name"
                 value={gameState.current_map}
               />
             </ListItemButton>
           </Form>
           <Divider />
-          <ListItem>
-            <ListItemIcon>
-              <PollIcon />
-            </ListItemIcon>
-            <ListItemText id="switch-list-label-wifi" primary="Map vote" />
-            <Switch
-              edge="end"
-              onChange={() => {}}
-              checked={votemapConfig.enabled}
-              inputProps={{
-                'aria-labelledby': 'switch-list-label-mapvote',
-              }}
-            />
-          </ListItem>
+          <Form method="post" onChange={(e) => {
+            const formData = new FormData();
+            const config = {
+              ...votemapConfig,
+              enabled: !votemapConfig.enabled,
+              intent: 'set_votemap',
+            }
+            Object.entries(config).forEach(entry => { formData.append(entry[0], entry[1]); })
+            submit(formData, { method: 'post', action: '/settings/maps' })
+          }}>
+            <ListItem>
+              <ListItemIcon>
+                <PollIcon />
+              </ListItemIcon>
+              <ListItemText id="switch-list-label-wifi" primary="Map vote" />
+              <Switch
+              name="enabled"
+                edge="end"
+                checked={votemapConfig.enabled}
+                inputProps={{
+                  'aria-labelledby': 'switch-list-label-mapvote',
+                }}
+              />
+              <input type="hidden" name="intent" value={'set_votemap'} />
+            </ListItem>
+          </Form>
           <ListItemButton onClick={handleChangeMapClick}>
             <ListItemIcon>
               <FormatListBulletedIcon />
@@ -342,7 +386,7 @@ export default function Root() {
             <ListItemText primary="Change map" />
             {open ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
-          <MapSelection maps={maps} open={open} />
+          <MapSelection maps={maps} open={open} onClick={handleSubmit} />
         </List>
         <BasicTabs />
       </Stack>

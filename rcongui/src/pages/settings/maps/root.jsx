@@ -66,37 +66,41 @@ function a11yProps(index) {
   };
 }
 
-function BasicTabs() {
-  const [value, setValue] = React.useState(0);
+function BasicTabs(props) {
+  const [openedTab, setOpenedTab] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const handleTabChange = (event, newValue) => {
+    setOpenedTab(newValue);
   };
 
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs
-          value={value}
-          onChange={handleChange}
+          value={openedTab}
+          onChange={handleTabChange}
           aria-label="basic tabs example"
           sx={{
             bgcolor: 'background.paper',
           }}
         >
-          <Tab label="Fixed Rotation Config" {...a11yProps(0)} />
-          <Tab label="Vote System Config" {...a11yProps(1)} />
-          <Tab label="Map History" {...a11yProps(2)} />
+          <Tab label="Quick settings" {...a11yProps(0)} />
+          <Tab label="Fixed Rotation Config" {...a11yProps(1)} />
+          <Tab label="Vote System Config" {...a11yProps(2)} />
+          <Tab label="Map History" {...a11yProps(3)} />
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0}>
+      <CustomTabPanel value={openedTab} index={0}>
+        Item 0
+      </CustomTabPanel>
+      <CustomTabPanel value={openedTab} index={1}>
         Item One
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        <VotemapStatus />
+      <CustomTabPanel value={openedTab} index={2}>
+        <VotemapStatus status={props.voteStatus} />
         <VotemapConfigForm />
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
+      <CustomTabPanel value={openedTab} index={3}>
         Simple table of maps including details as n-times played, average
         length... Based on map_history Maps with length over 90 do NOT discard
         but consider as server killers
@@ -258,6 +262,12 @@ export default function Root() {
 
   const actionData = useActionData();
 
+  const [openedTab, setOpenedTab] = React.useState(2);
+
+  const handleTabChange = (event, newValue) => {
+    setOpenedTab(newValue);
+  };
+
   const {
     gameState,
     publicInfo,
@@ -317,82 +327,122 @@ export default function Root() {
       <Section>
         <MapHistory maps={mapHistoryList} />
       </Section>
-      <Stack direction={'row'}>
-        <List
-          sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-        >
-          <Form method="post">
-            <ListItemButton
-              onClick={handleSubmit({
-                action: 'map change',
-                message: `Are you sure you want to change map to ${gameState.next_map}?`,
-              })}
+      <Box sx={{ width: '100%' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs
+            value={openedTab}
+            onChange={handleTabChange}
+            aria-label="basic tabs example"
+            sx={{
+              bgcolor: 'background.paper',
+            }}
+          >
+            <Tab label="Quick settings" {...a11yProps(0)} />
+            <Tab label="Fixed Rotation Config" {...a11yProps(1)} />
+            <Tab label="Vote System Config" {...a11yProps(2)} />
+            <Tab label="Map History" {...a11yProps(3)} />
+          </Tabs>
+        </Box>
+        <CustomTabPanel value={openedTab} index={0}>
+          <List
+            sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+          >
+            <Form method="post">
+              <ListItemButton
+                onClick={handleSubmit({
+                  action: 'map change',
+                  message: `Are you sure you want to change map to ${gameState.next_map}?`,
+                })}
+              >
+                <ListItemIcon>
+                  <RedoIcon />
+                </ListItemIcon>
+                <ListItemText primary="Next map" />
+                <input type="hidden" name="intent" value={'next_map'} />
+                <input
+                  type="hidden"
+                  name="map_name"
+                  value={gameState.next_map}
+                />
+              </ListItemButton>
+            </Form>
+            <Form method="post">
+              <ListItemButton
+                onClick={handleSubmit({
+                  action: 'map reset',
+                  message: `Are you sure you want to reset ${gameState.current_map}?`,
+                })}
+              >
+                <ListItemIcon>
+                  <RefreshIcon />
+                </ListItemIcon>
+                <ListItemText primary="Restart map" />
+                <input type="hidden" name="intent" value={'reset_map'} />
+                <input
+                  type="hidden"
+                  name="map_name"
+                  value={gameState.current_map}
+                />
+              </ListItemButton>
+            </Form>
+            <Divider />
+            <Form
+              method="post"
+              onChange={(e) => {
+                const formData = new FormData();
+                const config = {
+                  ...votemapConfig,
+                  enabled: !votemapConfig.enabled,
+                  intent: 'set_votemap',
+                };
+                Object.entries(config).forEach((entry) => {
+                  formData.append(entry[0], entry[1]);
+                });
+                submit(formData, {
+                  method: 'post',
+                  action: '/settings/maps',
+                });
+              }}
             >
+              <ListItem>
+                <ListItemIcon>
+                  <PollIcon />
+                </ListItemIcon>
+                <ListItemText id="switch-list-label-wifi" primary="Map vote" />
+                <Switch
+                  name="enabled"
+                  edge="end"
+                  checked={votemapConfig.enabled}
+                  inputProps={{
+                    'aria-labelledby': 'switch-list-label-mapvote',
+                  }}
+                />
+                <input type="hidden" name="intent" value={'set_votemap'} />
+              </ListItem>
+            </Form>
+            <ListItemButton onClick={handleChangeMapClick}>
               <ListItemIcon>
-                <RedoIcon />
+                <FormatListBulletedIcon />
               </ListItemIcon>
-              <ListItemText primary="Next map" />
-              <input type="hidden" name="intent" value={'next_map'} />
-              <input type="hidden" name="map_name" value={gameState.next_map} />
+              <ListItemText primary="Change map" />
+              {open ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
-          </Form>
-          <Form method="post">
-            <ListItemButton
-              onClick={handleSubmit({
-                action: 'map reset',
-                message: `Are you sure you want to reset ${gameState.current_map}?`,
-              })}
-            >
-              <ListItemIcon>
-                <RefreshIcon />
-              </ListItemIcon>
-              <ListItemText primary="Restart map" />
-              <input type="hidden" name="intent" value={'reset_map'} />
-              <input
-                type="hidden"
-                name="map_name"
-                value={gameState.current_map}
-              />
-            </ListItemButton>
-          </Form>
-          <Divider />
-          <Form method="post" onChange={(e) => {
-            const formData = new FormData();
-            const config = {
-              ...votemapConfig,
-              enabled: !votemapConfig.enabled,
-              intent: 'set_votemap',
-            }
-            Object.entries(config).forEach(entry => { formData.append(entry[0], entry[1]); })
-            submit(formData, { method: 'post', action: '/settings/maps' })
-          }}>
-            <ListItem>
-              <ListItemIcon>
-                <PollIcon />
-              </ListItemIcon>
-              <ListItemText id="switch-list-label-wifi" primary="Map vote" />
-              <Switch
-              name="enabled"
-                edge="end"
-                checked={votemapConfig.enabled}
-                inputProps={{
-                  'aria-labelledby': 'switch-list-label-mapvote',
-                }}
-              />
-              <input type="hidden" name="intent" value={'set_votemap'} />
-            </ListItem>
-          </Form>
-          <ListItemButton onClick={handleChangeMapClick}>
-            <ListItemIcon>
-              <FormatListBulletedIcon />
-            </ListItemIcon>
-            <ListItemText primary="Change map" />
-            {open ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
-          <MapSelection maps={maps} open={open} onClick={handleSubmit} />
-        </List>
-        <BasicTabs />
-      </Stack>
+            <MapSelection maps={maps} open={open} onClick={handleSubmit} />
+          </List>
+        </CustomTabPanel>
+        <CustomTabPanel value={openedTab} index={1}>
+          Item One
+        </CustomTabPanel>
+        <CustomTabPanel value={openedTab} index={2}>
+          <VotemapStatus status={votemapStatus} />
+          <VotemapConfigForm />
+        </CustomTabPanel>
+        <CustomTabPanel value={openedTab} index={3}>
+          Simple table of maps including details as n-times played, average
+          length... Based on map_history Maps with length over 90 do NOT discard
+          but consider as server killers
+        </CustomTabPanel>
+      </Box>
     </Box>
   );
 }

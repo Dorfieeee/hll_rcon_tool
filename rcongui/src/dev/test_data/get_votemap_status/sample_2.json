@@ -1,0 +1,36 @@
+{
+    "result": {
+      "votes": {
+        "NoodleArms": "stalingrad_warfare",
+        "bigconn*BK*": "ELA_S_1942_Night_P_Skirmish"
+      },
+      "selection": [
+        "utahbeach_warfare",
+        "stalingrad_warfare",
+        "purpleheartlane_warfare",
+        "kursk_warfare_night",
+        "mortain_offensiveger_overcast",
+        "kursk_offensive_rus",
+        "ELA_S_1942_Night_P_Skirmish"
+      ],
+      "results": {
+        "total_votes": 2,
+        "winning_maps": [
+          [
+            "stalingrad_warfare",
+            1
+          ],
+          [
+            "ELA_S_1942_Night_P_Skirmish",
+            1
+          ]
+        ]
+      }
+    },
+    "command": "set_votemap_config",
+    "arguments": null,
+    "failed": false,
+    "error": null,
+    "forwards_results": null,
+    "version": "v9.9.1"
+  }

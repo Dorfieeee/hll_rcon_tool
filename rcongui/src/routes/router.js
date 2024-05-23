@@ -9,11 +9,15 @@ import Login from '../pages/login/login';
 import loginAction from '../pages/login/action';
 import rootAction from '../pages/action';
 import mapsAction from '../pages/settings/maps/action';
+import mapQuickSettingsAction from '../pages/settings/maps/quick-settings/action';
+import votemapSettingsAction from '../pages/settings/maps/votemap-config/action';
 
 import loginLoader from '../pages/login/loader';
 import rootLoader from '../pages/loader';
 import mapsLoader from '../pages/settings/maps/loader';
+import votemapSettingsLoader from '../pages/settings/maps/votemap-config/loader';
 import settingsLoader from '../pages/settings/loader';
+import mapQuickSettingsLoader from '../pages/settings/maps/quick-settings/loader'
 
 import HLLSettings from '../components/SettingsView/hllSettings';
 import RconSettings from '../components/RconSettings/rconSettings';
@@ -55,6 +59,9 @@ import AuditLog from '../components/AuditLog';
 import PlayerInfo from '../components/PlayerInfo';
 import TeamView from '../pages/team-view';
 import MapManager from '../pages/settings/maps/root';
+import MapQuickSettings from '../pages/settings/maps/quick-settings/root'
+import VotemapSettings from '../pages/settings/maps/votemap-config/root';
+
 
 const router = createBrowserRouter([
   {
@@ -196,6 +203,29 @@ const router = createBrowserRouter([
             loader: mapsLoader,
             action: mapsAction,
             element: <MapManager />,
+            children: [
+              {
+                path: '',
+                index: true,
+                element: <MapQuickSettings />,
+                loader: mapQuickSettingsLoader,
+                action: mapQuickSettingsAction,
+              },
+              {
+                path: 'map-rotation-config',
+                element: <div>Rotation</div>,
+              },
+              {
+                path: 'votemap-config',
+                element: <VotemapSettings />,
+                loader: votemapSettingsLoader,
+                action: votemapSettingsAction,
+              },
+              {
+                path: 'map-history',
+                element: <div>History</div>,
+              },
+            ]
           },
           {
             path: 'rcon',

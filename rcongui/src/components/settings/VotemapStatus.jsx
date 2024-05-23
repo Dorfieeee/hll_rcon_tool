@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Stack,
   Table,
@@ -13,15 +14,14 @@ import {
 import { useConfirmDialog } from '../../hooks/useConfirmDialog';
 
 export const VotemapStatus = ({ status }) => {
-  const { openConfirmDialog } = useConfirmDialog();
+
+  console.log(status)
+
   return (
-    <div>
+    <Box sx={{ bgcolor: 'background.paper' }}>
       <Typography variant="h6" textAlign={'center'}>
         Current Map Vote
       </Typography>
-      <Stack direction={'row'} justifyContent={'end'}>
-        <Button variant="contained">New Selection</Button>
-      </Stack>
       <TableContainer>
         <Table aria-label="Votemap selection result">
           <TableHead>
@@ -32,7 +32,7 @@ export const VotemapStatus = ({ status }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {status?.selection.map((map) => (
+            {status.selection.length ? status.selection.map((map) => (
               <TableRow>
                 <TableCell>0</TableCell>
                 <TableCell>{map}</TableCell>
@@ -41,10 +41,16 @@ export const VotemapStatus = ({ status }) => {
                   NoodleArms
                 </TableCell>
               </TableRow>
-            ))}
+            )) : (
+              <TableRow>
+              <TableCell>-</TableCell>
+              <TableCell>No selection</TableCell>
+              <TableCell sx={{ textAlign: 'right' }}>-</TableCell>
+            </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
-    </div>
+    </Box>
   );
 };

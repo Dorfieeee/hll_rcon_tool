@@ -60,18 +60,20 @@ export default function Root() {
   ];
 
   return (
-    <Box>
+    <Box sx={{ mt: -2, mx: -3 }}>
       {actionData && (
         <Alert severity={actionData.ok ? 'info' : 'error'} onClose={() => {}}>
           {actionData.message}
         </Alert>
       )}
         <MapHistory maps={mapHistoryList} />
-      <Box sx={{ width: '100%' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs
             value={currentTab}
-            aria-label="basic tabs example"
+            variant="scrollable"
+            scrollButtons="auto"
+            allowScrollButtonsMobile
+            aria-label="Votemap settings tabs"
             sx={{
               bgcolor: 'background.paper',
             }}
@@ -98,7 +100,6 @@ export default function Root() {
           </Tabs>
         </Box>
         <Outlet />
-      </Box>
     </Box>
   );
 }

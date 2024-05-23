@@ -3,48 +3,23 @@ import {
   Autocomplete,
   Box,
   Button,
-  Divider,
   List,
   TextField,
   Typography,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { styled } from '@mui/system';
 import { difference } from 'lodash';
-
-const FormCard = styled('section')(({ theme }) => ({
-  background: theme.palette.background.paper,
-  paddingLeft: theme.spacing(2),
-  paddingRight: theme.spacing(2),
-  paddingTop: theme.spacing(1),
-  paddingBottom: theme.spacing(1),
-}));
-
-const FormCardTitle = styled((props) => (
-  <Typography variant={'h6'} {...props} />
-))(({ theme }) => ({
-  marginBottom: theme.spacing(1),
-  paddingBottom: theme.spacing(0.5),
-  borderBottom: `1px solid ${theme.palette.divider}`,
-}));
-
-const FormDivider = styled((props) => (
-  <Divider textAlign="left" flexItem {...props} />
-))(({ theme }) => ({
-  marginTop: theme.spacing(1),
-  marginBottom: theme.spacing(1),
-  color: theme.palette.text.secondary,
-}));
+import { FormCard, FormDivider } from './cards';
 
 export const VotemapMapOptions = ({ maps, whitelist }) => {
   const options = difference(maps, whitelist);
   const allOptionsUsed = !options.length;
 
   return (
-    <Stack gap={1}>
-      <FormCard style={{ maxWidth: 500 }}>
+    <Stack gap={1} sx={{ width: '100%' }}>
+      <FormCard fullWidth>
         <Stack direction="row" gap={1} alignItems={'center'} flexWrap={'wrap'}>
-        <Typography variant='h6'>Allowed Map Options</Typography>
+          <Typography variant="h6">Allowed Map Options</Typography>
           <Box sx={{ flexGrow: 1 }}></Box>
           <Button
             name="intent"
@@ -67,8 +42,7 @@ export const VotemapMapOptions = ({ maps, whitelist }) => {
           </Button>
         </Stack>
       </FormCard>
-      <FormCard style={{ maxWidth: 500 }}>
-        
+      <FormCard fullWidth>
         <Autocomplete
           disablePortal
           id="combo-box-demo"

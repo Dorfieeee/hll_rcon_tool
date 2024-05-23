@@ -1,18 +1,11 @@
+import React from 'react';
 import {
-  Autocomplete,
-  Avatar,
   Box,
   Button,
-  Divider,
   FormControl,
   FormControlLabel,
   FormGroup,
   FormLabel,
-  IconButton,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
   Radio,
   RadioGroup,
   Stack,
@@ -20,62 +13,17 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { green, orange, red } from '@mui/material/colors';
-import { darken, styled } from '@mui/system';
-import { Form, useActionData, useLoaderData } from 'react-router-dom';
-import { postData } from '../../utils/fetchUtils';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { difference } from 'lodash';
-import React from 'react';
+import { Form } from 'react-router-dom';
+import {
+  FormCard,
+  FormCardTitle,
+  FormDivider,
+  StyledFormControlLabel,
+  SwitchHelperText,
+  Wrapper,
+} from './cards';
 
-const FormCard = styled('section')(({ theme }) => ({
-  background: theme.palette.background.paper,
-  paddingLeft: theme.spacing(2),
-  paddingRight: theme.spacing(2),
-  paddingTop: theme.spacing(1),
-  paddingBottom: theme.spacing(1),
-  width: `calc(33% - ${theme.spacing(0.05)})`,
-  [theme.breakpoints.down('xl')]: {
-    width: `calc(50% - ${theme.spacing(0.5)})`,
-  },
-  [theme.breakpoints.down('md')]: {
-    width: '100%',
-  },
-}));
-
-const FormCardTitle = styled((props) => (
-  <Typography variant={'h6'} {...props} />
-))(({ theme }) => ({
-  marginBottom: theme.spacing(1),
-  paddingBottom: theme.spacing(0.5),
-  borderBottom: `1px solid ${theme.palette.divider}`,
-}));
-
-const Wrapper = styled((props) => (
-  <Stack gap={1} direction={'row'} flexWrap={'wrap'} {...props} />
-))(({ theme }) => ({}));
-
-const SwitchHelperText = styled((props) => (
-  <Typography variant="caption" {...props} />
-))(({ theme }) => ({
-  marginLeft: theme.spacing(3),
-  marginTop: theme.spacing(-0.5),
-  fontStyle: 'italic',
-}));
-
-const FormDivider = styled((props) => (
-  <Divider textAlign="left" flexItem {...props} />
-))(({ theme }) => ({
-  marginTop: theme.spacing(1),
-  marginBottom: theme.spacing(1),
-  color: theme.palette.text.secondary,
-}));
-
-const StyledFormControlLabel = styled((props) => (
-  <FormControlLabel labelPlacement="end" {...props} />
-))(({ theme }) => ({}));
-
-export const VotemapConfigForm = ({ config, mapList, maps }) => {
+export const VotemapConfigForm = ({ config, handleFactory, handleReset }) => {
   const [formChanged, setFormChanged] = React.useState(false);
 
   const totalMapOptions =
@@ -87,14 +35,14 @@ export const VotemapConfigForm = ({ config, mapList, maps }) => {
     <Form method="post" onChange={() => setFormChanged(true)}>
       <Wrapper>
         {/* General */}
-        <FormCard style={{ width: '100%' }}>
+        <FormCard fullWidth>
           <Stack
             direction="row"
             gap={1}
             alignItems={'center'}
             flexWrap={'wrap'}
           >
-            <Typography variant='h6'>Votemap Config</Typography>
+            <Typography variant="h6">Votemap Config</Typography>
             <Box sx={{ flexGrow: 1 }}></Box>
             <StyledFormControlLabel
               sx={{ marginLeft: 0, marginRight: 2 }}
@@ -111,12 +59,22 @@ export const VotemapConfigForm = ({ config, mapList, maps }) => {
             <Button
               size="small"
               variant="contained"
-              onClick={() => {
-                console.log('factory settings');
-              }}
+              onClick={handleFactory}
               color="warning"
             >
               Factory Settings
+            </Button>
+            <Button
+              size="small"
+              variant="contained"
+              onClick={() => {
+                setFormChanged(false);
+                handleReset();
+              }}
+              color="warning"
+              disabled={!formChanged}
+            >
+              Reset Changes
             </Button>
             <Button
               size="small"

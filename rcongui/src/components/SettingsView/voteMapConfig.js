@@ -152,20 +152,36 @@ const VoteMapConfig = () => {
         <TextField
           type="number"
           inputProps={{ min: 2, max: 10 }}
-          label="Number of options in selection:"
-          helperText="The amount of maps that should be offered in the vote"
-          value={config.get('number_of_options', false)}
-          onChange={(e) => saveConfig({ number_of_options: e.target.value })}
+          label="Total # Options:"
+          helperText="The combined total of warfare, offensive and skirmish options."
+          value={config.get("num_warfare_options", 0) + config.get("num_offensive_options", 0) + config.get("num_skirmish_control_options", 0)}
+        />
+      </Grid>
+      <Grid item>
+        <TextField
+          type="number"
+          label="Warfare"
+          helperText="Number of warfare maps to offer"
+          value={config.get('num_warfare_options', false)}
+          onChange={(e) => saveConfig({ num_warfare_options: e.target.value })}
+        />
+      </Grid>
+      <Grid item>
+        <TextField
+          type="number"
+          label="Offensive"
+          helperText="Number of offensive maps to offer"
+          value={config.get('num_offensive_options', false)}
+          onChange={(e) => saveConfig({ num_offensive_options: e.target.value })}
         />
       </Grid2>
       <Grid2 xs={12}>
         <TextField
           type="number"
-          inputProps={{ min: 0, max: 1, step: 0.05 }}
-          label="Ratio of offensives:"
-          helperText="The ratio of offensive maps in the selection"
-          value={config.get('ratio_of_offensives', false)}
-          onChange={(e) => saveConfig({ ratio_of_offensives: e.target.value })}
+          label="Control Skirmish"
+          helperText="Number of control skirmish maps to offer"
+          value={config.get('num_skirmish_control_options', false)}
+          onChange={(e) => saveConfig({ num_skirmish_control_options: e.target.value })}
         />
       </Grid2>
       <Grid2 xs={12}>
@@ -185,11 +201,18 @@ const VoteMapConfig = () => {
       </Grid2>
       <Grid2 xs={12}>
         <Padlock
-          label="Consider offensive map being the same as warfare when excluding:"
-          checked={config.get('consider_offensive_same_map', false)}
+          label="Consider offensive maps as being the same when excluding:"
+          checked={config.get("consider_offensive_same_map", false)}
           handleChange={(v) => saveConfig({ consider_offensive_same_map: v })}
         />
-      </Grid2>
+      </Grid>
+      <Grid item>
+        <Padlock
+          label="Consider skirmish maps as being the same when excluding:"
+          checked={config.get("consider_skirmishes_as_same_map", false)}
+          handleChange={(v) => saveConfig({ consider_skirmishes_as_same_map: v })}
+        />
+      </Grid>
 
       <Grid2 xs={12}>
         <Padlock
@@ -212,7 +235,15 @@ const VoteMapConfig = () => {
             })
           }
         />
-      </Grid2>
+      </Grid>
+
+      <Grid item>
+        <Padlock
+          label="Allow consecutive skirmish map"
+          checked={config.get("allow_consecutive_skirmishes", false)}
+          handleChange={(v) => saveConfig({ allow_consecutive_skirmishes: v })}
+        />
+      </Grid>
 
       <Grid2 xs={12}>
         <FormControl>
@@ -242,9 +273,16 @@ const VoteMapConfig = () => {
           checked={config.get('allow_default_to_offensive', false)}
           handleChange={(v) => saveConfig({ allow_default_to_offensive: v })}
         />
-      </Grid2>
-        <Grid2
-          xs={12}
+      </Grid>
+      <Grid item>
+        <Padlock
+          label="Allow default map to be a skirmish"
+          checked={config.get("allow_default_to_skirmish", false)}
+          handleChange={(v) => saveConfig({ allow_default_to_skirmish: v })}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <Grid
           container
           justifyContent="flex-start"
           alignContent="stretch"

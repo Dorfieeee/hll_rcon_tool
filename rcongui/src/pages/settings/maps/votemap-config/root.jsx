@@ -31,7 +31,7 @@ export default function VotemapConfig() {
           <TabList
             orientation="vertical"
             onChange={handleTabChange}
-            aria-label="lab API tabs example"
+            aria-label="Votemap config tabs"
             sx={{
               borderRight: 1,
               borderColor: 'divider',

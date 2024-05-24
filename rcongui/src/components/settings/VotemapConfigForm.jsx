@@ -13,7 +13,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { Form } from 'react-router-dom';
+import { Form, useActionData, useLoaderData, useSubmit } from 'react-router-dom';
 import {
   FormCard,
   FormCardTitle,
@@ -23,16 +23,94 @@ import {
   Wrapper,
 } from './cards';
 
-export const VotemapConfigForm = ({ config, handleFactory, handleReset }) => {
+const FACTORY_CONFIG = {
+  enabled: false,
+  default_method: 'least_played_from_suggestions',
+  number_last_played_to_exclude: 3,
+  num_warfare_options: 4,
+  num_offensive_options: 2,
+  num_skirmish_control_options: 1,
+  consider_offensive_same_map: true,
+  consider_skirmishes_as_same_map: true,
+  allow_consecutive_offensives: true,
+  allow_consecutive_offensives_opposite_sides: false,
+  allow_default_to_offensive: false,
+  allow_consecutive_skirmishes: false,
+  allow_default_to_skirmish: false,
+  instruction_text:
+    'Vote for the nextmap:\nType in the chat !votemap <map number>\n{map_selection}\n\nTo never see this message again type in the chat !votemap never\n\nTo renable type: !votemap allow',
+  thank_you_text: 'Thanks {player_name}, vote registered for:\n{map_name}',
+  no_vote_text: 'No votes recorded yet',
+  reminder_frequency_minutes: 20,
+  allow_opt_out: true,
+  help_text: '',
+};
+
+export const VotemapConfigForm = () => {
   const [formChanged, setFormChanged] = React.useState(false);
 
+  const { config: serverConfig } = useLoaderData();
+
+  const submit = useSubmit();
+
+  const actionData = useActionData();
+
+  const [config, setConfig] = React.useState(serverConfig);
+
+  React.useEffect(() => {
+    if (actionData?.ok) {
+      setFormChanged(false);
+    }
+  }, [actionData])
+
+  const handleFactoryConfig = () => {
+    setConfig(FACTORY_CONFIG);
+  };
+
+  const handleResetConfigChanges = () => {
+    setConfig(serverConfig);
+  };
+
+  const handleInputChange = (e) => {
+    let { name, value } = e.target;
+
+    if (typeof config[name] === 'boolean') {
+      setConfig(prevConfig => {
+        if (prevConfig[name]) {
+            value = false;
+        } else {
+            value = true;
+        }
+
+        return {
+            ...prevConfig,
+            [name]: value,
+          }
+      });
+      return;
+    }
+
+    setConfig({
+      ...config,
+      [name]: value,
+    });
+  };
+
+  const handleFormSubmit = (e) => {
+    const formData = new FormData();
+    Object.entries(config).forEach(entry => formData.append(...entry));
+    formData.append('intent', 'set_config');
+    submit(formData, { method: 'post' });
+    e.preventDefault();
+  }
+
   const totalMapOptions =
-    config.num_warfare_options +
-    config.num_offensive_options +
-    config.num_skirmish_control_options;
+    Number(config.num_warfare_options) +
+    Number(config.num_offensive_options) +
+    Number(config.num_skirmish_control_options);
 
   return (
-    <Form method="post" onChange={() => setFormChanged(true)}>
+    <Form onSubmit={handleFormSubmit} onChange={() => setFormChanged(true)}>
       <Wrapper>
         {/* General */}
         <FormCard fullWidth>
@@ -49,17 +127,21 @@ export const VotemapConfigForm = ({ config, handleFactory, handleReset }) => {
               labelPlacement="start"
               control={
                 <Switch
-                  defaultChecked={config.enabled}
+                  onChange={handleInputChange}
+                  checked={config.enabled}
                   color="warning"
                   name="enabled"
                 />
               }
-              label="Enabled"
+              label={config.enabled ? "ON" : "OFF"}
             />
             <Button
               size="small"
               variant="contained"
-              onClick={handleFactory}
+              onClick={() => {
+                setFormChanged(true);
+                handleFactoryConfig();
+              }}
               color="warning"
             >
               Factory Settings
@@ -69,7 +151,7 @@ export const VotemapConfigForm = ({ config, handleFactory, handleReset }) => {
               variant="contained"
               onClick={() => {
                 setFormChanged(false);
-                handleReset();
+                handleResetConfigChanges();
               }}
               color="warning"
               disabled={!formChanged}
@@ -97,10 +179,11 @@ export const VotemapConfigForm = ({ config, handleFactory, handleReset }) => {
             Total map options: {totalMapOptions}
           </Typography>
           <TextField
+            onChange={handleInputChange}
             name="num_warfare_options"
             label="Warfare maps"
             variant="outlined"
-            defaultValue={config.num_warfare_options}
+            value={config.num_warfare_options}
             margin="normal"
             fullWidth
             type="number"
@@ -109,10 +192,11 @@ export const VotemapConfigForm = ({ config, handleFactory, handleReset }) => {
             }}
           />
           <TextField
+            onChange={handleInputChange}
             name="num_offensive_options"
             label="Offensive maps"
             variant="outlined"
-            defaultValue={config.num_offensive_options}
+            value={config.num_offensive_options}
             margin="normal"
             fullWidth
             type="number"
@@ -121,10 +205,11 @@ export const VotemapConfigForm = ({ config, handleFactory, handleReset }) => {
             }}
           />
           <TextField
+            onChange={handleInputChange}
             name="num_skirmish_control_options"
             label="Skirmish maps"
             variant="outlined"
-            defaultValue={config.num_skirmish_control_options}
+            value={config.num_skirmish_control_options}
             margin="normal"
             fullWidth
             type="number"
@@ -148,8 +233,9 @@ export const VotemapConfigForm = ({ config, handleFactory, handleReset }) => {
               labelPlacement="end"
               control={
                 <Switch
+                  onChange={handleInputChange}
                   name="consider_offensive_same_map"
-                  defaultChecked={config.consider_offensive_same_map}
+                  checked={config.consider_offensive_same_map}
                 />
               }
               label="Exclude Skirmish"
@@ -162,8 +248,9 @@ export const VotemapConfigForm = ({ config, handleFactory, handleReset }) => {
               labelPlacement="end"
               control={
                 <Switch
+                  onChange={handleInputChange}
                   name="allow_consecutive_skirmishes"
-                  defaultChecked={config.allow_consecutive_skirmishes}
+                  checked={config.allow_consecutive_skirmishes}
                 />
               }
               label="Consecutive Skirmish"
@@ -178,8 +265,9 @@ export const VotemapConfigForm = ({ config, handleFactory, handleReset }) => {
               labelPlacement="end"
               control={
                 <Switch
+                  onChange={handleInputChange}
                   name="consider_skirmishes_as_same_map"
-                  defaultChecked={config.consider_skirmishes_as_same_map}
+                  checked={config.consider_skirmishes_as_same_map}
                 />
               }
               label="Exclude Offensive"
@@ -192,8 +280,9 @@ export const VotemapConfigForm = ({ config, handleFactory, handleReset }) => {
               labelPlacement="end"
               control={
                 <Switch
+                  onChange={handleInputChange}
                   name="allow_consecutive_offensives"
-                  defaultChecked={config.allow_consecutive_offensives}
+                  checked={config.allow_consecutive_offensives}
                 />
               }
               label="Consecutive Offensive"
@@ -205,8 +294,9 @@ export const VotemapConfigForm = ({ config, handleFactory, handleReset }) => {
               labelPlacement="end"
               control={
                 <Switch
+                  onChange={handleInputChange}
                   name="allow_consecutive_offensives_opposite_sides"
-                  defaultChecked={
+                  checked={
                     config.allow_consecutive_offensives_opposite_sides
                   }
                 />
@@ -220,10 +310,11 @@ export const VotemapConfigForm = ({ config, handleFactory, handleReset }) => {
             </SwitchHelperText>
             <FormDivider />
             <TextField
+              onChange={handleInputChange}
               name="number_last_played_to_exclude"
               label="Excluded last played maps"
               variant="outlined"
-              defaultValue={config.number_last_played_to_exclude}
+              value={config.number_last_played_to_exclude}
               margin="normal"
               fullWidth
               type="number"
@@ -242,8 +333,9 @@ export const VotemapConfigForm = ({ config, handleFactory, handleReset }) => {
             <FormLabel id="default-map-pick-method">Method</FormLabel>
             <RadioGroup
               aria-labelledby="default-map-pick-method"
-              defaultValue={config.default_method}
+              value={config.default_method}
               name="default_method"
+              onChange={handleInputChange}
             >
               <FormControlLabel
                 value="least_played_from_suggestions"
@@ -274,7 +366,8 @@ export const VotemapConfigForm = ({ config, handleFactory, handleReset }) => {
               control={
                 <Switch
                   name="allow_default_to_offensive"
-                  defaultChecked={config.allow_default_to_offensive}
+                  checked={config.allow_default_to_offensive}
+                  onChange={handleInputChange}
                 />
               }
               label="Default Offensive"
@@ -287,7 +380,8 @@ export const VotemapConfigForm = ({ config, handleFactory, handleReset }) => {
               control={
                 <Switch
                   name="allow_default_to_skirmish"
-                  defaultChecked={config.allow_default_to_skirmish}
+                  checked={config.allow_default_to_skirmish}
+                  onChange={handleInputChange}
                 />
               }
               label="Default Skirmish"
@@ -312,7 +406,8 @@ export const VotemapConfigForm = ({ config, handleFactory, handleReset }) => {
               control={
                 <Switch
                   name="allow_opt_out"
-                  defaultChecked={config.allow_opt_out}
+                  checked={config.allow_opt_out}
+                  onChange={handleInputChange}
                 />
               }
               label="Map Vote Opt Out"
@@ -323,10 +418,11 @@ export const VotemapConfigForm = ({ config, handleFactory, handleReset }) => {
             </SwitchHelperText>
           </FormGroup>
           <TextField
+            onChange={handleInputChange}
             name="reminder_frequency_minutes"
             label="Reminder frequency during game"
             variant="outlined"
-            defaultValue={config.reminder_frequency_minutes}
+            value={config.reminder_frequency_minutes}
             margin="normal"
             fullWidth
             type="number"
@@ -336,12 +432,13 @@ export const VotemapConfigForm = ({ config, handleFactory, handleReset }) => {
             }}
           />
           <TextField
+            onChange={handleInputChange}
             name="instruction_text"
             multiline
             minRows={4}
             label="Message"
             variant="filled"
-            defaultValue={config.instruction_text}
+            value={config.instruction_text}
             helperText="Make sure you add {map_selection} in your text"
             margin="normal"
             fullWidth
@@ -352,24 +449,26 @@ export const VotemapConfigForm = ({ config, handleFactory, handleReset }) => {
         <FormCard>
           <FormCardTitle>Messages</FormCardTitle>
           <TextField
+            onChange={handleInputChange}
             name="thank_you_text"
             multiline
             minRows={4}
             label="Vote Response"
             variant="filled"
-            defaultValue={config.thank_you_text}
+            value={config.thank_you_text}
             helperText="The reply to player after they voted. You can use {player_name} and {map_name} in the text. Leave blank if you don't want the confirmation message"
             margin="normal"
             fullWidth
             type="text"
           />
           <TextField
+            onChange={handleInputChange}
             name="help_text"
             multiline
             minRows={4}
             label="Vote Help"
             variant="filled"
-            defaultValue={config.help_text}
+            value={config.help_text}
             helperText="Help text:
           This text will show to the player in case of a bad !votemap command, or if the user types !votemap help"
             margin="normal"
@@ -377,12 +476,13 @@ export const VotemapConfigForm = ({ config, handleFactory, handleReset }) => {
             type="text"
           />
           <TextField
+            onChange={handleInputChange}
             name="no_vote_text"
             multiline
             minRows={4}
             label="No Vote Text"
             variant="filled"
-            defaultValue={config.no_vote_text}
+            value={config.no_vote_text}
             helperText="This text will be shown as Broadcast message when no map has been voted."
             margin="normal"
             fullWidth

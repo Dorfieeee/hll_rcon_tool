@@ -12,6 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 import { FormCard } from './cards';
+import { Form } from 'react-router-dom';
 
 export const VotemapStatus = ({ status }) => {
   return (
@@ -20,16 +21,18 @@ export const VotemapStatus = ({ status }) => {
         <Stack direction="row" gap={1} alignItems={'center'} flexWrap={'wrap'}>
           <Typography variant="h6">Current Map Vote</Typography>
           <Box sx={{ flexGrow: 1 }}></Box>
-          <Button
-            size="small"
-            variant="contained"
-            onClick={() => {
-              console.log('factory settings');
-            }}
-            color="warning"
-          >
-            Reset
-          </Button>
+          <Form method='post'>
+            <Button
+              size="small"
+              variant="contained"
+              name='intent'
+              value='reset_votemap_state'
+              type='submit'
+              color="warning"
+            >
+              New Selection
+            </Button>
+          </Form>
         </Stack>
       </FormCard>
       <TableContainer>

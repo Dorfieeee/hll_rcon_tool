@@ -156,8 +156,8 @@ const VoteMapConfig = () => {
           helperText="The combined total of warfare, offensive and skirmish options."
           value={config.get("num_warfare_options", 0) + config.get("num_offensive_options", 0) + config.get("num_skirmish_control_options", 0)}
         />
-      </Grid>
-      <Grid item>
+      </Grid2>
+      <Grid2>
         <TextField
           type="number"
           label="Warfare"
@@ -165,8 +165,8 @@ const VoteMapConfig = () => {
           value={config.get('num_warfare_options', false)}
           onChange={(e) => saveConfig({ num_warfare_options: e.target.value })}
         />
-      </Grid>
-      <Grid item>
+      </Grid2>
+      <Grid2>
         <TextField
           type="number"
           label="Offensive"
@@ -205,14 +205,14 @@ const VoteMapConfig = () => {
           checked={config.get("consider_offensive_same_map", false)}
           handleChange={(v) => saveConfig({ consider_offensive_same_map: v })}
         />
-      </Grid>
-      <Grid item>
+      </Grid2>
+      <Grid2>
         <Padlock
           label="Consider skirmish maps as being the same when excluding:"
           checked={config.get("consider_skirmishes_as_same_map", false)}
           handleChange={(v) => saveConfig({ consider_skirmishes_as_same_map: v })}
         />
-      </Grid>
+      </Grid2>
 
       <Grid2 xs={12}>
         <Padlock
@@ -235,15 +235,15 @@ const VoteMapConfig = () => {
             })
           }
         />
-      </Grid>
+      </Grid2>
 
-      <Grid item>
+      <Grid2>
         <Padlock
           label="Allow consecutive skirmish map"
           checked={config.get("allow_consecutive_skirmishes", false)}
           handleChange={(v) => saveConfig({ allow_consecutive_skirmishes: v })}
         />
-      </Grid>
+      </Grid2>
 
       <Grid2 xs={12}>
         <FormControl>
@@ -273,16 +273,16 @@ const VoteMapConfig = () => {
           checked={config.get('allow_default_to_offensive', false)}
           handleChange={(v) => saveConfig({ allow_default_to_offensive: v })}
         />
-      </Grid>
-      <Grid item>
+      </Grid2>
+      <Grid2>
         <Padlock
           label="Allow default map to be a skirmish"
           checked={config.get("allow_default_to_skirmish", false)}
           handleChange={(v) => saveConfig({ allow_default_to_skirmish: v })}
         />
-      </Grid>
-      <Grid item xs={12}>
-        <Grid
+      </Grid2>
+      <Grid2 xs={12}>
+        <Grid2
           container
           justifyContent="flex-start"
           alignContent="stretch"
@@ -330,7 +330,9 @@ const VoteMapConfig = () => {
             </Button>
           </Grid2>
         </Grid2>
+      </Grid2>
     </Grid2>
+
   );
 };
 

@@ -618,7 +618,7 @@ const GameView = () => {
                   multiple
                   clearOnEscape
                   id="tags-outlined"
-                  options={allPlayerNames}
+                  options={allPlayerNames.sort((a, b) => a.localeCompare(b))}
                   value={autoCompleteSelectedPlayers}
                   filterSelectedOptions
                   onChange={(e, val) => {

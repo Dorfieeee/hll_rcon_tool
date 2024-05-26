@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   Paper,
@@ -13,21 +14,39 @@ import {
 } from '@mui/material';
 import { FormCard } from './cards';
 import { Form } from 'react-router-dom';
+import { getMapImageUrl, getMapName } from '../Scoreboard/utils';
+
+const simplifyStatusResult = (status) => {
+  if (!status.selection.length) return;
+
+  let selection = new Map(status.selection.map((mapName) => [mapName, []]))
+
+  Object.entries(status.votes).forEach(([player, mapName]) => {
+    selection.get(mapName).push(player)
+  });
+
+  selection = [...selection]
+  selection.sort((a, b) => b[1].length - a[1].length)
+  
+  return selection;
+};
 
 export const VotemapStatus = ({ status }) => {
+  const selection = simplifyStatusResult(status)
+
   return (
     <Paper>
       <FormCard fullWidth>
         <Stack direction="row" gap={1} alignItems={'center'} flexWrap={'wrap'}>
           <Typography variant="h6">Current Map Vote</Typography>
           <Box sx={{ flexGrow: 1 }}></Box>
-          <Form method='post'>
+          <Form method="post">
             <Button
               size="small"
               variant="contained"
-              name='intent'
-              value='reset_votemap_state'
-              type='submit'
+              name="intent"
+              value="reset_votemap_state"
+              type="submit"
               color="warning"
             >
               New Selection
@@ -39,20 +58,21 @@ export const VotemapStatus = ({ status }) => {
         <Table aria-label="Votemap selection result">
           <TableHead>
             <TableRow>
-              <TableCell>Votes</TableCell>
-              <TableCell>Maps</TableCell>
+              <TableCell sx={{ maxWidth: 25 }}>Votes</TableCell>
+              <TableCell colSpan={3} sx={{ textAlign: 'center' }}>Map</TableCell>
               <TableCell sx={{ textAlign: 'right' }}>Voters</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {status.selection.length ? (
-              status.selection.map((map) => (
+            {selection.length ? (
+              selection.map(([map, votes]) => (
                 <TableRow>
-                  <TableCell>0</TableCell>
-                  <TableCell>{map}</TableCell>
+                  <TableCell sx={{ maxWidth: 25 }}>{votes.length}</TableCell>
+                  <TableCell sx={{ maxWidth: 50 }}><Avatar alt={map} src={getMapImageUrl(map)} variant='square' /></TableCell>
+                  <TableCell sx={{ maxWidth: 50 }}>{getMapName(map)}</TableCell>
+                  <TableCell sx={{ maxWidth: 25 }}>{'mode'}</TableCell>
                   <TableCell sx={{ textAlign: 'right' }}>
-                    NoodleArms, NoodleArms, NoodleArms, NoodleArms, NoodleArms,
-                    NoodleArms
+                    {votes.join(', ')}
                   </TableCell>
                 </TableRow>
               ))

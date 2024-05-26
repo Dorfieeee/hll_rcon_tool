@@ -59,10 +59,8 @@ export default function Root() {
     },
   ];
 
-  console.log(actionData)
-
   return (
-    <Box sx={{ mt: -2, mx: -3 }}>
+    <Box sx={{ mt: -4, mx: -3, height: '100%' }}>
       {actionData && (
         <Alert severity={actionData.ok ? 'info' : 'error'} onClose={() => {}}>
           {actionData.message}
@@ -80,11 +78,10 @@ export default function Root() {
               bgcolor: 'background.paper',
             }}
           >
-            <Tab label="Quick settings" value={pathRoot} to={pathRoot} component={Link} />
             <Tab
               label="Fixed Rotation Config"
-              value={pathRoot + '/map-rotation-config'}
-              to={pathRoot + '/map-rotation-config'}
+              value={pathRoot}
+              to={pathRoot}
               component={Link}
             />
             <Tab
@@ -98,6 +95,7 @@ export default function Root() {
               value={pathRoot + '/map-history'}
               to={pathRoot + '/map-history'}
               component={Link}
+              disabled
             />
           </Tabs>
         </Box>

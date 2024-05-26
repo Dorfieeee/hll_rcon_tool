@@ -22,6 +22,8 @@ const Main = styled('main')(({ theme }) => ({
       ? theme.palette.grey[100]
       : theme.palette.grey[900],
   flexGrow: 1,
+  display: 'flex',
+  flexDirection: 'column',
   height: '100vh',
   overflowY: 'auto',
   overflowX: 'clip',
@@ -57,7 +59,7 @@ export default function Root() {
               />
               <Main>
                 <Toolbar /> {/* To offset from the top  */}
-                <Container maxWidth={'xl'} sx={{ mt: 2, mb: 4 }}>
+                <Container maxWidth={'xl'} sx={{ mt: 2, mb: 4, flexGrow: 1 }}>
                   <Outlet />
                 </Container>
               </Main>

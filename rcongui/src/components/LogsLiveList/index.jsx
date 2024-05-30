@@ -101,7 +101,7 @@ const LiveLogs = () => {
   const { players = [], actions = [], logs = [] } = logsResult;
 
   return (
-    <Stack>
+    <Stack sx={{ maxHeight: 'calc(var(--DataGrid-headersTotalHeight))' }}>
       {/* FILTERS & CONTROLS */}
       <Grid container columnSpacing={1} alignItems={'center'}>
         <Grid xs={12} lg={2}>
@@ -188,7 +188,7 @@ const LiveLogs = () => {
       </Grid>
       {/* LOGS */}
       {logs.length ? (
-        <Paper sx={{ p: 1, my: 1 }} className={highlighted && 'highlighted'}>
+        <Paper sx={{ p: 1, my: 1, overflow: 'auto' }} className={highlighted && 'highlighted'}>
           <Line
             sx={{
               display: 'inline-flex',

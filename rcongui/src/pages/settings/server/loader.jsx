@@ -1,12 +1,19 @@
-import { get } from "../../../../utils/fetchUtils";
+import { get } from "../../../utils/fetchUtils";
+
+// autoBalanceThres: data.result.autobalance_threshold,
+// teamSwitchCooldownMin: data.result.team_switch_cooldown,
+// idleAutokickMin: data.result.idle_autokick_time,
+// maxPingMs: data.result.max_ping_autokick,
+// queueLength: data.result.queue_length,
+// vipSlots: data.result.vip_slots_num,
+// autobalanceEnabled: data.result.autobalance_enabled,
+// votekickEnabled: data.result.votekick_enabled,
 
 const loader = async () => {
   try {
     // Use Promise.all to wait for all promises to resolve
     const responses = await Promise.all([
-      get('get_gamestate'),
-      get('get_maps'),
-      get('get_votemap_config'),
+      get(`get_server_settings`)
     ]);
 
     // Check if any response has a status of 400 or above
@@ -30,16 +37,12 @@ const loader = async () => {
 
     // Extract the results from the JSON responses
     const [
-      gameState,
-      maps,
-      votemapConfig,
+      serverSettings,
     ] = data.map((json) => json.result);
 
     // Return an object containing all the results
     return {
-      gameState,
-      maps,
-      votemapConfig,
+      serverSettings,
     };
   } catch (error) {
     // Handle any errors that occurred during the fetch or processing

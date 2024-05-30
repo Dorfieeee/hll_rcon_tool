@@ -59,7 +59,7 @@ export default function Root() {
               />
               <Main>
                 <Toolbar /> {/* To offset from the top  */}
-                <Container maxWidth={'xl'} sx={{ mt: 2, mb: 4, flexGrow: 1 }}>
+                <Container maxWidth sx={{ mt: 2, mb: 4, flexGrow: 1 }}>
                   <Outlet />
                 </Container>
               </Main>

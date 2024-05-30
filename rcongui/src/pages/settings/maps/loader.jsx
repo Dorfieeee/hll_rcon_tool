@@ -5,7 +5,6 @@ const loader = async () => {
     // Use Promise.all to wait for all promises to resolve
     const responses = await Promise.all([
       get('get_gamestate'),
-      // get('public_info'),
       get('get_map_history'),
       get('get_maps'),
       get('get_map_rotation'),
@@ -36,7 +35,6 @@ const loader = async () => {
     // Extract the results from the JSON responses
     const [
       gameState,
-      // publicInfo,
       mapHistory,
       maps,
       mapRotation,

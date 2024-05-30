@@ -25,7 +25,7 @@ const PlayersTable = ({ data: teamData, rows, columns, ...props }) => {
         toolbar: TableToolbar,
         noRowsOverlay: NoRowsOverlay,
       },
-      sx: { '--DataGrid-overlayHeight': '300px' },
+      sx: { '--DataGrid-overlayHeight': '300px', maxWidth: 'calc(var(--DataGrid-columnsTotalWidth) + 10px)' },
       onRowDoubleClick: (params) => {
         setPlayer(params.row);
         setSidebarOpen((prev) => !prev);

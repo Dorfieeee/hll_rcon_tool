@@ -50,7 +50,7 @@ export default function Root() {
     ...lastThreeMaps,
     {
       name: gameState.current_map,
-      start: 123456789,
+      start: 'TODO',
       isCurrent: true,
     },
     {

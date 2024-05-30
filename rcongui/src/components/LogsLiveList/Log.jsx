@@ -136,17 +136,12 @@ export const Line = styled(Typography, {
   borderLeftColor: getTeamColor(team),
   borderLeftStyle: 'solid',
   paddingLeft: theme.spacing(0.5),
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
   tabSize: 2,
   fontFamily: 'monospace',
   fontSize: '0.8em',
   margin: 0,
   '&:hover, &:focus': {
     background: theme.palette.action.hover,
-    textOverflow: 'none',
-    whiteSpace: 'pre-wrap',
   },
   '.highlighted &': {
     color: getLineTextColor(severity, theme, team),

@@ -59,10 +59,10 @@ const LiveView = () => {
     <ViewWrapper>
       <Header teamData={teamData?.result} gameState={gameStateProp} />
       <Grid container spacing={1}>
-        <Grid xs={12} md={7}>
+        <Grid xs={12} md={6} xl={'auto'}>
           <PlayersTable data={teamData ?? {}} rows={rows} columns={columns}/>
         </Grid>
-        <Grid xs={12} md={5}>
+        <Grid xs={12} md={6} xl>
           <LogsLiveList />
         </Grid>
       </Grid>

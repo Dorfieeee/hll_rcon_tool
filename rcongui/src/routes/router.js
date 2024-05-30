@@ -19,6 +19,10 @@ import votemapSettingsLoader from '../pages/settings/maps/votemap-config/loader'
 import settingsLoader from '../pages/settings/loader';
 import mapRotationLoader from '../pages/settings/maps/map-rotation-config/loader'
 
+import ServerSettings from '../pages/settings/server/root'
+import serverSettingsAction from '../pages/settings/server/action'
+import serverSettingsLoader from '../pages/settings/server/loader'
+
 import HLLSettings from '../components/SettingsView/hllSettings';
 import RconSettings from '../components/RconSettings/rconSettings';
 import {
@@ -196,7 +200,9 @@ const router = createBrowserRouter([
           {
             path: 'server',
             index: true,
-            element: <HLLSettings />,
+            element: <ServerSettings />,
+            loader: serverSettingsLoader,
+            action: serverSettingsAction,
           },
           {
             path: 'maps',

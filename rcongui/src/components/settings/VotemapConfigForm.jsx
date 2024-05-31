@@ -111,8 +111,8 @@ export const VotemapConfigForm = () => {
 
   return (
     <Form onSubmit={handleFormSubmit} onChange={() => setFormChanged(true)}>
-      <Wrapper>
-        {/* General */}
+      <Wrapper direction={'row'}>
+        {/* Panel */}
         <FormCard fullWidth>
           <Stack
             direction="row"

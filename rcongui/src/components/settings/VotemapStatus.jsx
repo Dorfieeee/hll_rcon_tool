@@ -12,7 +12,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { FormCard } from './cards';
+import { FormCard, Wrapper } from './cards';
 import { Form } from 'react-router-dom';
 import { getMapImageUrl, getMapName } from '../Scoreboard/utils';
 
@@ -35,7 +35,7 @@ export const VotemapStatus = ({ status }) => {
   const selection = simplifyStatusResult(status)
 
   return (
-    <Paper>
+    <Wrapper>
       <FormCard fullWidth>
         <Stack direction="row" gap={1} alignItems={'center'} flexWrap={'wrap'}>
           <Typography variant="h6">Current Map Vote</Typography>
@@ -86,6 +86,6 @@ export const VotemapStatus = ({ status }) => {
           </TableBody>
         </Table>
       </TableContainer>
-    </Paper>
+    </Wrapper>
   );
 };

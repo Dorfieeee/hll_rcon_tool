@@ -17,15 +17,9 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Switch from '@mui/material/Switch';
 import RedoIcon from '@mui/icons-material/Redo';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import PollIcon from '@mui/icons-material/Poll';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { useConfirmDialog } from '../../../../hooks/useConfirmDialog';
-import { MapSelection } from '../../../../components/settings/maps';
 import { MapRotation } from '../../../../components/settings/MapRotation';
 
 export default function QuickSettings() {
@@ -67,13 +61,11 @@ export default function QuickSettings() {
     }
 
   return (
-    <Stack direction={'row'} sx={{ height: '100%' }}>
+    <Stack direction={'row'} gap={1} sx={{ height: '100%' }}>
       <List
         sx={{
           width: 350,
           bgcolor: 'background.paper',
-          flexGrow: 1,
-          height: '100%',
         }}
       >
         <Form method="post">
@@ -126,7 +118,7 @@ export default function QuickSettings() {
           />
         </ListItem>
       </List>
-      <MapRotation maps={maps} rotation={rotation} />
+      <MapRotation maps={maps} rotation={rotation} shuffleEnabled={shuffleEnabled} />
       <Snackbar
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         open={!!actionData}

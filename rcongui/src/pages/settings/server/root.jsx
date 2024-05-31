@@ -5,6 +5,7 @@ import Tab from '@mui/material/Tab';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { Box } from '@mui/material';
+import { Basic } from '../../../components/settings/Basic';
 
 export default function VotemapConfig() {
   const [openedTab, setOpenedTab] = React.useState(1);
@@ -41,12 +42,12 @@ export default function VotemapConfig() {
               bgcolor: 'background.paper',
             }}
           >
-            <Tab label="State" value={1} />
-            <Tab label="Config" value={2} />
-            <Tab label="Map Options" value={3} />
+            <Tab label="Basic" value={1} />
+            <Tab label="Votekick" value={2} />
+            <Tab label="???" value={3} />
           </TabList>
           <TabPanel sx={{ flexGrow: 1, p: 0 }} value={1}>
-            CONTENT
+            <Basic settings={serverSettings} />
           </TabPanel>
           <TabPanel sx={{ flexGrow: 1, p: 0 }} value={2}>
             CONTENT

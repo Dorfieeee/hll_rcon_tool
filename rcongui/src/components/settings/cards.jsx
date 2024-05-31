@@ -1,5 +1,9 @@
 import React from 'react';
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
   Divider,
   FormControlLabel,
   Paper,
@@ -7,8 +11,12 @@ import {
   Typography,
 } from '@mui/material';
 import { styled } from '@mui/system';
+import InfoIcon from '@mui/icons-material/Info';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-export const FormCard = styled(Paper, { shouldForwardProp: props => props !== 'fullWidth' })(({ theme, fullWidth }) => ({
+export const FormCard = styled(Paper, {
+  shouldForwardProp: (props) => props !== 'fullWidth',
+})(({ theme, fullWidth }) => ({
   paddingLeft: theme.spacing(2),
   paddingRight: theme.spacing(2),
   paddingTop: theme.spacing(1),
@@ -24,15 +32,30 @@ export const FormCard = styled(Paper, { shouldForwardProp: props => props !== 'f
 
 export const FormCardTitle = styled((props) => (
   <Typography variant={'h6'} {...props} />
-))(({ theme }) => ({
-  marginBottom: theme.spacing(1),
-  paddingBottom: theme.spacing(0.5),
-  borderBottom: `1px solid ${theme.palette.divider}`,
-}));
+))();
+
+export const FormCardHeader = styled((props) => <Box {...props} />)(
+  ({ theme }) => ({
+    marginBottom: theme.spacing(1),
+    paddingBottom: theme.spacing(0.5),
+    borderBottom: `1px solid ${theme.palette.divider}`,
+  })
+);
+
+export const FormCardContent = styled((props) => <Box {...props} />)(
+  ({ theme }) => ({
+    paddingBottom: theme.spacing(0.5),
+    paddingTop: theme.spacing(0.5),
+  })
+);
 
 export const Wrapper = styled((props) => (
-  <Stack gap={1} direction={'row'} flexWrap={'wrap'} {...props} />
-))(({ theme }) => ({}));
+  <Stack gap={1} flexWrap={'wrap'} {...props} />
+))(({ theme }) => ({
+  paddingRight: theme.spacing(1),
+  paddingTop: theme.spacing(1),
+  width: '100%',
+}));
 
 export const SwitchHelperText = styled((props) => (
   <Typography variant="caption" {...props} />
@@ -53,3 +76,26 @@ export const FormDivider = styled((props) => (
 export const StyledFormControlLabel = styled((props) => (
   <FormControlLabel labelPlacement="end" {...props} />
 ))(({ theme }) => ({}));
+
+const StyledAcordion = styled((props) => <Accordion {...props} />)(
+  ({ theme }) => ({
+    boxShadow: 'none',
+  })
+);
+
+export const FormDescription = ({ descFor, children }) => (
+  <StyledAcordion>
+    <AccordionSummary
+      expandIcon={<ExpandMoreIcon />}
+      aria-controls={`${descFor}-content`}
+      id={`${descFor}-header`}
+    >
+      <Typography sx={{ display: 'inline-flex', gap: 1 }}>
+        <InfoIcon /> Description
+      </Typography>
+    </AccordionSummary>
+    <AccordionDetails>
+      <Typography fontStyle={'italic'}>{children}</Typography>
+    </AccordionDetails>
+  </StyledAcordion>
+);

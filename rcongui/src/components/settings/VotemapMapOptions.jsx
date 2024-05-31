@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { difference } from 'lodash';
-import { FormCard, FormDivider } from './cards';
+import { FormCard, FormDivider, Wrapper } from './cards';
 import React from 'react';
 import { Form, useSubmit } from 'react-router-dom';
 
@@ -41,7 +41,7 @@ export const VotemapMapOptions = ({ maps, whitelist }) => {
 
   return (
     <Form onSubmit={onSubmit}>
-      <Stack gap={1} sx={{ width: '100%' }}>
+      <Wrapper>
         <FormCard fullWidth>
           <Stack
             direction="row"
@@ -113,7 +113,7 @@ export const VotemapMapOptions = ({ maps, whitelist }) => {
             })}
           </List>
         </FormCard>
-      </Stack>
+      </Wrapper>
     </Form>
   );
 };

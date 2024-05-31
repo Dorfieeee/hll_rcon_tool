@@ -1,27 +1,20 @@
 import {
-  ButtonGroup,
-  IconButton,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   Stack,
+  Switch,
 } from '@mui/material';
 import {
   Autocomplete,
   Box,
   Button,
-  List,
   TextField,
   Typography,
 } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { FormCard, FormDivider } from './cards';
+import { FormCard, FormCardHeader, FormCardTitle, FormDivider, StyledFormControlLabel, Wrapper } from './cards';
 import React from 'react';
 import { Form, useSubmit } from 'react-router-dom';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import MapListDraggable from './MapListDraggable';
 
-export const MapRotation = ({ maps, rotation: originalRotation }) => {
+export const MapRotation = ({ maps, rotation: originalRotation, shuffleEnabled }) => {
   const [rotation, setRotation] = React.useState(originalRotation);
   const submit = useSubmit();
 
@@ -46,32 +39,8 @@ export const MapRotation = ({ maps, rotation: originalRotation }) => {
 
   const options = maps;
 
-  const handleOrderUp = (index) => {
-    if (index === 0) return;
-    setRotation(prev => {
-        const rotation = [...prev]
-        const lower = rotation[index];
-        const higher = rotation[index - 1];
-        rotation[index] = higher;
-        rotation[index - 1] = lower;
-        return rotation;
-    })
-  }
-
-  const handleOrderDown = (index) => {
-    if (index === rotation.length - 1) return;
-    setRotation(prev => {
-        const rotation = [...prev]
-        const higher = rotation[index];
-        const lower = rotation[index + 1];
-        rotation[index] = lower;
-        rotation[index + 1] = higher;
-        return rotation;
-    })
-  }
-
   return (
-    <Box sx={{ width: '100%' }}>
+    <Wrapper>
       <Form onSubmit={onSubmit}>
         <Stack gap={1}>
           <FormCard fullWidth>
@@ -116,44 +85,32 @@ export const MapRotation = ({ maps, rotation: originalRotation }) => {
               )}
             />
             <FormDivider />
-            <List dense={true}>
-              {rotation.map((mapName, index) => {
-                return (
-                  <ListItem
-                    divider
-                    key={mapName + index}
-                    secondaryAction={
-                      <IconButton
-                        size="small"
-                        edge="end"
-                        aria-label="delete"
-                        onClick={() => removeFromRotation(index)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    }
-                  >
-                    <ListItemIcon>
-                      <ButtonGroup
-                        orientation="vertical"
-                        aria-label="Vertical button group"
-                      >
-                        <IconButton size='small' onClick={() => handleOrderUp(index)} disabled={index === 0}>
-                          <ArrowDropUpIcon />
-                        </IconButton>
-                        <IconButton size='small' onClick={() => handleOrderDown(index)} disabled={index === rotation.length - 1}>
-                          <ArrowDropDownIcon />
-                        </IconButton>
-                      </ButtonGroup>
-                    </ListItemIcon>
-                    <ListItemText primary={mapName} />
-                  </ListItem>
-                );
-              })}
-            </List>
+            {/* TODO */}
+            {/* Pass down MAP LAYERS */}
+            <MapListDraggable />
+          </FormCard>
+          <FormCard>
+            <FormCardHeader sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', }}>
+              <FormCardTitle>Rotation Shuffle</FormCardTitle>
+              <StyledFormControlLabel
+                labelPlacement="start"
+                control={
+                  <Switch
+                    checked={shuffleEnabled}
+                    name="enabled"
+                  />
+                }
+                label={"OFF/ON"}
+              />
+            </FormCardHeader>
+            <Typography fontStyle={'italic'}>
+              This feature is implemented by the HLL Game Server. It takes your current map rotation and shuffles it.
+              It is enabled by default and will reset to default when server restarts.
+              We recommend to <strong>disable</strong> this feature.
+            </Typography>
           </FormCard>
         </Stack>
       </Form>
-    </Box>
+    </Wrapper>
   );
 };

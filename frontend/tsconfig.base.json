@@ -15,8 +15,11 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@frontend/shared": ["shared/src/index.ts"],
-      "@frontend/shared/server": ["shared/src/server.ts"]
+      "@shared": ["shared/src/index.ts"],
+      "@shared/server": ["shared/src/server.ts"],
+      "@shared/utils": ["shared/src/lib/utils.ts"],
+      "@shared/lib/*": ["shared/src/lib/*"],
+      "@shared/components/*": ["shared/src/components/*"],
     }
   },
   "exclude": ["node_modules", "tmp"]

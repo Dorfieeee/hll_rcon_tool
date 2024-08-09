@@ -1,6 +1,6 @@
 import React from 'react';
 import './global.css';
-import { ThemeProvider } from "@shared/components/theme-provider"
+import Providers from './providers';
 
 export const metadata = {
   title: 'Welcome to public',
@@ -17,14 +17,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <html lang="en" suppressHydrationWarning>
         <head />
         <body>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
+          <Providers>{children}</Providers>
         </body>
       </html>
     </>

@@ -30,7 +30,7 @@
     "../../dist/apps/public/.next/types/**/*.ts",
     "next-env.d.ts",
     ".next/types/**/*.ts"
-  ],
+, "../../shared/src/lib/get-query-client.ts"  ],
   "exclude": [
     "node_modules",
     "jest.config.ts",

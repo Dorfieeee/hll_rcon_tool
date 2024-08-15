@@ -21,7 +21,7 @@ export default function Index() {
   void queryClient.prefetchQuery(liveGameStatsOptions)
 
   return (
-    <div className="container px-0 relative flex min-h-screen flex-col bg-background mt-2 gap-1">
+    <div className="container px-1 sm:px-4 relative flex min-h-screen flex-col bg-background mt-2 gap-1">
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Suspense fallback={<div>Loading...</div>}>
           <GameState />

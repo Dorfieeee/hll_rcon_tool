@@ -59,17 +59,17 @@ export default function LiveGameStats() {
   return (
     <section id="live-game-statistics">
       <h2 className="sr-only">Live Statistics</h2>
-      <div className="relative flex flex-col-reverse md:flex-row gap-2">
+      <div className="relative flex flex-col-reverse md:flex-row">
         <article className="w-full md:w-2/3">
-          <DataTable columns={liveColumns} data={liveGameStats.stats} />
+          <DataTable columns={liveColumns} data={liveGameStats.stats.concat(Array(90).fill(liveGameStats.stats[0]))} />
         </article>
-        <aside className="w-full md:w-1/3 border min-h-32">
+        <aside className="w-full md:w-1/3 min-h-32">
           {player ? (
-            <div className="divide-y-[1px] md:sticky md:top-14">
+            <div className="divide-y-[1px] md:sticky md:top-14 border md:border-l-0">
               <h3 className="grid items-center text-xl text-center px-2 h-12">
                 {player.player}
               </h3>
-              <section className="flex flex-row justify-around">
+              <section className="flex flex-row justify-around h-[7.5rem]">
                 {scores.map((score) => {
                   const Icon = score.icon;
                   return (
@@ -87,8 +87,8 @@ export default function LiveGameStats() {
               <SimpleTable columns={deathByColumns} data={deathsBy} />
             </div>
           ) : (
-            <div className="w-full h-full px-10 py-5 text-center">
-              <div className="grid items-center border border-dashed w-full h-full text-2xl">
+            <div className="w-full px-10 py-5 text-center border md:border-l-0 md:sticky md:top-14">
+              <div className="grid items-center border border-dashed w-full h-40 text-2xl">
                 SELECT A PLAYER
               </div>
             </div>

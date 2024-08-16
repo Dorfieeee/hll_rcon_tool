@@ -49,7 +49,7 @@ export function SimpleTable<TData, TValue>({
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header, i) => {
                 return (
-                  <TableHead key={header.id} style={i !== 0 ? { width: `${header.getSize()}px` } : {}} className='p-1'>
+                  <TableHead key={header.id} style={i !== 0 ? { width: `${header.getSize()}px` } : {}}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(

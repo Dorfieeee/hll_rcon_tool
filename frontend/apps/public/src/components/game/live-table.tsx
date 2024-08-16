@@ -52,7 +52,7 @@ export function DataTable<TData, TValue>({
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id} className='p-1'>
+                  <TableHead key={header.id}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -71,10 +71,10 @@ export function DataTable<TData, TValue>({
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
-                className='text-sm'
+                className='text-sm h-10'
               >
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id} className='py-0 px-1'>
+                  <TableCell key={cell.id} className='py-0'>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}

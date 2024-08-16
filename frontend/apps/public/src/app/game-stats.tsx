@@ -61,7 +61,7 @@ export default function LiveGameStats() {
       <h2 className="sr-only">Live Statistics</h2>
       <div className="relative flex flex-col-reverse md:flex-row">
         <article className="w-full md:w-2/3">
-          <DataTable columns={liveColumns} data={liveGameStats.stats.concat(Array(90).fill(liveGameStats.stats[0]))} />
+          <DataTable columns={liveColumns} data={liveGameStats.stats} />
         </article>
         <aside className="w-full md:w-1/3 min-h-32">
           {player ? (

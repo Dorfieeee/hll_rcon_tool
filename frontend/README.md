@@ -10,6 +10,13 @@ Enhance your Nx experience by installing [Nx Console](https://nx.dev/nx-console)
 provides an interactive UI to view your projects, run tasks, generate code, and more! Available for VSCode, IntelliJ and
 comes with a LSP for Vim users.
 
+## Install
+
+- Run `cd <your_rcon_path>/frontend` to enter the project.
+- Run `npm install` to install all dependencies.
+- Run `cp .env.example .env`.
+- Modify `CRCON_URL` to your needs or leave the default value.
+
 ## Start the application
 
 Run `npx nx dev public` to start the development server. Happy coding!

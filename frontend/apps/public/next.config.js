@@ -16,7 +16,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:slug*',
-        destination: 'http://localhost:8000/api/:slug*', // Change this to your actual API endpoint
+        destination: `${process.env.CRCON_URL ?? "http://localhost:8000"}/api/:slug*`, // Change this to your actual API endpoint
       },
     ];
   }

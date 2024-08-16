@@ -4,7 +4,6 @@ import { CRCON_Response, PublicInfo } from './types';
 
 const baseURL = getBaseURL();
 
-
 export async function fetchPublicInfo() {
   const response = await fetch(
     `${baseURL}/api/get_public_info`, { next: { revalidate: 15 } }

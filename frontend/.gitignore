@@ -1,5 +1,8 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# negate parent gitignore
+!lib
+
 # compiled output
 dist
 tmp

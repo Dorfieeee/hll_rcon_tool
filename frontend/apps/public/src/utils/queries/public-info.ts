@@ -9,6 +9,10 @@ export async function fetchPublicInfo() {
     `${baseURL}/api/get_public_info`, { next: { revalidate: 15 } }
   );
 
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
   const data: CRCON_Response<PublicInfo> = await response.json()
 
   if (data && data.error) {

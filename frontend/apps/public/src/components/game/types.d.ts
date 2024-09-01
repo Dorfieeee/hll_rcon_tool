@@ -175,7 +175,6 @@ type Team = {
     death_by: Record<string, number>;
     weapons: Record<Weapon, number>;
     death_by_weapons: Record<Weapon, number>;
-    side: "axis" | "allies";
   }
   
   export interface Steaminfo {

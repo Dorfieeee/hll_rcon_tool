@@ -6,7 +6,7 @@ export default {
             label: "Live Game",
         },
         {
-            href: "/last-games",
+            href: "/matches",
             label: "Last Games",
         },
         {

@@ -1,7 +1,58 @@
 import { Player } from "../../components/game/types";
 
 type UNIX_Timestamp = number;
-type TIME_IS_SECONDS = number;
+type ISO_8601_Timestamp = string;
+type TIME_SECONDS = number;
+type Team = 'allies' | 'axis';
+type Nation = 'us' | 'gb' | 'ger' | 'rus';
+type MatchMode = 'warfare' | 'offensive' | 'skirmish' | 'control';
+type MapEnvironment = 'day' | 'night' | 'dusk' | 'rain';
+type MapTeam = {
+  name: Nation;
+  team: Team;
+}
+
+type MatchMap = {
+  id: string;
+  map: Map;
+  game_mode: MatchMode;
+  attackers: Team | null;
+  environment: MapEnvironment;
+  pretty_name: string;
+  image_name: string;
+  orientation: "horizontal" | "vertical";
+}
+
+type Map = {
+  id: string;
+  name: string;
+  tag: string;
+  pretty_name: string;
+  shortname: string;
+  allies: MapTeam;
+  axis: MapTeam;
+}
+
+type ScoreboardMap = {
+  id: number;
+  creation_time: string;
+  start: ISO_8601_Timestamp;
+  end: ISO_8601_Timestamp;
+  map: MatchMap;
+  result: {
+    allied: number;
+    axis: number;
+  } | null;
+  player_stats: [];
+  server_number: number;
+}
+
+// TODO
+// Fix after https://github.com/MarechJ/hll_rcon_tool/issues/657 issue has been resolved
+type ScoreboardMapStats = Omit<ScoreboardMap, 'map'> & {
+  player_stats: Player[];
+  map_name: string;
+}
 
 export type CRCON_Response<T> = {
   arguments: string | null;
@@ -13,36 +64,6 @@ export type CRCON_Response<T> = {
   version: string;
 };
 
-interface MapMode {
-  id: string;
-  map: Map;
-  game_mode: GameMode;
-  attackers: Team | null;
-  environment: MapEnvironment;
-  pretty_name: string;
-  image_name: string;
-}
-
-interface Map {
-  id: string;
-  name: string;
-  tag: string;
-  pretty_name: string;
-  shortname: string;
-  allies: MapTeam;
-  axis: MapTeam;
-}
-
-type Team = 'allies' | 'axis';
-type Nation = 'us' | 'gb' | 'ger' | 'rus';
-type GameMode = 'warfare' | 'offensive' | 'skirmish';
-type MapEnvironment = 'day' | 'night' | 'dusk' | 'rain';
-
-interface MapTeam {
-  name: Nation;
-  team: Team;
-}
-
 export type PublicInfo = {
   max_player_count: number;
   player_count: number;
@@ -53,8 +74,8 @@ export type PublicInfo = {
   score: {
     allied: number;
     axis: number;
-  }
-  time_remaining: TIME_IS_SECONDS;
+  };
+  time_remaining: TIME_SECONDS;
   name: {
     name: string;
     short_name: string;
@@ -63,16 +84,16 @@ export type PublicInfo = {
   };
   current_map: {
     id: string;
-    map: MapMode;
+    map: MatchMap;
     start: UNIX_Timestamp;
   };
   next_map: {
     id: string;
-    map: MapMode;
+    map: MatchMap;
     start: UNIX_Timestamp;
   };
   vote_status: {
-    map: MapMode;
+    map: MatchMap;
     // TODO fix voters type
     voters: string[]
   }[]
@@ -83,3 +104,12 @@ export type LiveGameStats = {
     snapshot_timestamp: UNIX_Timestamp;
     stats: Player[];
 }
+
+export type ScoreboardMaps = {
+  page: number;
+  page_size: number;
+  total: number;
+  maps: ScoreboardMap[]
+}
+
+export type MapScoreboard = ScoreboardMapStats;

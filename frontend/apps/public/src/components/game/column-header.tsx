@@ -16,8 +16,8 @@ export const Header = ({
   onClick,
 }: {
   header: string;
-  desc: string;
-  onClick: () => void;
+  desc?: string;
+  onClick?: () => void;
 }) => (
   <TooltipProvider>
     <Tooltip>

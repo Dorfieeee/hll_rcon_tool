@@ -47,9 +47,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
           )}
         >
           <Providers>
-            <div className="relative flex min-h-screen flex-col bg-background">
+            <div className="relative flex min-h-screen flex-col">
               <Header />
-              {children}
+              <main className='container px-1 sm:px-4 relative flex min-h-screen flex-col bg-background gap-1'>
+                {children}
+              </main>
               <Footer />
             </div>
           </Providers>

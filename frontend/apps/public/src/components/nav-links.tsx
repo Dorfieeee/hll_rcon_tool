@@ -11,6 +11,7 @@ export function NavLinks() {
     const isNotActive = pathname !== link.href;
     return (
       <Link
+        key={link.href}
         href={link.href}
         className={cn(
           'text-sm font-medium transition-colors',
